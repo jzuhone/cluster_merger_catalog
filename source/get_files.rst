@@ -1,9 +1,10 @@
 
 .. raw:: html
    
-    <script src="https://hub.yt/girder/static/built/girder.ext.min.js"></script>
-    <script src="https://hub.yt/girder/static/built/girder.app.min.js"></script>
-
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="lightbox/js/lightbox.js"></script>
+    <script>$('head').append('<link rel="stylesheet" href="lightbox/css/lightbox.css"/>');</script>
+    
     <h1 id="header"></h1>
 
     <h2>Projections</h2>
@@ -15,15 +16,14 @@
     </select>
 
     <h3>X-ray Emissivity, Spectroscopic Temperature, Total Density</h3>
-     
-    <br><br>
 
-    <img id="xray" width="350" />
-    <img id="temp" width="350" />
-    <img id="dens" width="350" />
+    <a id="big_proj_xray" data-lightbox="lb_proj_xray" ><img id="proj_xray" width="350" /></a>
+    <a id="big_proj_temp" data-lightbox="lb_proj_temp" ><img id="proj_temp" width="350" /></a>
+    <a id="big_proj_dens" data-lightbox="lb_proj_dens" ><img id="proj_dens" width="350" /></a>
     <br>
-    <a id="proj_fits">Download the FITS file</a>
-
+    <a id="proj_fits">FITS File Download</a>
+    <br><br>
+    
     <script>
         var sim = sessionStorage.getItem("sim");
         var fileno = sessionStorage.getItem("fileno");
@@ -34,11 +34,10 @@
         
         $(document).ready(function () {
              
-            show_files(sim, fileno, 'z')
+            show_files(sim, fileno, 'proj', 'z')
             document.getElementById('header').innerText = sim_name+", "+timestr;
             document.title = sim_name+", "+timestr;
 
-            
             if (sim.substring(sim.length-2,sim.length) != "b0") {
                 var new_ax = document.createElement("option");
                 new_ax.text = "y";
@@ -47,8 +46,8 @@
             
         });
         
-        function show_files(sim, fileno, axis) {
-            var fn = "fiducial_"+sim+"_hdf5_plt_cnt_"+fileno+"_proj_"+axis;
+        function show_files(sim, fileno, type, axis) {
+            var fn = "fiducial_"+sim+"_hdf5_plt_cnt_"+fileno+"_"+type+"_"+axis;
             $.getJSON(girder_root+'/resource/search',
                       {q: fn,  types: '["item"]'},
                       function(data) {
@@ -59,18 +58,22 @@
                               if (names[i].indexOf("png") > -1) {
                                   var element = '';
                                   if (names[i].indexOf("xray") > -1) {
-                                      element = 'xray';
+                                      element = 'proj_xray';
                                   } else if (names[i].indexOf("kT") > -1) {
-                                      element = 'temp';
+                                      element = 'proj_temp';
                                   } else if (names[i].indexOf("density") > -1) {
-                                      element = 'dens';
+                                      element = 'proj_dens';
                                   }
                                   document.getElementById(element).src = get_link(ids[i]);
+                                  document.getElementById('big_'+element).href = get_link(ids[i]);
                               } else {
-                                  document.getElementById('proj_fits').href = get_link(ids[i]);
+                                  document.getElementById(type+'_fits').href = get_link(ids[i]);
                               }
                           }
                       });
+        }
+        
+        function element_map(type) {
         }
         
         function get_link(id) {
@@ -83,7 +86,7 @@
     
         var changeAxis = function () { 
             var axis = this.options[this.selectedIndex].value;
-            show_files(sim, fileno, axis);
+            show_files(sim, fileno, 'proj', axis);
         }
 
         axisList.addEventListener('change', changeAxis, false);
