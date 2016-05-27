@@ -14,7 +14,11 @@ GIRDER_API_URL = "https://girder.hub.yt/api/v1"
 
 gc = girder_client.GirderClient(apiUrl=GIRDER_API_URL)
 
-sim_dict = {"1to3_b0": ("R = 1:3, b = 0 kpc", [0, 20, 30, 40, 50, 55])}
+sim_dict = {"1to3_b0": ("R = 1:3, b = 0 kpc", 
+                        [0, 20, 30, 40, 50, 55, 60, 65, 70, 80, 90, 
+                         100, 110, 120, 130, 140, 145, 150, 160, 170, 
+                         180, 185, 190, 200, 210, 220, 230, 240, 250,
+                         260, 300])}
 
 def make_main_page(sims):
     sim_pages = []
@@ -34,12 +38,9 @@ def make_png_page(sim, sim_name, filenos):
             if item['name'].endswith("png"):
                 name = item['name']
                 field = name[name.find("Slice_z_")+8:name.find(".png")]
-                if field.startswith("xray"):
-                    field = "xray_emissivity"
                 imgs[field] = "http://girder.hub.yt/api/v1/item/%s/download" % item['_id']
         time = "t = %4.2f Gyr" % (fileno*0.02)
-        target = "https://girder.hub.yt/#folder/%s" % item["folderId"]
-        info.append(["%04d" % fileno, time, imgs, target])
+        info.append(["%04d" % fileno, time, imgs])
     outfile = "source/%s.rst" % sim
     context = {'sim': sim,
                'sim_name': sim_name,

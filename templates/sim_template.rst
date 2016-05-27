@@ -13,7 +13,7 @@
       }
    </script>
    
-{% for fileno, time, imgs, target in info %}
+{% for fileno, time, imgs in info %}
 
 {{time}}
 ------------
