@@ -7,6 +7,15 @@
     
     <h1 id="header"></h1>
 
+    <h2>Slices</h2>
+    
+    <a id="big_slice_dens" data-lightbox="lb_slice_dens" ><img id="slice_dens" width="350" /></a>
+    <a id="big_slice_temp" data-lightbox="lb_slice_temp" ><img id="slice_temp" width="350" /></a>
+    <a id="big_slice_pden" data-lightbox="lb_slice_pden" ><img id="slice_pden" width="350" /></a>
+    <br>
+    <a id="slice_fits">FITS File Download</a>
+    <br><br>
+
     <h2>Projections</h2>
 
     Change the projection direction:
@@ -32,9 +41,19 @@
         var girder_root = "https://girder.hub.yt/api/v1";
         var axisList = document.getElementById("proj_axis");
         
+        var type_map = {proj:["xray","temp","dens"],
+                        slice:["dens","temp","pden"]};
+
+        var field_map = {xray_emissivity:"xray",
+                         total_density:"dens",
+                         kT:"temp",
+                         dark_matter_density:"pden",
+                         density:"dens"};
+
         $(document).ready(function () {
              
-            show_files(sim, fileno, 'proj', 'z')
+            show_files(sim, fileno, 'slice', 'z')
+            //show_files(sim, fileno, 'proj', 'z')
             document.getElementById('header').innerText = sim_name+", "+timestr;
             document.title = sim_name+", "+timestr;
 
@@ -56,14 +75,7 @@
                           names = files.map(function(f){return f.name});
                           for (var i = 0; i < names.length; i++) {
                               if (names[i].indexOf("png") > -1) {
-                                  var element = '';
-                                  if (names[i].indexOf("xray") > -1) {
-                                      element = 'proj_xray';
-                                  } else if (names[i].indexOf("kT") > -1) {
-                                      element = 'proj_temp';
-                                  } else if (names[i].indexOf("density") > -1) {
-                                      element = 'proj_dens';
-                                  }
+                                  element = type+"_"+element_map(names[i]);
                                   document.getElementById(element).src = get_link(ids[i]);
                                   document.getElementById('big_'+element).href = get_link(ids[i]);
                               } else {
@@ -73,7 +85,11 @@
                       });
         }
         
-        function element_map(type) {
+        function element_map(name) {
+            st = name.indexOf("_Slice_z_")+9
+            ed = name.indexOf(".png")
+            field = name.substring(st,ed)
+            return field_map[field]
         }
         
         function get_link(id) {
@@ -86,7 +102,7 @@
     
         var changeAxis = function () { 
             var axis = this.options[this.selectedIndex].value;
-            show_files(sim, fileno, 'proj', axis);
+            //show_files(sim, fileno, 'proj', axis);
         }
 
         axisList.addEventListener('change', changeAxis, false);
