@@ -1,20 +1,22 @@
 
 .. raw:: html
-  
+   
     <script src="https://hub.yt/girder/static/built/girder.ext.min.js"></script>
     <script src="https://hub.yt/girder/static/built/girder.app.min.js"></script>
 
     <script>
         var sim = sessionStorage.getItem("sim");
         var fileno = sessionStorage.getItem("fileno");
+        var timestr = sessionStorage.getItem("timestr");
+        var sim_name = sessionStorage.getItem("sim_name");
 
         $(document).ready(function () {
-            //var sim = sessionStorage.getItem("sim");
-            //var fileno = sessionStorage.getItem("fileno");
             
             var fn = "fiducial_"+sim+"_hdf5_plt_cnt_"+fileno+"_proj_z";
             
             get_file_ids(fn)
+            document.getElementById('header').innerText = sim_name+", "+timestr;
+            document.title = sim_name+", "+timestr;
 
         });
         
@@ -49,8 +51,11 @@
 
     </script>
 
+    <h1 id="header"></h1>
+
     <h2>Projections</h2>
 
+    Change the projection direction:
     <select id="proj_axis">
         <option value="x">x</option>
         <option value="z" selected="selected">z</option>
