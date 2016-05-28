@@ -4,10 +4,8 @@
 .. raw:: html
    
    <script>
-      function get_files(fileno, sim, timestr, sim_name) {
-         //sessionStorage.setItem("fileno", fileno);
-         //sessionStorage.setItem("sim", sim);
-         window.open("get_files.html?sim={{sim}}&fileno={{fileno}}","_blank");
+      function get_files(fileno, sim, timestr) {
+         window.open("get_files.html?sim="+sim+"&fileno="+fileno,"_blank");
       }
    </script>
    

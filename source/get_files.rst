@@ -70,7 +70,7 @@
         var sim_map = {"1to3_b0" : "R = 1:3, b = 0 kpc"};
 
         var sim_name = sim_map[sim];
-        var timestr = "t = " + parseFlot(fileno)*0.02 + " Gyr";
+        var timestr = "t = " + parseFloat(fileno)*0.02 + " Gyr";
 
         $(document).ready(function () {
              
