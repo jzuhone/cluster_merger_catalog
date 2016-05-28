@@ -33,6 +33,12 @@
     <a id="proj_fits">FITS File Download</a>
     <br><br>
     
+    <h3>Sunyaev-Zeldovich</h3>
+    <a id="big_SZ_240" data-lightbox="lb_SZ_240" ><img id="SZ_240" width="350" /></a>
+    <br>
+    <a id="SZ_fits">FITS File Download</a>
+    <br><br>
+
     <script>
         var sim = sessionStorage.getItem("sim");
         var fileno = sessionStorage.getItem("fileno");
@@ -40,20 +46,19 @@
         var sim_name = sessionStorage.getItem("sim_name");
         var girder_root = "https://girder.hub.yt/api/v1";
         var axisList = document.getElementById("proj_axis");
-        
-        var type_map = {proj:["xray","temp","dens"],
-                        slice:["dens","temp","pden"]};
 
         var field_map = {xray_emissivity:"xray",
                          total_density:"dens",
                          kT:"temp",
                          dark_matter_density:"pden",
-                         density:"dens"};
+                         density:"dens",
+                         "240_GHz":"240"};
 
         $(document).ready(function () {
              
-            show_files(sim, fileno, 'slice', 'z')
-            //show_files(sim, fileno, 'proj', 'z')
+            show_files(sim, fileno, 'slice', 'z');
+            show_files(sim, fileno, 'proj', 'z');
+            show_files(sim, fileno, 'SZ', 'z');
             document.getElementById('header').innerText = sim_name+", "+timestr;
             document.title = sim_name+", "+timestr;
 
@@ -80,6 +85,7 @@
                                   document.getElementById('big_'+element).href = get_link(ids[i]);
                               } else {
                                   document.getElementById(type+'_fits').href = get_link(ids[i]);
+                                  document.getElementById(type+'_fits').innerText = "FITS File Download ("+axis+"-axis)";
                               }
                           }
                       });
@@ -102,7 +108,8 @@
     
         var changeAxis = function () { 
             var axis = this.options[this.selectedIndex].value;
-            //show_files(sim, fileno, 'proj', axis);
+            show_files(sim, fileno, 'proj', axis);
+            show_files(sim, fileno, 'SZ', axis);
         }
 
         axisList.addEventListener('change', changeAxis, false);
