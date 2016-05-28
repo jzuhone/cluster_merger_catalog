@@ -60,7 +60,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'cluster_catalog'
+project = 'Binary Cluster Merger Catalog'
 copyright = '2016, John ZuHone'
 author = 'John ZuHone'
 
