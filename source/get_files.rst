@@ -4,7 +4,18 @@
     <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="lightbox/js/lightbox.js"></script>
     <script>$('head').append('<link rel="stylesheet" href="lightbox/css/lightbox.css"/>');</script>
-    
+    <script>
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+    </script>
+
     <h1 id="header"></h1>
 
     <h2>Slices</h2>
@@ -40,10 +51,12 @@
     <br><br>
 
     <script>
-        var sim = sessionStorage.getItem("sim");
-        var fileno = sessionStorage.getItem("fileno");
-        var timestr = sessionStorage.getItem("timestr");
-        var sim_name = sessionStorage.getItem("sim_name");
+        //var sim = sessionStorage.getItem("sim");
+        //var fileno = sessionStorage.getItem("fileno");
+        //var timestr = sessionStorage.getItem("timestr");
+        //var sim_name = sessionStorage.getItem("sim_name");
+        var sim = getParameterByName('sim')
+        var fileno = getParameterByName('fileno')
         var girder_root = "https://girder.hub.yt/api/v1";
         var axisList = document.getElementById("proj_axis");
 
@@ -53,6 +66,11 @@
                          dark_matter_density:"pden",
                          density:"dens",
                          "240_GHz":"240"};
+
+        var sim_map = {"1to3_b0" : "R = 1:3, b = 0 kpc"};
+
+        var sim_name = sim_map[sim];
+        var timestr = fileno
 
         $(document).ready(function () {
              

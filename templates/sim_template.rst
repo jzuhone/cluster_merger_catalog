@@ -5,11 +5,9 @@
    
    <script>
       function get_files(fileno, sim, timestr, sim_name) {
-         sessionStorage.setItem("fileno", fileno);
-         sessionStorage.setItem("sim", sim);
-         sessionStorage.setItem("timestr", timestr);
-         sessionStorage.setItem("sim_name", sim_name);
-         window.open("get_files.html","_blank");
+         //sessionStorage.setItem("fileno", fileno);
+         //sessionStorage.setItem("sim", sim);
+         window.open("get_files.html?sim={{sim}}&fileno={{fileno}}","_blank");
       }
    </script>
    
