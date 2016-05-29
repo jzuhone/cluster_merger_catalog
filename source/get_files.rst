@@ -4,6 +4,12 @@
     <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="lightbox/js/lightbox.js"></script>
     <script>$('head').append('<link rel="stylesheet" href="lightbox/css/lightbox.css"/>');</script>
+    <script>$('head').append('<link type="text/css" rel="stylesheet" href="js9/js9support.css">');</script>
+    <script>$('head').append('<link type="text/css" rel="stylesheet" href="js9/js9.css">');</script>
+    <script type="text/javascript" src="js9/js9support.min.js"></script>
+    <script type="text/javascript" src="js9/js9.min.js"></script>
+    <script type="text/javascript" src="js9/js9plugins.js"></script>
+
     <script>
         function getParameterByName(name, url) {
             if (!url) url = window.location.href;
@@ -24,7 +30,8 @@
     <a id="big_slice_temp" data-lightbox="lb_slice_temp" ><img id="slice_temp" width="350" /></a>
     <a id="big_slice_pden" data-lightbox="lb_slice_pden" ><img id="slice_pden" width="350" /></a>
     <br>
-    <a id="slice_fits">FITS File Download</a>
+    <a id="slice_fits">FITS File Download</a><br>
+    <a id="slice_js9">Open in JS9</a>
     <br><br>
 
     <h2>Projections</h2>
@@ -42,12 +49,23 @@
     <a id="big_proj_dens" data-lightbox="lb_proj_dens" ><img id="proj_dens" width="450" /></a>
     <a id="big_proj_szy" data-lightbox="lb_proj_szy" ><img id="proj_szy" width="450" /></a>
     <br>
-    <a id="proj_fits">FITS File Download</a>
+    <a id="proj_fits">FITS File Download</a><br>
+    <a id="proj_js9">Open in JS9</a>
+
     <br><br>
     
     <h3>Sunyaev-Zeldovich Intensity</h3>
-    <a id="SZ_fits">FITS File Download</a>
+    <a id="SZ_fits">FITS File Download</a><br>
+    <a id="SZ_js9">Open in JS9</a>
     <br><br>
+
+    <h2>JS9 Interface</h2>
+
+    <div class="JS9Menubar"></div>
+    <div class="JS9"></div>
+    <div style="margin-top: 2px;">
+    <div class="JS9Colorbar"></div>
+    </div>
 
     <script>
         var sim = getParameterByName('sim')
@@ -65,7 +83,8 @@
         var type_map = {"slice":["density","kT","dark_matter_density"],
                         "proj":["xray_emissivity","kT","total_density","szy"]};
         var sim_map = {"1to3_b0" : "R = 1:3, b = 0 kpc"};
-
+        var default_js9 = {"slice":"density","proj":"xray_emissivity","SZ":"180_GHz"};
+        
         var sim_name = sim_map[sim];
         var timestr = "t = " + (parseFloat(fileno)*0.02).toFixed(2) + " Gyr";
 
@@ -95,6 +114,8 @@
                           var id = data.item[0]._id;
                           document.getElementById(type+'_fits').href = get_link(id);
                           document.getElementById(type+'_fits').innerText = "FITS File Download ("+axis+"-axis)";
+                          document.getElementById(type+'_js9').href = "javascript:js9Load('"+get_link(id)+"');";
+                          document.getElementById(type+'_js9').innerText = "Open in JS9 ("+axis+"-axis)";
                       });
         }
         
@@ -135,4 +156,9 @@
 
         axisList.addEventListener('change', changeAxis, false);
         
+        function js9Load(url, type) {
+            JS9.Load(url);
+            JS9.DisplayExtension(default_js9[type]);
+        }
+
     </script>
