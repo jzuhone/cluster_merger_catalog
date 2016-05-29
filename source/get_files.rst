@@ -158,7 +158,6 @@
         
         function js9Load(url, type) {
             JS9.Load(url);
-            JS9.DisplayExtension(default_js9[type]);
         }
 
     </script>
