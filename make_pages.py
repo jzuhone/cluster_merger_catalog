@@ -31,14 +31,14 @@ def make_main_page(sims):
 def make_png_page(sim, sim_name, filenos):
     info = []
     for fileno in filenos:
-        filename = "fiducial_%s_hdf5_plt_cnt_%04d_proj_z" % (sim, fileno)
-        items = gc.get("resource/search", {"q": filename, "types": '["item"]'})['item']
         imgs = {}
-        for item in items:
-            if item['name'].endswith("png"):
-                name = item['name']
-                field = name[name.find("Slice_z_")+8:name.find(".png")]
-                imgs[field] = "http://girder.hub.yt/api/v1/item/%s/download" % item['_id']
+        for field in ["xray_emissivity","kT","total_density","szy"]:
+            filename = "fiducial_%s_hdf5_plt_cnt_%04d_proj_z_%s" % (sim, fileno, field)
+            item = gc.get("resource/search", {"q": filename, "types": '["item"]'})['item'][0]
+            name = item['name']
+            field = name[name.find("proj_z_")+7:name.find(".png")]
+            print(field)
+            imgs[field] = "http://girder.hub.yt/api/v1/item/%s/download" % item['_id']
         time = "t = %4.2f Gyr" % (fileno*0.02)
         info.append(["%04d" % fileno, time, imgs])
     outfile = "source/%s.rst" % sim
