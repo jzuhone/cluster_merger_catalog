@@ -58,6 +58,9 @@
     <a id="SZ_fits">FITS File Download</a><br>
     <a id="SZ_js9">Open in JS9</a>
     <br><br>
+    
+    <h2>Jupyter Notebook</h2>
+    <a id="notebook" >Start a Jupyter notebook with access to these files.</a>
 
     <h2>JS9 Interface</h2>
 
@@ -83,7 +86,7 @@
         var type_map = {"slice":["density","kT","dark_matter_density"],
                         "proj":["xray_emissivity","kT","total_density","szy"]};
         var sim_map = {"1to3_b0" : "R = 1:3, b = 0 kpc"};
-        var default_js9 = {"slice":"density","proj":"xray_emissivity","SZ":"180_GHz"};
+        var default_js9 = {"slice":2,"proj":0,"SZ":0};
         
         var sim_name = sim_map[sim];
         var timestr = "t = " + (parseFloat(fileno)*0.02).toFixed(2) + " Gyr";
@@ -114,7 +117,7 @@
                           var id = data.item[0]._id;
                           document.getElementById(type+'_fits').href = get_link(id);
                           document.getElementById(type+'_fits').innerText = "FITS File Download ("+axis+"-axis)";
-                          document.getElementById(type+'_js9').href = "javascript:js9Load('"+get_link(id)+"');";
+                          document.getElementById(type+'_js9').href = "javascript:js9Load('"+get_link(id)+"','"+type+"');";
                           document.getElementById(type+'_js9').innerText = "Open in JS9 ("+axis+"-axis)";
                       });
         }
@@ -157,7 +160,7 @@
         axisList.addEventListener('change', changeAxis, false);
         
         function js9Load(url, type) {
-            JS9.Load(url);
+            JS9.Load(url+"["+default_js9[type]+"]");
         }
 
     </script>

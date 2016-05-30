@@ -61,8 +61,15 @@ JS9.RAWID0 = "raw0";		// default raw id
 JS9.RAWIDX = "alt";		// default "alternate" raw id
 JS9.REPROJDIM = 2200;		// max dimension for reprojection
 JS9.IDFMT = "  (id: %s)";       // format for light window id
+JS9.MINZOOM = 0.125;		// min zoom using scrool wheel
+JS9.MAXZOOM = 16.0;		// max zoom using scrool wheel
+JS9.ADDZOOM = 0.05;		// add/subtract amount per mouse wheel click
 JS9.CHROMEFILEWARNING = true;	// whether to alert chrome users about file URI
 
+// https://hacks.mozilla.org/2013/04/detecting-touch-its-the-why-not-the-how/
+JS9.TOUCHSUPPORTED = ( window.hasOwnProperty("ontouchstart") ||
+		      (navigator.maxTouchPoints > 0) ||
+		      (navigator.msMaxTouchPoints > 0));
 // modified from:
 // http://stackoverflow.com/questions/2400935/browser-detection-in-javascript
 JS9.BROWSER = (function(){
@@ -108,7 +115,7 @@ JS9.globalOpts = {
     xtimeout: 180000,		// connection timeout for fetch data requests
     extlist: "EVENTS STDEVT",	// list of binary table extensions
     dims: [1024, 1024],		// dims of extracted images
-    helperProtocol: location.protocol,// http: or https:
+    helperProtocol: location.protocol, // http: or https:
     maxMemory: 750000000,	// max heap memory to allocate for a fits image
     corsURL: "params/loadcors.html",       // location of param html file
     proxyURL: "params/loadproxy.html",     // location of param html file
@@ -121,6 +128,11 @@ JS9.globalOpts = {
     spinOpacity: 0.35,          // opacity of spinner
     resize: true,		// allow resize of display?
     resizeHandle: true,		// add resize handle to display?
+    mouseActions: ["display value/position", "change contrast/bias", "pan the image"],// 0,1,2 mousepress
+    touchActions: ["display value/position", "change contrast/bias", "pan the image"],// 1,2,3 fingers
+    mousetouchZoom: false,	// use mouse wheel, pinch to zoom?
+    pinchWait: 8,		// number of events to wait before testing pinch
+    pinchThresh: 6,		// threshold for pinch test
     debug: 0		        // debug level
 };
 
@@ -437,10 +449,10 @@ JS9.Image = function(file, params, func){
     this.setColormap(this.params.colormap);
     // do we display?
     this.displayMode = true;
-    // mouse event state
-    this.evstate = -1;
-    // no region clicks yet
-    this.rclick = 0;
+    // initialize click state
+    this.clickState = 0;
+    // initialize click in region
+    this.clickInRegion = false;
     // no helper queried yet
     this.queried = false;
     // is this a proxy image?
@@ -551,8 +563,8 @@ JS9.Image = function(file, params, func){
 	this.source = "fits2png";
 	// image or table
 	this.imtab = "image";
-	// downloaded image file
-	this.file = file;
+	// downloaded image file, path relative to displayed Web page
+	this.file = file.replace(/\/\.\//, "/");
 	// take file but discard path (or scheme) up to slashes
 	this.id0 = this.file.split("/").reverse()[0];
 	// save id in case we have to change it for uniqueness
@@ -733,7 +745,7 @@ JS9.Image.prototype.closeImage = function(){
 	tim = JS9.images[i];
 	if( display === tim.display ){
 	    // display image, 2D graphics, etc.
-	    tim.displayImage("display");
+	    tim.displayImage("all");
 	    tim.refreshLayers();
 	    break;
 	}
@@ -2680,6 +2692,8 @@ JS9.Image.prototype.parseZoom = function(zval){
 	case "T":
 	case "t":
 	    nzoom = Math.min(this.display.width, this.display.height) / Math.max(this.raw.width, this.raw.height);
+	    // a little rounding makes the zoom nicer
+	    nzoom = Math.round((nzoom + 0.00001) * 100) / 100;
 	    break;
 	default:
 	    nzoom = parseFloat(zval);
@@ -2921,7 +2935,7 @@ JS9.Image.prototype.notifyHelper = function(){
     if( JS9.helper.connected && (this.file !== JS9.ANON) ){
 	JS9.helper.send("image", {"image": this.file},
         function(res){
-	    var rstr, r, s, cc, im;
+	    var rstr, r, s, cc, im, regexp;
 	    if( typeof res === "object" ){
 		// from node.js, we get an object with stdout and stderr
 		rstr = res.stdout;
@@ -2946,10 +2960,14 @@ JS9.Image.prototype.notifyHelper = function(){
 		    if( !JS9.analOpts.dataDir ){
 			im.fitsFile = s;
 			// prepend base of png path if fits file has no path
-			// is this a bad "feature" in tpos??
+			// is this a bad "feature" in tpos?? probably ...
 			if( im.fitsFile.indexOf("/") < 0 ){
 			    basedir = im.file.match( /.*\// );
-			    if( basedir ){
+			    // but don't add installdir as part of prefix
+			    // (fitsFile path is relative to the js9 directory)
+			    if( basedir && basedir.length ){
+				regexp = new RegExp("^"+JS9.INSTALLDIR);
+				basedir = basedir[0].replace(regexp, "");
 				im.fitsFile =  basedir + im.fitsFile;
 			    }
 			}
@@ -2972,6 +2990,12 @@ JS9.Image.prototype.notifyHelper = function(){
 			JS9.log("JS9 fitsFile: %s %s", im.file, im.fitsFile);
 		    }
 		}
+	    }
+	    if( im.fitsFile ){
+		im.fitsFile = im.fitsFile.replace(/\/\.\//g, "/");
+	    }
+	    if( im.parentFile ){
+		im.parentFile = im.parentFile.replace(/\/\.\//g, "/");
 	    }
 	    // first time through, query the helper for info
 	    if( !that.queried ){
@@ -3100,6 +3124,9 @@ JS9.Image.prototype.expandMacro = function(s, opts){
 	case "ext":
 	    if( that.fitsFile ){
 		r = that.fitsFile.match(/\[.*\]/);
+		if( r === null ){
+		    r = "";
+		}
 	    } else {
 		JS9.error("no FITS file for " + that.id);
 	    }
@@ -3282,10 +3309,12 @@ JS9.Image.prototype.runAnalysis = function(name, opts, func){
 		break;
 	    case "fits":
 	    case "png":
-		f = robj.stdout.trim();
+		f = robj.stdout.trim().replace(/\/\.\//, "/");
+		// relative path: add install dir prefix
 		if( f.charAt(0) !== "/" ){
 		    f = JS9.InstallDir(f);
 		}
+		// load new file
 	        JS9.Load(f, {proxyFile: f}, {display: that.display});
 		break;
 	    case "none":
@@ -3824,28 +3853,61 @@ JS9.Image.prototype.setScale = function(s0, s1, s2){
 
 // re-calculate data min and max (and set scale params, if necessary)
 JS9.Image.prototype.dataminmax = function(){
-    var i;
+    var i, blankval;
+    var reminscale = isNaN(this.params.scalemin) ||
+                     (this.params.scalemin === undefined);
+    var remaxscale = isNaN(this.params.scalemax) ||
+                     (this.params.scalemax === undefined);
+    // might have to redo scaling if it's tied to current data min or max
+    if( this.params.scaleclipping === "dataminmax" ){
+	if( (this.raw.dmin === this.params.scalemin) ||
+	    (this.raw.dmin === undefined)            ){
+	    reminscale = true;
+	}
+	if( (this.raw.dmax === this.params.scalemax) ||
+	    (this.raw.dmax === undefined)            ){
+	    remaxscale = true;
+	}
+    }
+    // re-calculate data min and max values
     this.raw.dmin = Number.MAX_VALUE;
     this.raw.dmax = Number.MIN_VALUE;
-    for(i=0; i<this.raw.data.length; i++) {
-	if( !isNaN(this.raw.data[i]) ){
-	    this.raw.dmin = Math.min(this.raw.dmin, this.raw.data[i]);
-	    this.raw.dmax = Math.max(this.raw.dmax, this.raw.data[i]);
+    // get data min and max, ignoring type-dependent blank values
+    if( this.raw.bitpix > 0 ){
+	// integer data: BLANK header value specifies data value to ignore
+	if( this.raw.header.BLANK !== undefined ){
+	    blankval = this.raw.header.BLANK;
+	    for(i=0; i<this.raw.data.length; i++) {
+		if( this.raw.data[i] !== blankval ){
+		    this.raw.dmin = Math.min(this.raw.dmin, this.raw.data[i]);
+		    this.raw.dmax = Math.max(this.raw.dmax, this.raw.data[i]);
+		}
+	    }
+	} else {
+	    for(i=0; i<this.raw.data.length; i++) {
+		this.raw.dmin = Math.min(this.raw.dmin, this.raw.data[i]);
+		this.raw.dmax = Math.max(this.raw.dmax, this.raw.data[i]);
+	    }
+	}
+    } else {
+	// float data: ignore NaN
+	for(i=0; i<this.raw.data.length; i++) {
+	    if( !isNaN(this.raw.data[i]) ){
+		this.raw.dmin = Math.min(this.raw.dmin, this.raw.data[i]);
+		this.raw.dmax = Math.max(this.raw.dmax, this.raw.data[i]);
+	    }
 	}
     }
     // re-set scaling values, if necessary
-    if( (this.params.scaleclipping === "dataminmax") ||
-	isNaN(this.params.scalemin)                  ){
+    if( reminscale ){
 	this.params.scalemin = this.raw.dmin;
     }
-    if( (this.params.scaleclipping === "dataminmax") ||
-	isNaN(this.params.scalemax)                  ){
+    if( remaxscale ){
 	this.params.scalemax = this.raw.dmax;
     }
     // allow chaining
     return this;
 };
-
 
 // the zscale calculation
 JS9.Image.prototype.zscale = function(setvals){
@@ -4319,7 +4381,7 @@ JS9.Image.prototype.shiftData = function(x, y, opts){
     opts.x = x;
     opts.y = y;
     this.rawDataLayer(opts, function (oraw, nraw, opts){
-	var i, oi, oj, ni, nj, nlen, oU8, nU8, ooff, noff;
+	var i, oi, oj, ni, nj, nlen, oU8, nU8, ooff, noff, blankval;
 	var bpp = oraw.data.BYTES_PER_ELEMENT;
 	if( nraw.xoff === undefined ){
 	    nraw.xoff = 0;
@@ -4330,11 +4392,17 @@ JS9.Image.prototype.shiftData = function(x, y, opts){
 	nraw.xoff += opts.x;
 	nraw.yoff += opts.y;
 	if( !opts.fill || opts.fill === "clear" ){
+	    if( nraw.bitpix > 0 ){
+		blankval = opts.blank || nraw.header.BLANK || 0;
+		nraw.header.BLANK = blankval;
+	    } else {
+		blankval = NaN;
+	    }
 	    if( typeof nraw.data.fill === "function" ){
-		nraw.data.fill(0);
+		nraw.data.fill(blankval);
 	    } else {
 		for(i=0; i<nraw.data.length; i++){
-		    nraw.data[i] = 0;
+		    nraw.data[i] = blankval;
 		}
 	    }
 	}
@@ -4549,8 +4617,8 @@ JS9.Image.prototype.filterRGBImage = function(filter){
     }
     // remove filter name argument
     argv.shift();
-    // add RGB img arguments
-    argv.unshift(this.rgb.img);
+    // add display context and RGB img argument
+    argv.unshift(this.display.context, this.rgb.img);
     // try to run the filter to generate a new RGB image
     try{ JS9.ImageFilters[filter].apply(null, argv); }
     catch(e){ JS9.error("JS9 image filter '" + filter + "' failed", e); }
@@ -4817,33 +4885,52 @@ JS9.Display = function(el){
     this.initMessages();
     // blend mode is false to start
     this.blendMode = false;
+    // display-based mouse/touch actions initially from global
+    this.mouseActions = JS9.globalOpts.mouseActions.slice(0);
+    this.touchActions = JS9.globalOpts.touchActions.slice(0);
+    // display-based scroll-based zoom initially from global
+    this.mousetouchZoom = JS9.globalOpts.mousetouchZoom;
     // add event handlers
-    this.divjq.on("mouseover", this,
-		  function(evt){return JS9.mouseOverCB(evt);});
-    this.divjq.on("mousedown touchstart", this,
-		  function(evt){return JS9.mouseDownCB(evt);});
-    this.divjq.on("mousemove touchmove", this,
-		  function(evt){return JS9.mouseMoveCB(evt);});
-    this.divjq.on("mouseup touchend", this,
-		  function(evt){return JS9.mouseUpCB(evt);});
-    this.divjq.on("mouseout", this,
-		  function(evt){return JS9.mouseOutCB(evt);});
-    this.divjq.on("keypress", this,
-		  function(evt){return JS9.keyPressCB(evt);});
-    this.divjq.on("keydown", this,
-		  function(evt){return JS9.keyDownCB(evt);});
+    this.divjq.on("mouseover", this, function(evt){
+	return JS9.mouseOverCB(evt);
+    });
+    this.divjq.on("mousedown touchstart", this, function(evt){
+	return JS9.mouseDownCB(evt);
+    });
+    this.divjq.on("mousemove touchmove", this, function(evt){
+	return JS9.mouseMoveCB(evt);
+    });
+    this.divjq.on("mouseup touchend", this, function(evt){
+	return JS9.mouseUpCB(evt);
+    });
+    this.divjq.on("mouseout", this, function(evt){
+	return JS9.mouseOutCB(evt);
+    });
+    this.divjq.on("keypress", this, function(evt){
+	return JS9.keyPressCB(evt);
+    });
+    this.divjq.on("keydown", this, function(evt){
+	return JS9.keyDownCB(evt);
+    });
+    this.divjq.on("wheel", this, function(evt){
+	return JS9.wheelCB(evt);
+    });
     // set up drag and drop, if available
     this.divjq.on("dragenter", this, function(evt){
-	return JS9.dragenter(this.id, evt.originalEvent);
+	return JS9.dragenter(this.id, evt);
     });
     this.divjq.on("dragover", this, function(evt){
-	return JS9.dragover(this.id, evt.originalEvent);
+	return JS9.dragover(this.id, evt);
     });
     this.divjq.on("dragexit", this, function(evt){
-	return JS9.dragexit(this.id, evt.originalEvent);
+	return JS9.dragexit(this.id, evt);
     });
     this.divjq.on("drop", this, function(evt){
-	return JS9.dragdrop(this.id, evt.originalEvent, JS9.NewFITSImage);
+	return JS9.dragdrop(this.id, evt, JS9.NewFITSImage);
+    });
+    // no context menus on the display
+    this.divjq.on("contextmenu", this, function(evt){
+	return false;
     });
     this.divjq.append('<div style="visibility:hidden; position:relative; top:-50;left:-50"> <input type="file" id="openLocalFile-' + this.id + '" multiple="true" onchange="javascript:for(var i=0; i<this.files.length; i++){JS9.Load(this.files[i], {display:\''+ this.id +'\'}); }"> </div>');
     this.divjq.append('<div style="visibility:hidden; position:relative; top:-50;left:-50"> <input type="file" id="refreshLocalFile-' + this.id + '" multiple="true" onchange="javascript:for(var i=0; i<this.files.length; i++){JS9.RefreshImage(this.files[i], {display:\''+ this.id +'\'}); }"> </div>');
@@ -5867,7 +5954,7 @@ JS9.Menubar = function(width, height){
 				if( (udisp.id === uim.display.id) &&
 				    (uim.id === kid) ){
 				    // display image, 2D graphics, etc.
-				    uim.displayImage("display");
+				    uim.displayImage("all");
 				    uim.refreshLayers();
 				    uim.clearMessage();
 				    break;
@@ -6389,7 +6476,7 @@ JS9.Menubar = function(width, height){
 	    zIndex: JS9.MENUZINDEX,
 	    events: { hide: onhide },
             build: function($trigger, evt){
-		var i, s1, s2;
+		var i, s1, s2, arr;
 		var n = 0;
 		var items = {};
 		var tdisp = getDisplays()[0];
@@ -6435,6 +6522,21 @@ JS9.Menubar = function(width, height){
 		    }
 		}
 		items["sep" + n++] = "------";
+		items.imfilter = {
+		    name: "image filters",
+		    items: {}
+		};
+		arr = JS9.Image.prototype.filterRGBImage.call(null).sort();
+		for(i=0; i<arr.length; i++){
+		    if( arr[i] === "convolve" ){
+			continue;
+		    }
+		    s1 = "imfilter_" + arr[i];
+		    items.imfilter.items[s1] = {
+			name: arr[i]
+		    };
+		}
+		items["sep" + n++] = "------";
 		items.contrast = {
 		    events: {keyup: keyColor},
 		    name: "contrast value:",
@@ -6478,6 +6580,11 @@ JS9.Menubar = function(width, height){
 				JS9.SaveColormap({display: udisp});
 				break;
 			    default:
+				if( key.match(/^imfilter_/) ){
+				    s1 = key.replace(/^imfilter_/,"");
+				    uim.filterRGBImage(s1);
+				    return;
+				}
 				uim.setColormap(key);
 			    }
 			}
@@ -6798,9 +6905,6 @@ JS9.Menubar = function(width, height){
 			    ntask++;
 			    // m++;
 			}
-			// if( (m > 0 ) && (j < (apackages.length-1)) ){
-			    // items["sep" + n++] = "------";
-			// }
 		    }
 		}
 		if( !ntask ){
@@ -6813,7 +6917,7 @@ JS9.Menubar = function(width, height){
 		items["sep" + n++] = "------";
 		items.sigma = {
 		    events: {keyup: keyAnalysis},
-		    name: "gaussian blur sigma:",
+		    name: "Gaussian blur sigma:",
 		    type: "text"
 		};
 		items.dpath = {name: "set data path ..."};
@@ -6865,6 +6969,7 @@ JS9.Menubar = function(width, height){
 					uim.runAnalysis(a.name);
 				    }
 				}
+				return;
 			    }
 			}
 		    });
@@ -7176,6 +7281,7 @@ JS9.Helper.prototype.send = function(key, obj, cb){
     return this;
 };
 
+
 // ---------------------------------------------------------------------
 // Graphics support using fabric.js
 //
@@ -7360,7 +7466,7 @@ JS9.Fabric.newShapeLayer = function(layerName, layerOpts, divjq){
 		if( dlayer.display.image && opts.target ){
 		    // on main window, set region click
 		    if( dlayer.dtype === "main" ){
-			dlayer.display.image.rclick = 1;
+			dlayer.display.image.clickInRegion = true;
 		    }
 		    dlayer.opts.onmousedown.call(this,
 						 dlayer.display.image,
@@ -10171,6 +10277,10 @@ JS9.Magnifier.display = function(im, ipos){
        (im.display.pluginInstances.JS9Magnifier.status !== "active")){
 	return;
     }
+    // don't display if a mouse button is pressed while moving
+    if( im.clickState ){
+	return;
+    }
     // image init: add magnifier object to image, if necessary
     if( !im.magnifier ){
 	im.magnifier = {zoom: JS9.Magnifier.opts.zoom, posx: 0, posy: 0};
@@ -10957,8 +11067,8 @@ JS9.bcall = function(which, cmd, arg1){
 // from: /tksao1.0/colorbar/colorbarbase.C
 JS9.floatPrecision = function(fval1, fval2){
     var aa, bb, prec;
-    aa = Math.floor(Math.log10(fval1));
-    bb = Math.floor(Math.log10(fval2));
+    aa = Math.floor(Math.log10(Math.abs(fval1)));
+    bb = Math.floor(Math.log10(Math.abs(fval2)));
     if( aa !== bb ){
       prec = aa > bb ? aa : bb;
     } else {
@@ -11043,6 +11153,10 @@ JS9.centroidPolygon = function(points){
 JS9.lookupImage = function(id, display){
     var i, im;
     var ilen= JS9.images.length;
+    // sanity check
+    if( !id ){
+	return null;
+    }
     for(i=0; i<ilen; i++){
 	im = JS9.images[i];
 	if( (id === im )                          ||
@@ -11415,10 +11529,9 @@ JS9.error = function(emsg, epattern, dothrow){
 
 // get position of mouse in a canvas
 // http://stackoverflow.com/questions/1114465/getting-mouse-location-in-canvas
-JS9.eventToDisplayPos = function(evt){
+JS9.eventToDisplayPos = function(evt, offset){
     //this section is from http://www.quirksmode.org/js/events_properties.html
-    var targ;
-    var pageX, pageY, x, y;
+    var i, targ, pageX, pageY, leftOff, upOff, touches, pos;
     var XFUDGE = 1;
     var YFUDGE = 1;
     if( !evt ){
@@ -11432,27 +11545,42 @@ JS9.eventToDisplayPos = function(evt){
     if( targ.nodeType === 3 ){ // defeat Safari bug
         targ = targ.parentNode;
     }
+    // offset() returns the position of the element relative to the document
+    offset = offset || $(targ).offset();
+    // jQuery normalizes pageX, pageY: mouse positions relative to the document
     // changed touch events: take position from first finger
-    if( evt.originalEvent &&
-	evt.originalEvent.changedTouches &&
-	evt.originalEvent.changedTouches.length ){
-	pageX = evt.originalEvent.changedTouches[0].pageX;
-	pageY = evt.originalEvent.changedTouches[0].pageY;
+    touches = evt.originalEvent.touches;
+    if( touches ){
+	if( touches.length ){
+	    pageX = touches[0].pageX;
+	    pageY = touches[0].pageY;
+	} else if( evt.originalEvent.changedTouches &&
+		   evt.originalEvent.changedTouches.length ){
+	    pageX = evt.originalEvent.changedTouches[0].pageX;
+	    pageY = evt.originalEvent.changedTouches[0].pageY;
+	}
     } else {
 	// mouse events
 	pageX = evt.pageX;
 	pageY = evt.pageY;
     }
-    // jQuery normalizes the pageX and pageY
-    // pageX,Y are the mouse positions relative to the document
-    // offset() returns the position of the element relative to the document
-    x = pageX - $(targ).offset().left;
-    y = pageY - $(targ).offset().top;
-    // return {"x": x, "y": y};
+    // position is (evt pos relative to page - pos of element relative to page)
     // FUDGE added after visual inspection of line512 at zoom 32
     // I tried to place the mouse, and have the magnifier be in the right place
     // Linux, FF & Chrome: x=1, y=1 (5/28/14)
-    return {"x": Math.floor(x - XFUDGE), "y": Math.floor(y - YFUDGE)};
+    leftOff = offset.left + XFUDGE;
+    upOff = offset.top  + YFUDGE;
+    // display position
+    pos = {x: Math.floor(pageX - leftOff), y: Math.floor(pageY - upOff)};
+    // touch positions, if necesary
+    if( touches && touches.length ){
+	pos.touches = [{x: pos.x, y: pos.y}];
+	for(i=1; i<touches.length; i++){
+	    pos.touches[i] = {x: Math.floor(touches[i].pageX - leftOff),
+			      y: Math.floor(touches[i].pageY - upOff)};
+	}
+    }
+    return pos;
 };
 
 // http://stackoverflow.com/questions/13695317/rotate-a-point-around-another-point
@@ -11810,35 +11938,40 @@ JS9.isTypedArray = function(obj) {
 
 // mousedown: assumes display obj is passed in evt.data
 JS9.mouseDownCB = function(evt){
-    var pname, pinst, popts, pos, ipos;
+    var pname, pinst, popts;
     var display = evt.data;
     var im = display.image;
-    // evt.preventDefault();
     // sanity checks
     if( !im ){
 	return;
     }
+    // get element offset
+    if( evt.target ){
+	im.posOffset = $(evt.target).offset();
+    }
     // get canvas position
-    pos = JS9.eventToDisplayPos(evt);
+    im.pos0 = JS9.eventToDisplayPos(evt, im.posOffset);
+    // this also is the current canvas position
+    im.pos = im.pos0;
+    // get image position
+    im.ipos0 = im.displayToImagePos(im.pos);
+    // this also is the current image position
+    im.ipos = im.ipos0;
     // prevent default unless we are close to the resize area
-    if( !display.inResize(pos) ){
+    if( !display.inResize(im.pos) ){
 	evt.preventDefault();
     }
-    // debugging
-    if( JS9.DEBUG > 2 ){
-	JS9.log("m-down: %d %d %s", pos.x, pos.y, im.rclick);
+    // begin actions for mouse and touch events
+    if( JS9.hasOwnProperty("MouseTouch") ){
+	JS9.MouseTouch.action(im, "start");
     }
-    // get image position
-    ipos = im.displayToImagePos(pos);
-    // save for mouseup check
-    im.dnpos = pos;
     // inside a region, clear region display and return;
-    if( im.rclick ){
+    if( im.clickInRegion ){
 	// clear the region layer
 	im.clearMessage("regions");
 	return;
     }
-    // change blend mode to 0 in case we change contrast/bias
+    // temporarily turn off blending in case we change contrast/bias
     // (setting to 0 instead of false signals it was true ... for resetting)
     if( display.blendMode ){
 	display.blendMode = 0;
@@ -11850,8 +11983,8 @@ JS9.mouseDownCB = function(evt){
 		pinst = display.pluginInstances[pname];
 		popts = pinst.plugin.opts;
 		if( pinst.isActive("onmousedown") ){
-		    if( !im.rclick || popts.mousedownRegions ){
-			try{ popts.onmousedown.call(pinst, im, ipos,
+		    if( !im.clickInRegion || popts.mousedownRegions ){
+			try{ popts.onmousedown.call(pinst, im, im.ipos,
 					        evt.originalEvent || evt); }
 			catch(e){ pinst.errLog("onmousedown", e); }
 		    }
@@ -11859,13 +11992,26 @@ JS9.mouseDownCB = function(evt){
 	    }
 	}
     }
-    im.evstate = evt.button;
-    if( evt.originalEvent &&
-	evt.originalEvent.touches &&
-	evt.originalEvent.touches.length ){
-	im.evstate = evt.originalEvent.touches.length - 2;
+    // set click state to current mouse button
+    im.clickState = evt.which;
+    switch(evt.which){
+    case 1:
+	// primary mouse click
+	im.clickState = 1;
+	break;
+    case 2:
+	break;
+    case 3:
+	// secondary mouse click
+	im.clickState = 2;
+	break;
     }
-    $("body").on("mousemove", display,
+    // override click state with touch state, if possible
+    if( evt.originalEvent.touches && evt.originalEvent.touches.length ){
+	im.clickState = -evt.originalEvent.touches.length;
+    }
+    // add callbacks for moving
+    $("body").on("mousemove", display, 
 		 function(evt){return JS9.mouseMoveCB(evt);});
     $("body").on("mouseup", display,
 		 function(evt){return JS9.mouseUpCB(evt);});
@@ -11873,44 +12019,35 @@ JS9.mouseDownCB = function(evt){
 
 // mouseup: assumes display obj is passed in evt.data
 JS9.mouseUpCB = function(evt){
-    var pos, ipos, pname, pinst, popts;
+    var pname, pinst, popts;
     var display = evt.data;
     var im = display.image;
-    // evt.preventDefault();
     // sanity checks
     if( !im ){
 	return;
     }
     // get canvas position
-    pos = JS9.eventToDisplayPos(evt);
+    im.pos = JS9.eventToDisplayPos(evt, im.posOffset);
+    // image position
+    im.ipos = im.displayToImagePos(im.pos);
     // prevent default unless we are close to the resize area
-    if( !display.inResize(pos) ){
+    if( !display.inResize(im.pos) ){
 	evt.preventDefault();
     }
-    // debugging
-    if( JS9.DEBUG > 2 ){
-	JS9.log("m-up: %d %d %s", pos.x, pos.y, im.rclick);
+    // begin actions for mouse and touch events
+    if( JS9.hasOwnProperty("MouseTouch") ){
+	JS9.MouseTouch.action(im, "stop");
     }
-    // image position
-    ipos = im.displayToImagePos(pos);
     // inside a region, update region string
-    if( im.rclick ){
-	if( im.dnpos &&
-	    ((Math.abs(im.dnpos.x-pos.x) < JS9.NOMOVE)  &&
-	     (Math.abs(im.dnpos.y-pos.y) < JS9.NOMOVE)) ){
+    if( im.clickInRegion ){
+	if( ((Math.abs(im.pos0.x-im.pos.x) < JS9.NOMOVE)  &&
+	     (Math.abs(im.pos0.y-im.pos.y) < JS9.NOMOVE)) ){
 	    im.updateShapes("regions", "selected", "select");
 	} else {
 	    im.updateShapes("regions", "selected", "update");
 	}
-    } else {
-	// outside a region: special key means pan if the mouse didn't move much
-	if( JS9.specialKey(evt) && im.dnpos &&
-	    ((Math.abs(im.dnpos.x-pos.x) < JS9.NOMOVE)  &&
-	     (Math.abs(im.dnpos.y-pos.y) < JS9.NOMOVE)) ){
-	    im.setPan(ipos.x, ipos.y);
-	}
     }
-    // if blend mode is 0, it was true on mousedown, so reset and redisplay
+    // if blendMode is exactly 0, it was true on mousedown, so reset/redisplay
     if( display.blendMode === 0 ){
 	display.blendMode = true;
 	im.displayImage("rgb");
@@ -11922,8 +12059,8 @@ JS9.mouseUpCB = function(evt){
 		pinst = display.pluginInstances[pname];
 		popts = pinst.plugin.opts;
 		if( pinst.isActive("onmouseup") ){
-		    if( !im.rclick || popts.mouseupRegions ){
-			try{ popts.onmouseup.call(pinst, im, ipos,
+		    if( !im.clickInRegion || popts.mouseupRegions ){
+			try{ popts.onmouseup.call(pinst, im, im.ipos,
 						  evt.originalEvent || evt); }
 			catch(e){ pinst.errLog("onmouseup", e); }
 		    }
@@ -11931,9 +12068,11 @@ JS9.mouseUpCB = function(evt){
 	    }
 	}
     }
-    // safe to unset rclick now
-    im.rclick = 0;
-    im.evstate = -1;
+    // safe to unset clickInRegion now
+    im.clickInRegion = false;
+    im.clickState = 0;
+    im.posOffset = null;
+    // finish resize, if necessary
     if( display.resizing ){
 	display.resizing = 0;
 	if( JS9.bugs.webkit_resize ){
@@ -11953,7 +12092,7 @@ JS9.mouseUpCB = function(evt){
 
 // mousemove: assumes display obj is passed in evt.data
 JS9.mouseMoveCB = function(evt){
-    var pos, ipos, pname, pinst, popts, sel;
+    var pname, pinst, popts, sel;
     var display = evt.data;
     var im = display.image;
     // evt.preventDefault();
@@ -11961,25 +12100,33 @@ JS9.mouseMoveCB = function(evt){
     if( !im ){
 	return;
     }
+    // don't do anything if we are resizing
     if( display.resizing ){
 	return;
     }
     // get canvas position
-    pos = JS9.eventToDisplayPos(evt);
+    im.pos = JS9.eventToDisplayPos(evt, im.posOffset);
+    // get image position
+    im.ipos = im.displayToImagePos(im.pos);
+    // in case mouse down was not called
+    if( !im.pos0 ){
+	im.pos0 = im.pos;
+    }
+    if( !im.ipos0 ){
+	im.ipos0 = im.ipos;
+    }
     // prevent default unless we are close to the resize area
-    if( !display.inResize(pos) ){
+    if( !display.inResize(im.pos) ){
 	evt.preventDefault();
     }
-    // debugging
-    if( JS9.DEBUG > 3 ){
-	JS9.log("m-move: %d %d %s", pos.x, pos.y, im.rclick);
+    // begin actions for mouse and touch events
+    if( JS9.hasOwnProperty("MouseTouch") ){
+	JS9.MouseTouch.action(im, "stop");
     }
-    // get image position
-    ipos = im.displayToImagePos(pos);
     // reset the valpos object
     im.valpos = null;
-    if( im.rclick ){
-	im.rclick = 2;
+    // in a region, update the region info
+    if( im.clickInRegion ){
 	sel = im.display.layers.regions.params.sel;
 	if( sel ){
 	    if( im.params.listonchange || sel.params.listonchange ){
@@ -11988,83 +12135,34 @@ JS9.mouseMoveCB = function(evt){
 	    }
 	}
     }
-    // process mouse event
-    switch(im.evstate){
-    case -1:
-	// display value/pos, etc.
-	if( (ipos.x > 0) && (ipos.y > 0) &&
-	    (ipos.x < im.raw.width) && (ipos.y < im.raw.height) ){
-	    if( !JS9.specialKey(evt) ){
-		// display pixel and wcs values, like a plugin, but not really
-		if( JS9.globalOpts.internalValPos ){
-		    // cache the valpos object, in case a plugin wants it
-		    im.valpos = im.updateValpos(ipos);
-		}
-		// plugin callbacks
-		for( pname in display.pluginInstances ){
-		    if( display.pluginInstances.hasOwnProperty(pname) ){
-			pinst = display.pluginInstances[pname];
-			popts = pinst.plugin.opts;
-			if( pinst.isActive("onmousemove") ){
-			    if( !im.rclick || popts.mousemoveRegions ){
-				try{ popts.onmousemove.call(pinst, im, ipos,
-						evt.originalEvent || evt); }
-				catch(e){ pinst.errLog("onmousemove", e); }
-			    }
-			}
+    // actions for mouse and touch events
+    if( JS9.hasOwnProperty("MouseTouch") ){
+	JS9.MouseTouch.action(im, evt);
+    }
+    if( !JS9.specialKey(evt) ){
+	// update valpos, in case a plugin wants it, and we did not do it above
+	if( !im.valpos ){
+	    im.valpos = im.updateValpos(im.ipos, false);
+	}
+	for( pname in display.pluginInstances ){
+	    if( display.pluginInstances.hasOwnProperty(pname) ){
+		pinst = display.pluginInstances[pname];
+		popts = pinst.plugin.opts;
+		if( pinst.isActive("onmousemove") ){
+		    if( !im.clickInRegion || popts.mousemoveRegions ){
+			try{ popts.onmousemove.call(pinst, im, im.ipos,
+						    evt.originalEvent || evt); }
+			catch(e){ pinst.errLog("onmousemove", e); }
 		    }
 		}
 	    }
 	}
-	break;
-    case 0:
-    case 1:
-	// skip contrast/bias change?
-	if( !JS9.globalOpts.internalContrastBias ){
-	    return;
-	}
-	// inside a region or with special key: no contrast/bias
-	if( im.rclick || JS9.specialKey(evt) ){
-	    return;
-	}
-	// static RGB image: no contrast/bias
-	if( im.rgbFile ){
-	    return;
-	}
-	// if we haven't moved much from the start, just return
-	if( im.dnpos &&
-	    ((Math.abs(im.dnpos.x-pos.x) < JS9.NOMOVE)  &&
-	     (Math.abs(im.dnpos.y-pos.y) < JS9.NOMOVE)) ){
-	    return;
-	}
-	// contrast/bias change
-	ipos.x= Math.floor(pos.x + 0.5);
-	ipos.y= Math.floor(pos.y + 0.5);
-	if( (ipos.x < 0) || (ipos.y < 0) ||
-	    (ipos.x >= display.canvas.width) ||
-	    (ipos.y >= display.canvas.height) ){
-	    return;
-	}
-	im.params.bias = ipos.x / display.canvas.width;
-	im.params.contrast = ipos.y / display.canvas.height * 10.0;
-	// work-around for FF bug, not fixed as of 8/8/2012
-        // https://bugzilla.mozilla.org/show_bug.cgi?id=732621
-	if( JS9.bugs.firefox_linux ){
-	    window.setTimeout(function(){
-		im.displayImage("scaled");
-	    }, 0);
-	} else {
-	    im.displayImage("scaled");
-	}
-	break;
-    default:
-	break;
     }
 };
 
 // mouseover: assumes display obj is passed in evt.data
 JS9.mouseOverCB = function(evt){
-    var pos, ipos, pname, pinst, popts;
+    var pname, pinst, popts;
     var display = evt.data;
     var im = display.image;
     var x = $(document).scrollLeft(), y = $(document).scrollTop();
@@ -12081,17 +12179,17 @@ JS9.mouseOverCB = function(evt){
     // plugin callbacks
     if( !JS9.specialKey(evt) ){
 	// get canvas position
-	pos = JS9.eventToDisplayPos(evt);
+	im.pos = JS9.eventToDisplayPos(evt);
 	// get image position
-	ipos = im.displayToImagePos(pos);
+	im.ipos = im.displayToImagePos(im.pos);
 	// plugin callbacks
 	for( pname in display.pluginInstances ){
 	    if( display.pluginInstances.hasOwnProperty(pname) ){
 		pinst = display.pluginInstances[pname];
 		popts = pinst.plugin.opts;
 		if( pinst.isActive("onmouseover") ){
-		    if( !im.rclick || popts.mouseoverRegions ){
-			try{ popts.onmouseover.call(pinst, im, ipos,
+		    if( !im.clickInRegion || popts.mouseoverRegions ){
+			try{ popts.onmouseover.call(pinst, im, im.ipos,
 						    evt.originalEvent || evt); }
 			catch(e){ pinst.errLog("onmouseover", e); }
 		    }
@@ -12103,7 +12201,7 @@ JS9.mouseOverCB = function(evt){
 
 // mouseover: assumes display obj is passed in evt.data
 JS9.mouseOutCB = function(evt){
-    var pos, ipos, pname, pinst, popts;
+    var pname, pinst, popts;
     var display = evt.data;
     var im = display.image;
     evt.preventDefault();
@@ -12113,22 +12211,20 @@ JS9.mouseOutCB = function(evt){
     }
     // unset focus
     im.display.displayConjq.blur();
-    // change cursor
-    // document.body.style.cursor = "default";
     // plugin callbacks
     if( !JS9.specialKey(evt) ){
 	// get canvas position
-	pos = JS9.eventToDisplayPos(evt);
+	im.pos = JS9.eventToDisplayPos(evt);
 	// get image position
-	ipos = im.displayToImagePos(pos);
+	im.ipos = im.displayToImagePos(im.pos);
 	// plugin callbacks
 	for( pname in display.pluginInstances ){
 	    if( display.pluginInstances.hasOwnProperty(pname) ){
 		pinst = display.pluginInstances[pname];
 		popts = pinst.plugin.opts;
 		if( pinst.isActive("onmouseout") ){
-		    if( !im.rclick || popts.mouseoutRegions ){
-			try{ popts.onmouseout.call(pinst, im, ipos,
+		    if( !im.clickInRegion || popts.mouseoutRegions ){
+			try{ popts.onmouseout.call(pinst, im, im.ipos,
 						   evt.originalEvent || evt); }
 			catch(e){ pinst.errLog("onmouseout", e); }
 		    }
@@ -12138,30 +12234,37 @@ JS9.mouseOutCB = function(evt){
     }
 };
 
+// scrollwheel: assumes display obj is passed in evt.data
+JS9.wheelCB = function(evt){
+    var display = evt.data;
+    var im = display.image;
+    evt.preventDefault();
+    if( JS9.hasOwnProperty("MouseTouch") && 
+	JS9.MouseTouch.Actions["wheel zoom"]  ){
+	JS9.MouseTouch.Actions["wheel zoom"](im, evt);
+    }
+};
+
 // keypress: assumes display obj is passed in evt.data
 // in case you are wondering: you can't move the mouse via javascript!
 // http://stackoverflow.com/questions/4752501/move-the-mouse-pointer-to-a-specific-position
 JS9.keyPressCB = function(evt){
-    var pos, ipos;
     var pname, pinst, popts;
     var display = evt.data;
     var im = display.image;
-    var keycode = evt.which || evt.keyCode;
+    // var keycode = evt.which || evt.keyCode;
     evt.preventDefault();
-    if( JS9.DEBUG > 3 ){
-	JS9.log("keypress: %d ",  keycode);
-    }
     // get canvas position
-    pos = JS9.eventToDisplayPos(evt);
+    im.pos = JS9.eventToDisplayPos(evt);
     // get image position
-    ipos = im.displayToImagePos(pos);
+    im.ipos = im.displayToImagePos(im.pos);
     // plugin callbacks
     for( pname in display.pluginInstances ){
 	if( display.pluginInstances.hasOwnProperty(pname) ){
 	    pinst = display.pluginInstances[pname];
 	    popts = pinst.plugin.opts;
 	    if( pinst.isActive("onkeypress") ){
-		try{ popts.onkeypress.call(pinst, im, ipos,
+		try{ popts.onkeypress.call(pinst, im, im.ipos,
 					   evt.originalEvent || evt); }
 		catch(e){ pinst.errLog("onkeypress", e); }
 	    }
@@ -12173,28 +12276,21 @@ JS9.keyPressCB = function(evt){
 // in case you are wondering: you can't move the mouse via javascript!
 // http://stackoverflow.com/questions/4752501/move-the-mouse-pointer-to-a-specific-position
 JS9.keyDownCB = function(evt){
-    var pos, ipos;
     var pname, pinst, popts;
     var display = evt.data;
     var im = display.image;
-    var keycode = evt.which || evt.keyCode;
-    // this prevents keypress on FF (and others)
-    // https://developer.mozilla.org/en-US/docs/Web/Reference/Events/keydown
-    // evt.preventDefault();
-    if( JS9.DEBUG > 3 ){
-	JS9.log("keydown: %d ",  keycode);
-    }
+    // var keycode = evt.which || evt.keyCode;
     // get canvas position
-    pos = JS9.eventToDisplayPos(evt);
+    im.pos = JS9.eventToDisplayPos(evt);
     // get image position
-    ipos = im.displayToImagePos(pos);
+    im.ipos = im.displayToImagePos(im.pos);
     // plugin callbacks
     for( pname in display.pluginInstances ){
 	if( display.pluginInstances.hasOwnProperty(pname) ){
 	    pinst = display.pluginInstances[pname];
 	    popts = pinst.plugin.opts;
 	    if( pinst.isActive("onkeydown") ){
-		try{ popts.onkeydown.call(pinst, im, ipos,
+		try{ popts.onkeydown.call(pinst, im, im.ipos,
 					  evt.originalEvent || evt); }
 		catch(e){ pinst.errLog("onkeydown", e); }
 	    }
@@ -12202,30 +12298,32 @@ JS9.keyDownCB = function(evt){
     }
     // fire keydown for keyboard-enabled layer, if necessary
     if( im.layer && im.layers[im.layer].opts.usekeyboard ){
-	JS9.Regions.keyDownCB(im, ipos, evt, im.layer);
+	JS9.Regions.keyDownCB(im, im.ipos, evt, im.layer);
     }
 };
 
-JS9.dragenter = function(id, e){
-    e.stopPropagation();
-    e.preventDefault();
+JS9.dragenter = function(id, evt){
+    evt.stopPropagation();
+    evt.preventDefault();
 };
 
-JS9.dragover = function(id, e){
-    e.stopPropagation();
-    e.preventDefault();
+JS9.dragover = function(id, evt){
+    evt.stopPropagation();
+    evt.preventDefault();
 };
 
-JS9.dragexit = function(id, e){
-    e.stopPropagation();
-    e.preventDefault();
+JS9.dragexit = function(id, evt){
+    evt.stopPropagation();
+    evt.preventDefault();
 };
 
-JS9.dragdrop = function(id, e, handler){
-    var files = e.target.files || e.dataTransfer.files;
-    var opts = $.extend(true, {}, JS9.fits.options);
-    e.stopPropagation();
-    e.preventDefault();
+JS9.dragdrop = function(id, evt, handler){
+    var files, opts;
+    evt = evt.originalEvent;
+    files = evt.target.files || evt.dataTransfer.files;
+    opts = $.extend(true, {}, JS9.fits.options);
+    evt.stopPropagation();
+    evt.preventDefault();
     if( opts.display === undefined ){ opts.display = id; }
     if( opts.extlist === undefined ){ opts.extlist = JS9.globalOpts.extlist; }
     JS9.onFileList(files, opts, handler);
@@ -12567,7 +12665,7 @@ JS9.init = function(){
 	JS9.error("sorry: your browser does not support JS9 (no JSON support). Try a modern version of Firefox, Chrome, or Safari.");
     }
     // get relative location of installed js9.css file
-    // which tells us where other files and dirs are located
+    // which tells us where JS9 installed files (and the helper) are located
     if( !JS9.INSTALLDIR ){
 	try{
 	    JS9.INSTALLDIR = $('link[href$="js9.css"]')
@@ -13338,7 +13436,7 @@ JS9.init = function(){
     JS9.helper = new JS9.Helper();
     //  for analysis forms, Enter should not Submit
     $(document).on("keyup keypress", ".js9AnalysisForm", function(e){
-	var code = e.keyCode || e.which;
+	var code = e.which || e.keyCode;
 	if( code === 13 ){
 	    e.preventDefault();
 	    return false;
@@ -13604,7 +13702,7 @@ JS9.mkPublic("Load", function(file, opts){
     im = JS9.lookupImage(file, display);
     if( im ){
 	// display image, 2D graphics, etc.
-	im.displayImage("display", opts);
+	im.displayImage("all", opts);
 	im.clearMessage();
 	return;
     }
@@ -13864,11 +13962,14 @@ JS9.mkPublic("LoadProxy", function(url, opts){
 	    if( opts.fits2png === undefined ){
 		opts.fits2png = false;
 	    }
-	    f = robj.stdout.trim();
+	    f = robj.stdout.trim().replace(/\/\.\//, "/");
+	    // proxy file
+	    opts.proxyFile = f;
+	    // relative path: add install dir prefix
 	    if( f.charAt(0) !== "/" ){
 		f = JS9.InstallDir(f);
 	    }
-	    opts.proxyFile = f;
+	    // load new file
 	    JS9.Load(f, opts, {display: obj.display});
 	} else {
 	    JS9.error('internal error: no return from load proxy command');
