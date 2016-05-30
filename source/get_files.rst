@@ -64,6 +64,9 @@
 
     <h2>JS9 Interface</h2>
 
+    <select id="fits_ext"></select>
+    <br>
+
     <div class="JS9Menubar"></div>
     <div class="JS9"></div>
     <div style="margin-top: 2px;">
@@ -75,7 +78,8 @@
         var fileno = getParameterByName('fileno')
         var girder_root = "https://girder.hub.yt/api/v1";
         var axisList = document.getElementById("proj_axis");
-
+        var fitsList = document.getElementById("fits_ext");
+         
         var field_map = {xray_emissivity:"xray",
                          total_density:"dens",
                          kT:"temp",
@@ -87,7 +91,10 @@
                         "proj":["xray_emissivity","kT","total_density","szy"]};
         var sim_map = {"1to3_b0" : "R = 1:3, b = 0 kpc"};
         var default_js9 = {"slice":2,"proj":0,"SZ":0};
-        
+        var hdu_map = {"slice":["CLR2","CLR1","DENSITY","KT","DARK_MATTER_DENSITY","VELOCITY_X","VELOCITY_Y"],
+                       "proj":["XRAY_EMISSIVITY","SZ_KINETIC","SZY","TOTAL_DENSITY","KT"],
+                       "SZ":["180_GHZ","90_GHZ","240_GHZ","TESZ","TAU"]};
+                       
         var sim_name = sim_map[sim];
         var timestr = "t = " + (parseFloat(fileno)*0.02).toFixed(2) + " Gyr";
 
@@ -161,6 +168,21 @@
         
         function js9Load(url, type) {
             JS9.Load(url+"["+default_js9[type]+"]");
+            $('#fits_ext').empty();
+            var hdulist = hdu_map[type];
+            for (var i = 0; i < hdulist.length; i++) {
+                var new_hdu = document.createElement("option");
+                new_hdu.text = hdulist[i];
+                fitsList.options.add(new_hdu, i);
+            }
+            $('#fits_ext').val(hdu_map[type][default_js9[type]])
         }
 
+        var changeFits = function () {
+            var extid = this.selectedIndex;
+            JS9.DisplayExtension(extid);
+        }
+        
+        fitsList.addEventListener('change', changeFits, false);
+        
     </script>
