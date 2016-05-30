@@ -162,6 +162,8 @@
             show_files(sim, fileno, 'proj', axis);
             fits_link(sim, fileno, 'proj', axis);
             fits_link(sim, fileno, 'SZ', axis);
+            $('#fits_ext').empty();
+            JS9.CloseImage();
         }
 
         axisList.addEventListener('change', changeAxis, false);
@@ -175,7 +177,7 @@
                 new_hdu.text = hdulist[i];
                 fitsList.options.add(new_hdu, i);
             }
-            $('#fits_ext').val(hdu_map[type][default_js9[type]])
+            $('#fits_ext').val(hdu_map[type][default_js9[type]]);
         }
 
         var changeFits = function () {
