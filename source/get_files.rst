@@ -6,6 +6,8 @@
     <script>$('head').append('<link rel="stylesheet" href="lightbox/css/lightbox.css"/>');</script>
     <script>$('head').append('<link type="text/css" rel="stylesheet" href="js9/js9support.css">');</script>
     <script>$('head').append('<link type="text/css" rel="stylesheet" href="js9/js9.css">');</script>
+    <script src="https://girder.hub.yt/static/built/girder.ext.min.js"></script>
+    <script src="https://girder.hub.yt/static/built/girder.app.min.js"></script>
     <script type="text/javascript" src="js9/js9support.min.js"></script>
     <script type="text/javascript" src="js9/js9.min.js"></script>
     <script type="text/javascript" src="js9/js9plugins.js"></script>
@@ -100,6 +102,9 @@
 
         $(document).ready(function () {
              
+            girder.apiRoot = girder_root;
+            girder.router.enabled(false);
+ 
             show_files(sim, fileno, 'slice', 'z');
             fits_link(sim, fileno, 'slice', 'z');
             show_files(sim, fileno, 'proj', 'z');
@@ -113,7 +118,7 @@
                 new_ax.text = "y";
                 axisList.options.add(new_ax, 1);
             }
-            
+ 
         });
         
         function fits_link(sim, fileno, type, axis) {
@@ -122,10 +127,14 @@
                       {q: fn,  types: '["item"]'},
                       function(data) {
                           var id = data.item[0]._id;
+                          var folderId = data.item[0].folderId;
                           document.getElementById(type+'_fits').href = get_link(id);
                           document.getElementById(type+'_fits').innerText = "FITS File Download ("+axis+"-axis)";
                           document.getElementById(type+'_js9').href = "javascript:js9Load('"+get_link(id)+"','"+type+"');";
                           document.getElementById(type+'_js9').innerText = "Open in JS9 ("+axis+"-axis)";
+                          if (type == 'slice') {
+                              document.getElementById('notebook').href = "javascript:open_nb('"+folderId+"');";
+                          }
                       });
         }
         
@@ -169,6 +178,7 @@
         axisList.addEventListener('change', changeAxis, false);
         
         function js9Load(url, type) {
+            JS9.CloseImage();
             JS9.Load(url+"["+default_js9[type]+"]");
             $('#fits_ext').empty();
             var hdulist = hdu_map[type];
@@ -186,5 +196,13 @@
         }
         
         fitsList.addEventListener('change', changeFits, false);
-        
+ 
+        function open_nb(folderId) {
+            girder.restRequest({
+                path: 'notebook/' + folderId,
+                type: 'POST'
+            }).done(function (notebook) {
+                window.location.assign(hub["url"] + notebook["url"]);
+            });
+        }
     </script>
