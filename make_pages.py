@@ -15,10 +15,12 @@ GIRDER_API_URL = "https://girder.hub.yt/api/v1"
 gc = girder_client.GirderClient(apiUrl=GIRDER_API_URL)
 
 sim_dict = {"1to3_b0": ("R = 1:3, b = 0 kpc", 
-                        [0, 20, 30, 40, 50, 55, 60, 65, 70, 80, 90, 
-                         100, 110, 120, 130, 140, 145, 150, 160, 170, 
-                         180, 185, 190, 200, 210, 220, 230, 240, 250,
-                         260, 300])}
+                        [0, 20, 30, 40, 50, 55, 56, 57, 58, 59, 60, 
+                         61, 62, 63, 64, 65, 70, 80, 90, 100, 110, 120,
+                         130, 140, 141, 142, 143, 144, 145, 146, 147, 148,
+                         149, 150, 160, 170, 180, 181, 182, 183, 184, 185, 
+                         186, 187, 188, 189, 190, 200, 210, 220, 230, 240, 
+                         250, 260, 300, 350, 400, 450, 500])}
 
 def make_main_page(sims):
     sim_pages = []
@@ -35,9 +37,6 @@ def make_png_page(sim, sim_name, filenos):
         for field in ["xray_emissivity","kT","total_density","szy"]:
             filename = "fiducial_%s_hdf5_plt_cnt_%04d_proj_z_%s" % (sim, fileno, field)
             item = gc.get("resource/search", {"q": filename, "types": '["item"]'})['item'][0]
-            name = item['name']
-            field = name[name.find("proj_z_")+7:name.find(".png")]
-            print(field)
             imgs[field] = "http://girder.hub.yt/api/v1/item/%s/download" % item['_id']
         time = "t = %4.2f Gyr" % (fileno*0.02)
         info.append(["%04d" % fileno, time, imgs])
