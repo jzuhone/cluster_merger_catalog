@@ -105,7 +105,8 @@
                         "proj":["xray_emissivity","kT","total_density","szy"],
                         "SZ":["Tau","240_GHz"],
                         "cxo_evt":["counts"]};
-        var sim_map = {"1to3_b0" : "R = 1:3, b = 0 kpc"};
+        var sim_map = {"1to3_b0" : "R = 1:3, b = 0 kpc",
+                       "1to3_b1" : "R = 1:3, b = 1000 kpc"};
         var default_js9 = {"slice":2,"proj":0,"SZ":0,"cxo_evt":1};
         var hdu_map = {"slice":["CLR2","CLR1","DENSITY","KT","DARK_MATTER_DENSITY","VELOCITY_X","VELOCITY_Y"],
                        "proj":["XRAY_EMISSIVITY","SZ_KINETIC","SZY","TOTAL_DENSITY","KT"],
@@ -174,7 +175,7 @@
         }
         
         function element_map(axis, name) {
-            var st = name.lastIndexOf(axis+"_")+2;
+            var st = name.lastIndexOf("_"+axis+"_")+3;
             var ed = name.indexOf(".png");
             field = name.substring(st,ed);
             return field_map[field]
