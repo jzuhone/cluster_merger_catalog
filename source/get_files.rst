@@ -27,7 +27,6 @@
     <h1 id="header"></h1>
 
     <h2>Slices</h2>
-    
     <a id="big_slice_dens" data-lightbox="lb_slice_dens" ><img id="slice_dens" width="350" /></a>
     <a id="big_slice_temp" data-lightbox="lb_slice_temp" ><img id="slice_temp" width="350" /></a>
     <a id="big_slice_pden" data-lightbox="lb_slice_pden" ><img id="slice_pden" width="350" /></a>
@@ -45,7 +44,6 @@
     </select>
 
     <h3>X-ray Emissivity, Spectroscopic Temperature, Total Density, Compton-y</h3>
-
     <a id="big_proj_xray" data-lightbox="lb_proj_xray" ><img id="proj_xray" width="450" /></a>
     <a id="big_proj_temp" data-lightbox="lb_proj_temp" ><img id="proj_temp" width="450" /></a>
     <a id="big_proj_dens" data-lightbox="lb_proj_dens" ><img id="proj_dens" width="450" /></a>
@@ -56,14 +54,25 @@
 
     <br><br>
     
-    <h3>Sunyaev-Zeldovich Intensity</h3>
+    <h3>Compton Optical Depth, Sunyaev-Zeldovich Signal (240 GHz)</h3>
+    <a id="big_SZ_tau" data-lightbox="lb_SZ_tau" ><img id="SZ_tau" width="450" /></a>
+    <a id="big_SZ_inty" data-lightbox="lb_SZ_inty" ><img id="SZ_inty" width="450" /></a>
+    <br>
     <a id="SZ_fits">FITS File Download</a><br>
     <a id="SZ_js9">Open in JS9</a>
     <br><br>
     
-    <h2>Jupyter Notebook</h2>
-    <a id="notebook" >Start a Jupyter notebook with access to these files.</a>
+    <h3>X-ray Counts (0.5-7 keV, <em>Chandra</em> ACIS-I, 50 ks)</h3>
+    <a id="big_cxo_evt_counts" data-lightbox="lb_cxo_evt_counts" ><img id="cxo_evt_counts" width="450" /></a>
+    <br>
+    <a id="cxo_evt_fits">FITS File Download</a><br>
+    <a id="cxo_evt_js9">Open in JS9</a>
+    <br><br>
 
+    <!-- <h2>Jupyter Notebook</h2>
+    <a id="notebook" >Start a Jupyter notebook with access to these files.</a>
+    -->
+    
     <h2>JS9 Interface</h2>
 
     <select id="fits_ext"></select>
@@ -87,15 +96,21 @@
                          kT:"temp",
                          dark_matter_density:"pden",
                          density:"dens",
-                         szy:"szy"};
+                         szy:"szy",
+                         Tau:"tau",
+                         "240_GHz":"inty",
+                         "counts":"counts"};
 
         var type_map = {"slice":["density","kT","dark_matter_density"],
-                        "proj":["xray_emissivity","kT","total_density","szy"]};
+                        "proj":["xray_emissivity","kT","total_density","szy"],
+                        "SZ":["Tau","240_GHz"],
+                        "cxo_evt":["counts"]};
         var sim_map = {"1to3_b0" : "R = 1:3, b = 0 kpc"};
-        var default_js9 = {"slice":2,"proj":0,"SZ":0};
+        var default_js9 = {"slice":2,"proj":0,"SZ":0,"cxo_evt":1};
         var hdu_map = {"slice":["CLR2","CLR1","DENSITY","KT","DARK_MATTER_DENSITY","VELOCITY_X","VELOCITY_Y"],
                        "proj":["XRAY_EMISSIVITY","SZ_KINETIC","SZY","TOTAL_DENSITY","KT"],
-                       "SZ":["180_GHZ","90_GHZ","240_GHZ","TESZ","TAU"]};
+                       "SZ":["180_GHZ","90_GHZ","240_GHZ","TESZ","TAU"],
+                       "cxo_evt":["PRIMARY","EVENTS"]};
                        
         var sim_name = sim_map[sim];
         var timestr = "t = " + (parseFloat(fileno)*0.02).toFixed(2) + " Gyr";
@@ -109,7 +124,10 @@
             fits_link(sim, fileno, 'slice', 'z');
             show_files(sim, fileno, 'proj', 'z');
             fits_link(sim, fileno, 'proj', 'z');
+            show_files(sim, fileno, 'SZ', 'z');
             fits_link(sim, fileno, 'SZ', 'z');
+            show_files(sim, fileno, 'cxo_evt', 'z');
+            fits_link(sim, fileno, 'cxo_evt', 'z');
             document.getElementById('header').innerText = sim_name+", "+timestr;
             document.title = sim_name+", "+timestr;
 
@@ -132,9 +150,9 @@
                           document.getElementById(type+'_fits').innerText = "FITS File Download ("+axis+"-axis)";
                           document.getElementById(type+'_js9').href = "javascript:js9Load('"+get_link(id)+"','"+type+"');";
                           document.getElementById(type+'_js9').innerText = "Open in JS9 ("+axis+"-axis)";
-                          if (type == 'slice') {
-                              document.getElementById('notebook').href = "javascript:open_nb('"+folderId+"');";
-                          }
+                          //if (type == 'slice') {
+                          //    document.getElementById('notebook').href = "javascript:open_nb('"+folderId+"');";
+                          //}
                       });
         }
         
@@ -170,7 +188,10 @@
             var axis = this.options[this.selectedIndex].value;
             show_files(sim, fileno, 'proj', axis);
             fits_link(sim, fileno, 'proj', axis);
+            show_files(sim, fileno, 'SZ', axis);
             fits_link(sim, fileno, 'SZ', axis);
+            show_files(sim, fileno, 'cxo_evt', axis);
+            fits_link(sim, fileno, 'cxo_evt', axis);
             $('#fits_ext').empty();
             JS9.CloseImage();
         }
@@ -184,8 +205,10 @@
             var hdulist = hdu_map[type];
             for (var i = 0; i < hdulist.length; i++) {
                 var new_hdu = document.createElement("option");
-                new_hdu.text = hdulist[i];
-                fitsList.options.add(new_hdu, i);
+                if (hdulist[i] != "PRIMARY") {
+                    new_hdu.text = hdulist[i];
+                    fitsList.options.add(new_hdu, i);
+                }
             }
             $('#fits_ext').val(hdu_map[type][default_js9[type]]);
         }
