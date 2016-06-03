@@ -1,2 +1,11 @@
 .idea
 build
+syntax: glob
+js9/js/jquery.ui.touch-punch.js
+js9/js/jquery.ui.touch-punch.min.js
+js9/plugins/core/mousetouch.css
+js9/plugins/core/mousetouch.js
+js9/plugins/help/mousetouch.html
+source/1to3_b0.rst
+source/1to3_b1.rst
+source/index.rst
