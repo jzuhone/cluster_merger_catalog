@@ -8,7 +8,8 @@
          window.open("get_files.html?sim="+sim+"&fileno="+fileno,"_blank");
       }
    </script>
-   
+   <script>$('#dLabelLocalToc').addClass('hidden');</script>
+
 {% for fileno, time, imgs in info %}
 
 {{time}}

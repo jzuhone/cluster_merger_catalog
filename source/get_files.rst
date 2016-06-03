@@ -11,6 +11,8 @@
     <script type="text/javascript" src="js9/js9support.min.js"></script>
     <script type="text/javascript" src="js9/js9.min.js"></script>
     <script type="text/javascript" src="js9/js9plugins.js"></script>
+    <script>$('#dLabelGlobalToc').addClass('hidden');</script>
+    <script>$('#dLabelLocalToc').addClass('hidden');</script>
 
     <script>
         function getParameterByName(name, url) {
