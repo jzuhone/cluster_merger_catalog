@@ -109,11 +109,7 @@
                         "cxo_evt":["counts"]};
         var sim_map = {"1to3_b0" : "R = 1:3, b = 0 kpc",
                        "1to3_b1" : "R = 1:3, b = 1000 kpc"};
-        var default_js9 = {"slice":2,"proj":0,"SZ":0,"cxo_evt":1};
-        var hdu_map = {"slice":["CLR2","CLR1","DENSITY","KT","DARK_MATTER_DENSITY","VELOCITY_X","VELOCITY_Y"],
-                       "proj":["XRAY_EMISSIVITY","SZ_KINETIC","SZY","TOTAL_DENSITY","KT"],
-                       "SZ":["180_GHZ","90_GHZ","240_GHZ","TESZ","TAU"],
-                       "cxo_evt":["PRIMARY","EVENTS"]};
+        var default_js9 = {"slice":"DENSITY","proj":"XRAY_EMISSIVITY","SZ":"180_GHZ","cxo_evt":"EVENTS"};
                        
         var sim_name = sim_map[sim];
         var timestr = "t = " + (parseFloat(fileno)*0.02).toFixed(2) + " Gyr";
@@ -201,19 +197,28 @@
 
         axisList.addEventListener('change', changeAxis, false);
         
-        function js9Load(url, type) {
-            JS9.CloseImage();
-            JS9.Load(url+"["+default_js9[type]+"]");
+        var getHDUList = function() {
             $('#fits_ext').empty();
-            var hdulist = hdu_map[type];
-            for (var i = 0; i < hdulist.length; i++) {
+            imdata = JS9.GetImageData(false);
+            var default_name = "";
+            for (var i = 0; i < imdata.hdus.length; i++) {
+                var name = imdata.hdus[i].name;
                 var new_hdu = document.createElement("option");
-                if (hdulist[i] != "PRIMARY") {
-                    new_hdu.text = hdulist[i];
-                    fitsList.options.add(new_hdu, i);
+                if (name == "DENSITY" || name == "XRAY_EMISSIVITY" ||
+                    name == "180_GHZ" || name == "EVENTS") {
+                    default_name = name;
+                }
+                if (name != "PRIMARY") {
+                    new_hdu.text = name;
+                    fitsList.options.add(new_hdu, i)
                 }
             }
-            $('#fits_ext').val(hdu_map[type][default_js9[type]]);
+            $('#fits_ext').val(default_name);
+        }
+        
+        function js9Load(url, type) {
+            JS9.CloseImage();
+            JS9.Load(url+"["+default_js9[type]+"]", {onload: getHDUList});
         }
 
         var changeFits = function () {
