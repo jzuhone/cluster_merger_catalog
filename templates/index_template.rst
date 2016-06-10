@@ -6,8 +6,8 @@
 Binary Cluster Merger Catalog
 =============================
 
-ZuHone et al. 2011
-------------------
+ZuHone 2011
+-----------
 
 .. toctree::
    :maxdepth: 1
@@ -17,6 +17,9 @@ ZuHone et al. 2011
    {{sim_page}}
 
 {% endfor %}
+
+ZuHone, Markevitch, & Johnson 2010
+----------------------------------
 
 Indices and tables
 ==================
