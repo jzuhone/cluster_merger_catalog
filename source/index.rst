@@ -6,6 +6,7 @@ Binary Cluster Merger Catalog
    
    introduction
    description
+   how_to_use
    simulations
    faqs
    
