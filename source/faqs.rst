@@ -14,7 +14,7 @@ what background to simulate, if any. For example, one could use background event
 the `ACIS blank-sky background files <http://cxc.harvard.edu/ciao/threads/acisbackground/>`_. 
 
 I have some really cool data I'd like to include in the catalog. How can I do this?
----------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
 
 
 How do I cite the catalog?
