@@ -15,8 +15,8 @@ GIRDER_API_URL = "https://girder.hub.yt/api/v1"
 
 gc = girder_client.GirderClient(apiUrl=GIRDER_API_URL)
 
-sim_dict = OrderedDict()
-sim_dict["1to1_b1"] = ("R = 1:1, b = 1000 kpc",
+fid_dict = OrderedDict()
+fid_dict["1to1_b1"] = ("R = 1:1, b = 1000 kpc",
                        [0, 20, 30, 40, 50, 55, 60, 61, 62,
                         63, 64, 65, 66, 67, 68, 69, 70, 71,
                         72, 73, 74, 75, 80, 90, 100, 110, 120,
@@ -25,14 +25,14 @@ sim_dict["1to1_b1"] = ("R = 1:1, b = 1000 kpc",
                         155, 160, 165, 170, 175, 180, 190, 200,
                         210, 220, 240, 260, 280, 300, 350, 400,
                         450, 500])
-sim_dict["1to3_b0"] = ("R = 1:3, b = 0 kpc", 
+fid_dict["1to3_b0"] = ("R = 1:3, b = 0 kpc", 
                        [0, 20, 30, 40, 50, 55, 56, 57, 58, 59, 60, 
                         61, 62, 63, 64, 65, 70, 80, 90, 100, 110, 120,
                         130, 140, 141, 142, 143, 144, 145, 146, 147, 148,
                         149, 150, 160, 170, 180, 181, 182, 183, 184, 185, 
                         186, 187, 188, 189, 190, 200, 210, 220, 230, 240, 
                         250, 260, 300, 350, 400, 450, 500])
-sim_dict["1to3_b1"] = ("R = 1:3, b = 1000 kpc",
+fid_dict["1to3_b1"] = ("R = 1:3, b = 1000 kpc",
                        [0, 20, 30, 40, 50, 55, 60, 61, 62,
                         63, 64, 65, 66, 67, 68, 69, 70, 75,
                         80, 85, 95, 105, 115, 125, 135, 145,
@@ -43,13 +43,14 @@ sim_dict["1to3_b1"] = ("R = 1:3, b = 1000 kpc",
                         260, 270, 280, 290, 300, 320, 340, 360,
                         380, 400, 450, 500])
 
-def make_main_page(sims):
+def make_set_page(name, set_name, sims):
     sim_pages = []
     for sim, sim_info in sims.items():
         sim_pages.append(make_png_page(sim, sim_info[0], sim_info[1]))
-    context = {'sim_pages': sim_pages}
-    template_file = 'templates/index_template.rst'
-    make_template('source/index.rst', template_file, context)
+    context = {'sim_pages': sim_pages,
+               'set_name': set_name}
+    template_file = 'templates/set_template.rst'
+    make_template('source/%s.rst' % name, template_file, context)
 
 def make_png_page(sim, sim_name, filenos):
     info = []
@@ -78,4 +79,4 @@ def make_template(outfile, template_file, context):
     open(outfile, 'w').write(template.render(django_context))
 
 if __name__ == "__main__":
-    make_main_page(sim_dict)
+    make_set_page("zuhone2011", "ZuHone 2011", fid_dict)
