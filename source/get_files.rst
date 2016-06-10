@@ -28,6 +28,10 @@
 
     <h1 id="header"></h1>
 
+For directions on how to navigate this page, check out :ref:`how-to-use`.
+
+.. raw:: html
+
     <h2>Slices</h2>
     <a id="big_slice_dens" data-lightbox="lb_slice_dens" ><img id="slice_dens" width="350" /></a>
     <a id="big_slice_temp" data-lightbox="lb_slice_temp" ><img id="slice_temp" width="350" /></a>
