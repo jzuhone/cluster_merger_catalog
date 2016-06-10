@@ -87,8 +87,8 @@
     </div>
 
     <script>
-        var sim = getParameterByName('sim')
-        var fileno = getParameterByName('fileno')
+        var sim = getParameterByName('sim');
+        var fileno = getParameterByName('fileno');
         var girder_root = "https://girder.hub.yt/api/v1";
         var axisList = document.getElementById("proj_axis");
         var fitsList = document.getElementById("fits_ext");
@@ -107,11 +107,9 @@
                         "proj":["xray_emissivity","kT","total_density","szy"],
                         "SZ":["Tau","240_GHz"],
                         "cxo_evt":["counts"]};
-        var sim_map = {"1to3_b0" : "R = 1:3, b = 0 kpc",
-                       "1to3_b1" : "R = 1:3, b = 1000 kpc"};
         var default_js9 = {"slice":"DENSITY","proj":"XRAY_EMISSIVITY","SZ":"180_GHZ","cxo_evt":"EVENTS"};
                        
-        var sim_name = sim_map[sim];
+        var sim_name = get_sim_name(sim);
         var timestr = "t = " + (parseFloat(fileno)*0.02).toFixed(2) + " Gyr";
 
         $(document).ready(function () {
@@ -137,6 +135,21 @@
             }
  
         });
+        
+        function get_sim_name(sim) {
+            if (sim.startsWith("R")) {
+                var ridx = sim.indexOf("R")+1;
+            } else {
+                var ridx = sim.indexOf("to")+2;
+            }
+            var bidx = sim.indexOf("b")+1;
+            var ratio = sim.substring(ridx,ridx+1);
+            var b = sim.substring(bidx,sim.length);
+            if (!sim.startsWith("R")) {
+                var b = ~~(parseFloat(b)*1000);
+            }
+            return "R = 1:"+ratio+", b = "+b+" kpc";
+        }
         
         function fits_link(sim, fileno, type, axis) {
             var fn = "fiducial_"+sim+"_hdf5_plt_cnt_"+fileno+"_"+type+"_"+axis;
