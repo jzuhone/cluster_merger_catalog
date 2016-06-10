@@ -50,7 +50,8 @@ help:
 .PHONY: clean
 clean:
 	rm -rf $(BUILDDIR)/*
-	rm -rf source/index.rst source/*to*b*.rst
+	rm -rf source/*to*b*.rst source/R*b*.rst
+	rm -rf source/zuhone2011.rst source/zuhone2010.rst
 
 .PHONY: html
 html:

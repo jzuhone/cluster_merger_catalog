@@ -43,12 +43,14 @@ fid_dict["1to3_b1"] = ("R = 1:3, b = 1000 kpc",
                         260, 270, 280, 290, 300, 320, 340, 360,
                         380, 400, 450, 500])
 
-def make_set_page(name, set_name, sims):
+def make_set_page(name, set_name, ads_link, sims):
     sim_pages = []
     for sim, sim_info in sims.items():
         sim_pages.append(make_png_page(sim, sim_info[0], sim_info[1]))
-    context = {'sim_pages': sim_pages,
-               'set_name': set_name}
+    context = {'name': name,
+               'sim_pages': sim_pages,
+               'set_name': set_name,
+               'ads_link': ads_link}
     template_file = 'templates/set_template.rst'
     make_template('source/%s.rst' % name, template_file, context)
 
@@ -79,4 +81,6 @@ def make_template(outfile, template_file, context):
     open(outfile, 'w').write(template.render(django_context))
 
 if __name__ == "__main__":
-    make_set_page("zuhone2011", "ZuHone 2011", fid_dict)
+    make_set_page("zuhone2011", "ZuHone 2011", 
+                  "http://adsabs.harvard.edu/abs/2011ApJ...728...54Z", 
+                  fid_dict)
