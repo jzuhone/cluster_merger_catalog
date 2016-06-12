@@ -109,13 +109,16 @@ They are stored in separate FITS files from the other projections. The fields ar
 * ``"180_GHz``: The S-Z signal at 180 GHz in units of :math:`{\rm MJy~{steradian}^{-1}}`. 
 * ``"240_GHz``: The S-Z signal at 240 GHz in units of :math:`{\rm MJy~{steradian}^{-1}}`. 
 
+.. |photon_simulator| replace:: ``photon_simulator`` analysis module of yt
+.. _photon_simulator: http://yt-project.org/doc/analyzing/analysis_modules/photon_simulator.html
+
 X-ray Events
 ++++++++++++
 
 The X-ray events files are standard events files which can be manipulated and analyzed with standard
 X-ray analysis tools, such as `ds9 <http://ds9.si.edu>`_, `CIAO <http://cxc.cfa.harvard.edu/ciao/>`_, and the 
 `HEASOFT software suite <http://heasarc.nasa.gov/lheasoft/>`_. The events have been generated using the
-``photon_simulator`` analysis module of yt and have been convolved with the ACIS-I on-axis responses, assuming
+|photon_simulator|_ and have been convolved with the ACIS-I on-axis responses, assuming
 an exposure time of 50~ks. The pixel size corresponds to the width of the finest simulation cell size as 
 before, assuming a redshift of z = 0.05 and the above cosmology. These files can be used to produce images 
 and spectra. 
