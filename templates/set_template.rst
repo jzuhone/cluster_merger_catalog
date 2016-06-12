@@ -3,7 +3,12 @@
 {{set_name}}
 ============
 
-`ADS link to original paper <{{ads_link}}>`_
+Set Characteristics
+-------------------
+
+* Original paper: `{{set_journal}} <{{ads_link}}>`_
+* Box size: *L* = {{box_size}} Mpc
+* Finest cell size: :math:`\Delta{x}_{\rm min}` = {{cell_size}} kpc
 
 Simulations
 -----------
