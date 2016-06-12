@@ -33,9 +33,18 @@ For directions on how to navigate this page, check out :ref:`how-to-use`.
 .. raw:: html
 
     <h2>Slices</h2>
+    <figure style="display: inline-block;">
+    <figcaption><h4>Density</h4></figcaption>
     <a id="big_slice_dens" data-lightbox="lb_slice_dens" ><img id="slice_dens" width="350" /></a>
+    </figure>
+    <figure style="display: inline-block;">
+    <figcaption><h4>Temperature</h4></figcaption>
     <a id="big_slice_temp" data-lightbox="lb_slice_temp" ><img id="slice_temp" width="350" /></a>
+    </figure>
+    <figure style="display: inline-block;">
+    <figcaption><h4>Dark Matter Density</h4></figcaption>
     <a id="big_slice_pden" data-lightbox="lb_slice_pden" ><img id="slice_pden" width="350" /></a>
+    </figure>
     <br>
     <a id="slice_fits">FITS File Download</a><br>
     <a id="slice_js9">Open in JS9</a>
@@ -49,27 +58,46 @@ For directions on how to navigate this page, check out :ref:`how-to-use`.
         <option value="z" selected="selected">z</option>
     </select>
 
-    <h3>X-ray Emissivity, Spectroscopic Temperature, Total Density, Compton-y</h3>
+    <br>
+    <figure style="display: inline-block;">
+    <figcaption><h4>X-ray Emissivity</h4></figcaption>
     <a id="big_proj_xray" data-lightbox="lb_proj_xray" ><img id="proj_xray" width="450" /></a>
+    </figure>
+    <figure style="display: inline-block;">
+    <figcaption><h4>Projected Temperature</h4></figcaption>
     <a id="big_proj_temp" data-lightbox="lb_proj_temp" ><img id="proj_temp" width="450" /></a>
+    </figure>
+    <figure style="display: inline-block;">
+    <figcaption><h4>Total Density</h4></figcaption>
     <a id="big_proj_dens" data-lightbox="lb_proj_dens" ><img id="proj_dens" width="450" /></a>
+    </figure>
+    <figure style="display: inline-block;">
+    <figcaption><h4>Compton-y</h4></figcaption>
     <a id="big_proj_szy" data-lightbox="lb_proj_szy" ><img id="proj_szy" width="450" /></a>
+    </figure>
     <br>
     <a id="proj_fits">FITS File Download</a><br>
     <a id="proj_js9">Open in JS9</a>
 
     <br><br>
     
-    <h3>Compton Optical Depth, Sunyaev-Zeldovich Signal (240 GHz)</h3>
+    <figure style="display: inline-block;">
+    <figcaption><h4>Compton Optical Depth</h4></figcaption>
     <a id="big_SZ_tau" data-lightbox="lb_SZ_tau" ><img id="SZ_tau" width="450" /></a>
+    </figure>
+    <figure style="display: inline-block;">
+    <figcaption><h4>S-Z Signal (240 GHz)</h4></figcaption>
     <a id="big_SZ_inty" data-lightbox="lb_SZ_inty" ><img id="SZ_inty" width="450" /></a>
+    </figure>
     <br>
     <a id="SZ_fits">FITS File Download</a><br>
     <a id="SZ_js9">Open in JS9</a>
     <br><br>
     
-    <h3>X-ray Counts (0.5-7 keV, <em>Chandra</em> ACIS-I, 50 ks)</h3>
+    <figure style="display: inline-block;">
+    <figcaption><h4>X-ray Counts (0.5-7 keV, <em>Chandra</em> ACIS-I, 50 ks)</h4></figcaption>
     <a id="big_cxo_evt_counts" data-lightbox="lb_cxo_evt_counts" ><img id="cxo_evt_counts" width="450" /></a>
+    </figure>
     <br>
     <a id="cxo_evt_fits">FITS File Download</a><br>
     <a id="cxo_evt_js9">Open in JS9</a>
