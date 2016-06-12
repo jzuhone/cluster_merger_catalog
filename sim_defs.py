@@ -1,6 +1,7 @@
 from collections import OrderedDict
 
 fid_info = {"name": "zuhone2011", 
+            "basenm": "fiducial",
             "set_name": "ZuHone 2011",
             "set_journal": "ZuHone, J. A. 2011, ApJ, 728, 54",
             "ads_link": "http://adsabs.harvard.edu/abs/2011ApJ...728...54Z",
@@ -36,16 +37,27 @@ fid_dict["1to3_b1"] = ("R = 1:3, b = 1000 kpc",
                         380, 400, 450, 500])
 
 slosh_info = {"name": "zuhone2010",
-            "set_name": "ZuHone, Markevitch, & Johnson 2010",
-            "set_journal": "ZuHone, J. A., Markevitch, M., & Johnson, R. E. 2010, ApJ, 717, 908",
-            "ads_link": "http://adsabs.harvard.edu/abs/2010ApJ...717..908Z",
-            "box_size": 10.0,
-            "cell_size": 4.88}
+              "basenm": "sloshing",
+              "set_name": "ZuHone, Markevitch, & Johnson 2010",
+              "set_journal": "ZuHone, J. A., Markevitch, M., & Johnson, R. E. 2010, ApJ, 717, 908",
+              "ads_link": "http://adsabs.harvard.edu/abs/2010ApJ...717..908Z",
+              "box_size": 10.0,
+              "cell_size": 4.88}
 
 slosh_dict = OrderedDict()
-slosh_dict["R5_b500"] = ("R = 1:5, b = 500 kpc, gasless subcluster", [])
-slosh_dict["R20_b200"] = ("R = 1:20, b = 200 kpc", [])
-slosh_dict["R20_b1000"] = ("R = 1:20, b = 1000 kpc", [])
+slosh_dict["R5_b500"] = ("R = 1:5, b = 500 kpc, gasless subcluster",
+                         [0, 90, 120, 130, 131, 132,
+                          133, 134, 135, 136, 137, 138, 139, 140,
+                          145, 150, 160, 170, 180, 190, 200, 210,
+                          220, 230, 240, 250, 260, 270, 280, 290,
+                          300, 310, 320, 330, 340, 350, 360, 370,
+                          380, 390, 395, 396, 397, 398, 399, 400,
+                          401, 402, 403, 404, 405, 410, 415, 420,
+                          430, 440, 450, 460, 470, 480, 490, 500,
+                          510, 520, 530, 540, 550, 560, 570, 580,
+                          590, 600])
+#slosh_dict["R20_b200"] = ("R = 1:20, b = 200 kpc", [])
+#slosh_dict["R20_b1000"] = ("R = 1:20, b = 1000 kpc", [])
 
 test_info = fid_info
 test_dict = OrderedDict()
