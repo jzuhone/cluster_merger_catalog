@@ -1,12 +1,12 @@
 .. _{{name}}:
 
-{{set_name}}
+{{set_name|safe}}
 ============
 
 Set Characteristics
 -------------------
 
-* Original paper: `{{set_journal}} <{{ads_link}}>`_
+* Original paper: `{{set_journal|safe}} <{{ads_link}}>`_
 * Box size: *L* = {{box_size}} Mpc
 * Finest cell size: :math:`\Delta{x}_{\rm min}` = {{cell_size}} kpc
 
