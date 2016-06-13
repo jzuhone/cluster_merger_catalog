@@ -105,7 +105,9 @@ For directions on how to navigate this page, check out :ref:`how-to-use`.
 
     <h2>Jupyter Notebook</h2>
     <a id="notebook" >Start a Jupyter notebook with access to these files.</a>
-    
+    <button class="btn btn-link" id="login" href="#">Login</button>
+    <div class="modal fade" id="dialog-container"></div>
+
     <h2>JS9 Interface</h2>
 
     <select id="fits_ext"></select>
@@ -165,6 +167,13 @@ For directions on how to navigate this page, check out :ref:`how-to-use`.
                 axisList.options.add(new_ax, 1);
             }
  
+            $('#login').click(function () {
+                var loginView = new girder.views.LoginView({
+                    el: $('#dialog-container')
+                });
+                loginView.render();
+            });
+
         });
         
         function get_sim_name(sim) {
