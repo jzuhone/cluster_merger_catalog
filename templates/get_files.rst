@@ -95,7 +95,7 @@ For directions on how to navigate this page, check out :ref:`how-to-use`.
     <br><br>
     
     <figure style="display: inline-block;">
-    <figcaption><h4>X-ray Counts (0.5-7 keV, <em>Chandra</em> ACIS-I, 50 ks)</h4></figcaption>
+    <figcaption><h4>X-ray Counts (<em>Chandra</em> ACIS-I, 50 ks)</h4></figcaption>
     <a id="big_cxo_evt_counts" data-lightbox="lb_cxo_evt_counts" ><img id="cxo_evt_counts" width="450" /></a>
     </figure>
     <br>
@@ -103,9 +103,8 @@ For directions on how to navigate this page, check out :ref:`how-to-use`.
     <a id="cxo_evt_js9">Open in JS9</a>
     <br><br>
 
-    <!-- <h2>Jupyter Notebook</h2>
+    <h2>Jupyter Notebook</h2>
     <a id="notebook" >Start a Jupyter notebook with access to these files.</a>
-    -->
     
     <h2>JS9 Interface</h2>
 
@@ -194,9 +193,9 @@ For directions on how to navigate this page, check out :ref:`how-to-use`.
                           document.getElementById(type+'_fits').innerText = "FITS File Download ("+axis+"-axis)";
                           document.getElementById(type+'_js9').href = "javascript:js9Load('"+get_link(id)+"','"+type+"');";
                           document.getElementById(type+'_js9').innerText = "Open in JS9 ("+axis+"-axis)";
-                          //if (type == 'slice') {
-                          //    document.getElementById('notebook').href = "javascript:open_nb('"+folderId+"');";
-                          //}
+                          if (type == 'slice') {
+                              document.getElementById('notebook').href = "javascript:open_nb('"+folderId+"');";
+                          }
                       });
         }
         
