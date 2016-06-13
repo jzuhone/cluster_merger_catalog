@@ -9,10 +9,4 @@ Binary Cluster Merger Catalog
    how_to_use
    simulations
    faqs
-   
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`search`
 
