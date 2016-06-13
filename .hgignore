@@ -6,8 +6,6 @@ js9/js/jquery.ui.touch-punch.min.js
 js9/plugins/core/mousetouch.css
 js9/plugins/core/mousetouch.js
 js9/plugins/help/mousetouch.html
-source/*to*_b*.rst
-source/R*b*.rst
-source/zuhone2011.rst
-source/zuhone2010.rst
+source/zuhone2011/*
+source/zuhone2010/*
 *.pyc

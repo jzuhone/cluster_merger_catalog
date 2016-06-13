@@ -50,12 +50,14 @@ help:
 .PHONY: clean
 clean:
 	rm -rf $(BUILDDIR)/*
-	rm -rf source/*to*b*.rst source/R*b*.rst
-	rm -rf source/zuhone2011.rst source/zuhone2010.rst
+	rm -rf source/zuhone2011 source/zuhone2010
+
+.PHONY: pages
+pages:
+	python make_pages.py
 
 .PHONY: html
 html:
-	python make_pages.py
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	cp -rf lightbox $(BUILDDIR)/html
 	cp -rf js9 $(BUILDDIR)/html

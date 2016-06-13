@@ -9,5 +9,5 @@ about the types of data found in these sets can be found at :ref:`description`.
 .. toctree::
     :maxdepth: 1
         
-    zuhone2011
-    zuhone2010
+    zuhone2011/index
+    zuhone2010/index

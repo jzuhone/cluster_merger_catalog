@@ -125,14 +125,6 @@ For directions on how to navigate this page, check out :ref:`how-to-use`.
         var axisList = document.getElementById("proj_axis");
         var fitsList = document.getElementById("fits_ext");
 
-        if (sim.startsWith("R")) {
-            var basenm = "sloshing";
-            var cadence = 0.01;
-        } else {
-            var basenm = "fiducial";
-            var cadence = 0.02;
-        }
-
         var field_map = {xray_emissivity:"xray",
                          total_density:"dens",
                          kT:"temp",
@@ -150,7 +142,7 @@ For directions on how to navigate this page, check out :ref:`how-to-use`.
         var default_js9 = {"slice":"DENSITY","proj":"XRAY_EMISSIVITY","SZ":"180_GHZ","cxo_evt":"EVENTS"};
                        
         var sim_name = get_sim_name(sim);
-        var timestr = "t = " + (parseFloat(fileno)*cadence).toFixed(2) + " Gyr";
+        var timestr = "t = " + (parseFloat(fileno)*{{cadence}}).toFixed(2) + " Gyr";
 
         $(document).ready(function () {
              
@@ -192,7 +184,7 @@ For directions on how to navigate this page, check out :ref:`how-to-use`.
         }
         
         function fits_link(sim, fileno, type, axis) {
-            var fn = basenm+"_"+sim+"_hdf5_plt_cnt_"+fileno+"_"+type+"_"+axis;
+            var fn = "{{basenm}}_"+sim+"_hdf5_plt_cnt_"+fileno+"_"+type+"_"+axis;
             $.getJSON(girder_root+'/resource/search',
                       {q: fn,  types: '["item"]'},
                       function(data) {
@@ -209,7 +201,7 @@ For directions on how to navigate this page, check out :ref:`how-to-use`.
         }
         
         function show_files(sim, fileno, type, axis) {
-            var fn = basenm+"_"+sim+"_hdf5_plt_cnt_"+fileno+"_"+type+"_"+axis;
+            var fn = "{{basenm}}_"+sim+"_hdf5_plt_cnt_"+fileno+"_"+type+"_"+axis;
             var fields = type_map[type];
             for (var i = 0; i < fields.length; i++) {
                 $.getJSON(girder_root+'/resource/search',
