@@ -4,6 +4,7 @@
     <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="../lightbox/js/lightbox.js"></script>
     <script>$('head').append('<link rel="stylesheet" href="../lightbox/css/lightbox.css"/>');</script>
+    <script>$('head').append('<link rel="stylesheet" href="../modal.css"/>');</script>
     <script>$('head').append('<link type="text/css" rel="stylesheet" href="../js9/js9support.css">');</script>
     <script>$('head').append('<link type="text/css" rel="stylesheet" href="../js9/js9.css">');</script>
     <script src="https://girder.hub.yt/static/built/girder.ext.min.js"></script>
@@ -104,9 +105,20 @@ For directions on how to navigate this page, check out :ref:`how-to-use`.
     <br><br>
 
     <h2>Jupyter Notebook</h2>
-    <a id="notebook" >Start a Jupyter notebook with access to these files.</a>
-    <a class="g-login-link" id="login">Login</a>
-    <div class="modal fade" id="dialog-container"></div>
+    <a id="hubLink" >Get direct access to these files on the yt Hub and run Jupyter notebooks.</a>
+
+    <div id="hubModal" class="modal">
+    <div class="modal-content">
+    <span id="closeModal" class="close">x</span>
+    <p>
+    <a id="hubFolder" href="#">Click this link</a> to get direct access to the files from within the yt Hub.
+    You can optionally also register for an account on the Hub, and use the button in
+    the top-right corner to start a Jupyter notebook on the server, with access to the files
+    and a full Python stack including NumPy, SciPy, AstroPy, yt, and more.
+    </p>
+    </div>
+
+    </div>
 
     <h2>JS9 Interface</h2>
 
@@ -166,13 +178,6 @@ For directions on how to navigate this page, check out :ref:`how-to-use`.
                 new_ax.text = "y";
                 axisList.options.add(new_ax, 1);
             }
- 
-            //$('#login').click(function () {
-            //    var loginView = new girder.views.LoginView({
-            //        el: $('#dialog-container')
-            //    });
-            //    loginView.render();
-            //});
 
         });
         
@@ -203,7 +208,21 @@ For directions on how to navigate this page, check out :ref:`how-to-use`.
                           document.getElementById(type+'_js9').href = "javascript:js9Load('"+get_link(id)+"','"+type+"');";
                           document.getElementById(type+'_js9').innerText = "Open in JS9 ("+axis+"-axis)";
                           if (type == 'slice') {
-                              document.getElementById('notebook').href = "javascript:open_nb('"+folderId+"');";
+                              var myModal = document.getElementByID('hubModal');
+                              var myLink = document.getElementById("hubLink");
+                              var mySpan = document.getElementById("closeModal");
+                              myLink.onclick = function() {
+                                  myModal.style.display = "block";
+                              }
+                              mySpan.onclick = function() {
+                                  myModal.style.display = "none";
+                              }
+                              window.onclick = function(event) {
+                                  if (event.target == modal) {
+                                      modal.style.display = "none";
+                                  }
+                              }
+                              document.getElementById('hubFolder').href = "http://www.jzuhone.com";
                           }
                       });
         }
@@ -280,13 +299,23 @@ For directions on how to navigate this page, check out :ref:`how-to-use`.
         }
         
         fitsList.addEventListener('change', changeFits, false);
- 
-        function open_nb(folderId) {
+
+        function nb_link(folderId) {
             girder.restRequest({
                 path: 'notebook/' + folderId,
-                type: 'POST'
+                type: 'GET'
             }).done(function (notebook) {
                 window.location.assign(hub["url"] + notebook["url"]);
             });
+
         }
+
+        //function open_nb(folderId) {
+        //    girder.restRequest({
+        //        path: 'notebook/' + folderId,
+        //        type: 'POST'
+        //    }).done(function (notebook) {
+        //        window.location.assign(hub["url"] + notebook["url"]);
+        //    });
+        //}
     </script>

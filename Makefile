@@ -61,7 +61,7 @@ html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	cp -rf lightbox $(BUILDDIR)/html
 	cp -rf js9 $(BUILDDIR)/html
-	cp -rf js9/js9Prefs.json $(BUILDDIR)/html
+    cp -rf modal.css $(BUILDDIR)/html
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 
