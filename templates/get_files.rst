@@ -105,7 +105,7 @@ For directions on how to navigate this page, check out :ref:`how-to-use`.
 
     <h2>Jupyter Notebook</h2>
     <a id="notebook" >Start a Jupyter notebook with access to these files.</a>
-    <a class="g-login-link" id="login"ß>Login</a>
+    <a class="g-login-link" id="login">Login</a>
     <div class="modal fade" id="dialog-container"></div>
 
     <h2>JS9 Interface</h2>
