@@ -59,9 +59,7 @@ pages:
 .PHONY: html
 html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
-	cp -rf lightbox $(BUILDDIR)/html
-	cp -rf js9 $(BUILDDIR)/html
-    cp -rf modal.css $(BUILDDIR)/html
+	cp -rf lightbox js9 modal.css start_notebook.png $(BUILDDIR)/html
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 
