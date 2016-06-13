@@ -9,6 +9,7 @@
     <script>$('head').append('<link rel="stylesheet" href="../../lightbox/css/lightbox.css"/>');</script>
     <script>$('head').append('<link type="text/css" rel="stylesheet" href="../../js9/js9support.css">');</script>
     <script>$('head').append('<link type="text/css" rel="stylesheet" href="../../js9/js9.css">');</script>
+    <script>$('head').append('<link type="text/css" rel="stylesheet" href="../../scripts/modal.css">');</script>
     <script type="text/javascript" src="../../js9/js9support.min.js"></script>
     <script type="text/javascript" src="../../js9/js9.min.js"></script>
     <script type="text/javascript" src="../../js9/js9plugins.js"></script>
@@ -160,7 +161,21 @@ The S-Z FITS file contains the following fields:
     <a id="big_cxo_evt_counts" data-lightbox="lb_cxo_evt_counts" ><img id="cxo_evt_counts" width="450" /></a>
     </figure>
     <br><br>
-    
+
+    <h2>Jupyter Notebook</h2>
+    <a id="hubLink" >Get direct access to these files on the yt Hub and run Jupyter notebooks.</a>
+
+    <div id="hubModal" class="modal">
+    <div class="modal-content">
+    <span id="closeModal" class="close">x</span>
+    <p>
+    <a id="hubFolder" href="#">Click this link</a> to get direct access to the files from within the yt Hub.
+    You can optionally also register for an account on the Hub, and use the button in
+    the top-right corner to start a Jupyter notebook on the server, with access to the files
+    and a full Python stack including NumPy, SciPy, AstroPy, yt, and more.
+    </p>
+    </div>
+
     <a name="js9"></a>
     <h2>JS9 Interface</h2>
     
@@ -211,6 +226,22 @@ The S-Z FITS file contains the following fields:
         ];
 	
         $(document).ready(function () {
+
+            var myModal = document.getElementByID('hubModal');  
+            var myLink = document.getElementById("hubLink");
+            var mySpan = document.getElementById("closeModal");
+            myLink.onclick = function() {
+                myModal.style.display = "block";
+            }
+            mySpan.onclick = function() {
+                myModal.style.display = "none";
+            }
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+            document.getElementById('hubFolder').href = "{{hub_folder}}";
 
             show_files('slice', 'z');
             fits_link('slice', 'z');
