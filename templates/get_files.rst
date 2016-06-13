@@ -2,15 +2,15 @@
 .. raw:: html
    
     <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="lightbox/js/lightbox.js"></script>
-    <script>$('head').append('<link rel="stylesheet" href="lightbox/css/lightbox.css"/>');</script>
-    <script>$('head').append('<link type="text/css" rel="stylesheet" href="js9/js9support.css">');</script>
-    <script>$('head').append('<link type="text/css" rel="stylesheet" href="js9/js9.css">');</script>
+    <script src="../lightbox/js/lightbox.js"></script>
+    <script>$('head').append('<link rel="stylesheet" href="../lightbox/css/lightbox.css"/>');</script>
+    <script>$('head').append('<link type="text/css" rel="stylesheet" href="../js9/js9support.css">');</script>
+    <script>$('head').append('<link type="text/css" rel="stylesheet" href="../js9/js9.css">');</script>
     <script src="https://girder.hub.yt/static/built/girder.ext.min.js"></script>
     <script src="https://girder.hub.yt/static/built/girder.app.min.js"></script>
-    <script type="text/javascript" src="js9/js9support.min.js"></script>
-    <script type="text/javascript" src="js9/js9.min.js"></script>
-    <script type="text/javascript" src="js9/js9plugins.js"></script>
+    <script type="text/javascript" src="../js9/js9support.min.js"></script>
+    <script type="text/javascript" src="../js9/js9.min.js"></script>
+    <script type="text/javascript" src="../js9/js9plugins.js"></script>
     <script>$('#dLabelGlobalToc').addClass('hidden');</script>
     <script>$('#dLabelLocalToc').addClass('hidden');</script>
 
@@ -248,12 +248,12 @@ For directions on how to navigate this page, check out :ref:`how-to-use`.
             var default_name = "";
             for (var i = 0; i < imdata.hdus.length; i++) {
                 var name = imdata.hdus[i].name;
-                var new_hdu = document.createElement("option");
                 if (name == "DENSITY" || name == "XRAY_EMISSIVITY" ||
                     name == "180_GHZ" || name == "EVENTS") {
                     default_name = name;
                 }
-                if (name != "PRIMARY") {
+                if (typeof name != "undefined" && name != "STDGTI") {
+                    var new_hdu = document.createElement("option");
                     new_hdu.text = name;
                     fitsList.options.add(new_hdu, i)
                 }
