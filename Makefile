@@ -63,6 +63,11 @@ html:
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 
+.PHONY: deploy
+deploy:
+	sudo rm -rf /var/www/html/*
+	sudo cp -rf build/html/* /var/www/html/
+
 .PHONY: dirhtml
 dirhtml:
 	$(SPHINXBUILD) -b dirhtml $(ALLSPHINXOPTS) $(BUILDDIR)/dirhtml
