@@ -1,7 +1,7 @@
 .. _faqs:
 
- Frequently Asked Questions
-===========================
+Frequently Asked Questions
+==========================
 
 Why are you giving this data away?
 ----------------------------------

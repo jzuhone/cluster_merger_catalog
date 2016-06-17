@@ -1,6 +1,5 @@
 # Makefile for Sphinx documentation
 #
-
 # You can set these variables from the command line.
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
@@ -59,7 +58,10 @@ pages:
 .PHONY: html
 html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
-	cp -rf lightbox js9 modal.css start_notebook.png $(BUILDDIR)/html
+	cd js9 && ./configure --with-webdir=../build/html/js9 && make && make install
+	cp -rf lightbox $(BUILDDIR)/html
+	cp $(BUILDDIR)/html/js9/js9Prefs.json $(BUILDDIR)/html/zuhone2011
+	cp $(BUILDDIR)/html/js9/js9Prefs.json $(BUILDDIR)/html/zuhone2010                                               
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 

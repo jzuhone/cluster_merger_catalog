@@ -6,12 +6,9 @@
     <script>$('head').append('<link rel="stylesheet" href="../lightbox/css/lightbox.css"/>');</script>
     <script>$('head').append('<link type="text/css" rel="stylesheet" href="../js9/js9support.css">');</script>
     <script>$('head').append('<link type="text/css" rel="stylesheet" href="../js9/js9.css">');</script>
-    <script src="https://girder.hub.yt/static/built/girder.ext.min.js"></script>
-    <script src="https://girder.hub.yt/static/built/girder.app.min.js"></script>
     <script type="text/javascript" src="../js9/js9support.min.js"></script>
     <script type="text/javascript" src="../js9/js9.min.js"></script>
     <script type="text/javascript" src="../js9/js9plugins.js"></script>
-    <script>$('head').append('<link type="text/css" rel="stylesheet" href="../modal.css">');</script>
     <script>$('#dLabelGlobalToc').addClass('hidden');</script>
     <script>$('#dLabelLocalToc').addClass('hidden');</script>
 
@@ -103,23 +100,6 @@ For directions on how to navigate this page, check out :ref:`how-to-use`.
     <a id="cxo_evt_fits">FITS File Download</a><br>
     <a id="cxo_evt_js9">Open in JS9</a>
     <br><br>
-
-    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#hubModal">Get access to these files on the yt Hub and run Jupyter notebooks.</button>
-    
-    <div id="hubModal" class="modal fade" role="dialog">
-    <div class="modal-content">
-    <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal">&times;</button>
-    </div>
-    <div class="modal-body">
-    <p>
-    <a href="" onclick="get_hub_link()"><h3>Get direct access to these files from within the yt Hub.</h3></a>
-    <img src="../start_notebook.png" hspace="10" align="right" />
-    If you have an account on the <a href="http://girder.hub.yt" target="_blank">yt Hub</a>, click the link above and use the button in the top-right corner to start a Jupyter notebook on the server, with access to the files and a full Python stack including NumPy, SciPy, AstroPy, yt, and more.
-    </p>
-    </div>
-    </div>
-    </div>
     
     <h2>JS9 Interface</h2>
 
@@ -157,13 +137,9 @@ For directions on how to navigate this page, check out :ref:`how-to-use`.
                        
         var sim_name = get_sim_name(sim);
         var timestr = "t = " + (parseFloat(fileno)*{{cadence}}).toFixed(2) + " Gyr";
-	var hub_link = "";
 	
         $(document).ready(function () {
              
-            girder.apiRoot = girder_root;
-            girder.router.enabled(false);
- 
             show_files(sim, fileno, 'slice', 'z');
             fits_link(sim, fileno, 'slice', 'z');
             show_files(sim, fileno, 'proj', 'z');
@@ -180,8 +156,6 @@ For directions on how to navigate this page, check out :ref:`how-to-use`.
                 new_ax.text = "y";
                 axisList.options.add(new_ax, 1);
             }
-
-	    document.getElementById('hubFolder').href = hub_link;
 	    
         });
         
@@ -200,10 +174,6 @@ For directions on how to navigate this page, check out :ref:`how-to-use`.
             return "R = 1:"+ratio+", b = "+b+" kpc";
         }
 
-	function get_hub_link() {
-	    window.open(hub_link, "_blank");
-	}
-	 
         function fits_link(sim, fileno, type, axis) {
             var fn = "{{basenm}}_"+sim+"_hdf5_plt_cnt_"+fileno+"_"+type+"_"+axis;
             $.getJSON(girder_root+'/resource/search',
@@ -215,9 +185,6 @@ For directions on how to navigate this page, check out :ref:`how-to-use`.
                           document.getElementById(type+'_fits').innerText = "FITS File Download ("+axis+"-axis)";
                           document.getElementById(type+'_js9').href = "javascript:js9Load('"+get_link(id)+"','"+type+"');";
                           document.getElementById(type+'_js9').innerText = "Open in JS9 ("+axis+"-axis)";
-                          if (type == 'slice') {
-			      hub_link = "https://girder.hub.yt/#folder/"+folderId;
-                          }
                       });
         }
         
@@ -294,22 +261,4 @@ For directions on how to navigate this page, check out :ref:`how-to-use`.
         
         fitsList.addEventListener('change', changeFits, false);
 
-        function nb_link(folderId) {
-            girder.restRequest({
-                path: 'notebook/' + folderId,
-                type: 'GET'
-            }).done(function (notebook) {
-                window.location.assign(hub["url"] + notebook["url"]);
-            });
-
-        }
-
-        //function open_nb(folderId) {
-        //    girder.restRequest({
-        //        path: 'notebook/' + folderId,
-        //        type: 'POST'
-        //    }).done(function (notebook) {
-        //        window.location.assign(hub["url"] + notebook["url"]);
-        //    });
-        //}
     </script>
