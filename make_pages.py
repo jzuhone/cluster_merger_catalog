@@ -9,6 +9,7 @@ from sim_defs import \
     slosh_info, slosh_dict,\
     test_info, test_dict
 import argparse
+import json
 
 cadence = {"fiducial":0.02, "sloshing":0.01}
 
@@ -22,12 +23,20 @@ GIRDER_API_URL = "https://girder.hub.yt/api/v1"
 
 gc = girder_client.GirderClient(apiUrl=GIRDER_API_URL)
 
+itypes = ["slice", "proj", "SZ", "cxo_evt"]
+
+type_map = {"slice":["density","kT","dark_matter_density"],
+            "proj":["xray_emissivity","kT","total_density","szy"],
+            "SZ":["Tau","240_GHz"],
+            "cxo_evt":["counts"]}
+
 def make_set_page(set_info, set_dict):
     if not os.path.exists('source/%s' % set_info['name']):
         os.mkdir('source/%s' % set_info['name'])
     sim_pages = []
     for sim, sim_info in set_dict.items():
         sim_pages.append(make_png_page(set_info['name'], set_info["basenm"], sim, sim_info[0], sim_info[1]))
+        make_json(set_info['name'], set_info['basenm'], sim, sim_info[1])
     context = {'name': set_info["name"],
                'sim_pages': sim_pages,
                'set_name': set_info["set_name"],
@@ -46,21 +55,19 @@ def make_png_page(set_name, basenm, sim, sim_name, filenos):
     outfile = "source/%s/%s.rst" % (set_name, sim)
     if not os.path.exists(outfile):
         info = []
-        pbar = get_pbar("Setting up simulation "+sim, len(filenos))
+        pbar = get_pbar("Setting up simulation page for "+sim, len(filenos))
         for fileno in filenos:
             imgs = {}
             for field in ["xray_emissivity","kT","total_density","szy"]:
                 filename = basenm+"_%s_hdf5_plt_cnt_%04d_proj_z_%s" % (sim, fileno, field)
-                item = gc.get("resource/search", {"q": filename, "types": '["item"]'})['item'][0]
-                imgs[field] = "http://girder.hub.yt/api/v1/item/%s/download" % item['_id']
+                imgs[field] = get_file(filename)
             time = "t = %4.2f Gyr" % (fileno*cadence[basenm])
             info.append(["%04d" % fileno, time, imgs])
             pbar.update()
         pbar.finish()
         context = {'sim': sim,
                    'sim_name': sim_name,
-                   'info': info,
-                   }
+                   'info': info}
         template_file = 'templates/sim_template.rst'
         make_template(outfile, template_file, context)
     return os.path.split(outfile[:-4])[-1]
@@ -71,6 +78,33 @@ def make_template(outfile, template_file, context):
     template = re.sub(r' %}\n', ' %}', template)
     template = django.template.Template(template)
     open(outfile, 'w').write(template.render(django_context))
+
+def make_json(set_name, basenm, sim, filenos):
+    data = {}
+    pbar = get_pbar("Setting up JSON for simulation "+sim, len(filenos))
+    for fileno in filenos:
+        data[fileno] = {}
+        for itype in itypes:
+            data[fileno][itype] = {}
+            for ax in "xyz":
+                if itype == "slice" and ax != "z":
+                    continue
+                data[fileno][itype][ax] = {}
+                filename = basenm+"_%s_hdf5_plt_cnt_%04d_%s_%s" % (sim, fileno, itype, ax)
+                data[fileno][itype][ax]['fits'] = get_file(filename)
+                imgs = []
+                for field in type_map[itype]:
+                    imgs.append(get_file(filename+"_"+field))
+                data[fileno][itype][ax]['pngs'] = imgs
+        pbar.update()
+    pbar.finish()
+    outfile = "source/%s/%s.json" % (set_name, sim)
+    with open(outfile, 'w') as f:
+        json.dump(data, f)
+
+def get_file(filename):
+    item = gc.get("resource/search", {"q": filename, "types": '["item"]'})['item'][0]
+    return "http://girder.hub.yt/api/v1/item/%s/download" % item['_id']
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
