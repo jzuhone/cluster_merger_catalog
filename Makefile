@@ -61,7 +61,7 @@ html:
 	cd js9 && ./configure --with-webdir=../build/html/js9 && make && make install
 	cp -rf lightbox $(BUILDDIR)/html
 	cp $(BUILDDIR)/html/js9/js9Prefs.json $(BUILDDIR)/html/zuhone2011
-	cp $(BUILDDIR)/html/js9/js9Prefs.json $(BUILDDIR)/html/zuhone2010                                               
+	cp $(BUILDDIR)/html/js9/js9Prefs.json $(BUILDDIR)/html/zuhone2010
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 

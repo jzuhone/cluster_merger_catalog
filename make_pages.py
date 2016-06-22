@@ -9,7 +9,6 @@ from sim_defs import \
     slosh_info, slosh_dict,\
     test_info, test_dict
 import argparse
-import json
 
 cadence = {"fiducial":0.02, "sloshing":0.01}
 
@@ -30,15 +29,20 @@ type_map = {"slice":["density","kT","dark_matter_density"],
             "SZ":["Tau","240_GHz"],
             "cxo_evt":["counts"]}
 
+link_map = {"slice":["dens","temp","pden"],
+            "proj":["xray","temp","dens","szy"],
+            "SZ":["tau","inty"],
+            "cxo_evt":["counts"]}
+
 def make_set_page(set_info, set_dict):
     if not os.path.exists('source/%s' % set_info['name']):
         os.mkdir('source/%s' % set_info['name'])
     sim_pages = []
     for sim, sim_info in set_dict.items():
-        sim_pages.append(make_png_page(set_info['name'], set_info["basenm"], sim, sim_info[0], sim_info[1]))
-        make_json(set_info['name'], set_info['basenm'], sim, sim_info[1])
+        make_sim_page(set_info['name'], set_info["basenm"], sim, sim_info[0], sim_info[1])
+        make_epoch_pages(set_info['name'], set_info['basenm'], sim, sim_info[0], sim_info[1])
     context = {'name': set_info["name"],
-               'sim_pages': sim_pages,
+               'sim_pages': list(set_dict.keys()),
                'set_name': set_info["set_name"],
                'ads_link': set_info["ads_link"],
                'set_journal': set_info["set_journal"],
@@ -46,13 +50,12 @@ def make_set_page(set_info, set_dict):
                'cell_size': set_info["cell_size"]}
     template_file = 'templates/set_template.rst'
     make_template('source/%s/index.rst' % set_info["name"], template_file, context)
-    context = {'basenm': set_info['basenm'],
-               'cadence': cadence[set_info['basenm']]}
-    template_file = 'templates/get_files.rst'
-    make_template('source/%s/get_files.rst' % set_info["name"], template_file, context)
 
-def make_png_page(set_name, basenm, sim, sim_name, filenos):
-    outfile = "source/%s/%s.rst" % (set_name, sim)
+def make_sim_page(set_name, basenm, sim, sim_name, filenos):
+    sim_dir = 'source/%s/%s' % (set_name, sim)
+    if not os.path.exists(sim_dir):
+        os.mkdir(sim_dir)
+    outfile = sim_dir+"/index.rst"
     if not os.path.exists(outfile):
         info = []
         pbar = get_pbar("Setting up simulation page for "+sim, len(filenos))
@@ -70,7 +73,6 @@ def make_png_page(set_name, basenm, sim, sim_name, filenos):
                    'info': info}
         template_file = 'templates/sim_template.rst'
         make_template(outfile, template_file, context)
-    return os.path.split(outfile[:-4])[-1]
 
 def make_template(outfile, template_file, context):
     django_context = django.template.Context(context)
@@ -79,28 +81,35 @@ def make_template(outfile, template_file, context):
     template = django.template.Template(template)
     open(outfile, 'w').write(template.render(django_context))
 
-def make_json(set_name, basenm, sim, filenos):
-    data = {}
-    pbar = get_pbar("Setting up JSON for simulation "+sim, len(filenos))
+def make_epoch_pages(set_name, basenm, sim, sim_name, filenos):
+    pbar = get_pbar("Setting up epoch pages for simulation "+sim, len(filenos))
     for fileno in filenos:
-        data[fileno] = {}
-        for itype in itypes:
-            data[fileno][itype] = {}
-            for ax in "xyz":
-                if itype == "slice" and ax != "z":
-                    continue
-                data[fileno][itype][ax] = {}
-                filename = basenm+"_%s_hdf5_plt_cnt_%04d_%s_%s" % (sim, fileno, itype, ax)
-                data[fileno][itype][ax]['fits'] = get_file(filename)
-                imgs = []
-                for field in type_map[itype]:
-                    imgs.append(get_file(filename+"_"+field))
-                data[fileno][itype][ax]['pngs'] = imgs
+        outfile = "source/%s/%s/%04d.rst" % (set_name, sim, fileno)
+        if not os.path.exists(outfile):
+            if sim[-2:] == "b0":
+                axes = "xz"
+            else:
+                axes = "xyz"
+            data = {}
+            for itype in itypes:
+                data[itype] = {}
+                for ax in axes:
+                    if itype == "slice" and ax != "z":
+                        continue
+                    data[itype][ax] = {}
+                    filename = basenm+"_%s_hdf5_plt_cnt_%04d_%s_%s" % (sim, fileno, itype, ax)
+                    data[itype][ax]['fits'] = get_file(filename)
+                    imgs = {}
+                    for field, link in zip(type_map[itype], link_map[itype]):
+                        imgs[link] = get_file(filename+"_"+field)
+                    data[itype][ax]['pngs'] = imgs
+            template_file = 'templates/epoch_template.rst'
+            context = {"sim": sim, "data": data, 
+                       "sim_name": sim_name,
+                       'cadence': cadence[basenm]}
+            make_template(outfile, template_file, context)
         pbar.update()
     pbar.finish()
-    outfile = "source/%s/%s.json" % (set_name, sim)
-    with open(outfile, 'w') as f:
-        json.dump(data, f)
 
 def get_file(filename):
     item = gc.get("resource/search", {"q": filename, "types": '["item"]'})['item'][0]

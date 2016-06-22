@@ -3,11 +3,6 @@
 
 .. raw:: html
    
-   <script>
-      function get_files(fileno, sim) {
-         window.open("get_files.html?sim="+sim+"&fileno="+fileno,"_blank");
-      }
-   </script>
    <script>$('#dLabelLocalToc').addClass('hidden');</script>
 
 {% for fileno, time, imgs in info %}
@@ -17,7 +12,7 @@
 
 .. raw:: html
 
-   <a href="" onclick="get_files('{{fileno}}', '{{sim}}')">
+   <a href="{{fileno}}.html" target="_blank">
    <figure style="display: inline-block;">
    <figcaption><h4>X-ray Emissivity</h4></figcaption>
    <img src={{imgs.xray_emissivity}} width="450" />

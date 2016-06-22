@@ -18,6 +18,6 @@ Simulations
       
 {% for sim_page in sim_pages %}      
 
-   {{sim_page}}
+   {{sim_page}}/index
 
 {% endfor %}

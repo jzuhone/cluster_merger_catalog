@@ -9,3 +9,6 @@ js9/plugins/help/mousetouch.html
 source/zuhone2011/*
 source/zuhone2010/*
 *.pyc
+js9/config.log
+js9/config.status
+js9/Makefile
