@@ -104,7 +104,8 @@ def make_epoch_pages(set_name, basenm, sim, sim_name, filenos):
                         imgs[link] = get_file(filename+"_"+field)
                     data[itype][ax]['pngs'] = imgs
             template_file = 'templates/epoch_template.rst'
-            context = {"sim": sim, "data": data, 
+            context = {"sim": sim, "data": data,
+                       "fileno": fileno,
                        "sim_name": sim_name,
                        'cadence': cadence[basenm]}
             make_template(outfile, template_file, context)

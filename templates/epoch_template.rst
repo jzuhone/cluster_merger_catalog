@@ -102,7 +102,7 @@ For directions on how to navigate this page, check out :ref:`how-to-use`.
 
     <script>
         var sim = "{{sim}}";
-        var timestr = "t = " + (parseFloat("{{fileno}}")*{{cadence}}).toFixed(2) + " Gyr";
+        var timestr = "t = " + ({{fileno}}*{{cadence}}).toFixed(2) + " Gyr";
 
         var axisList = document.getElementById("proj_axis");
         var fitsList = document.getElementById("fits_ext");
