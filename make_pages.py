@@ -113,7 +113,7 @@ def make_epoch_pages(set_name, basenm, sim, sim_name, filenos):
 
 def get_file(filename):
     item = gc.get("resource/search", {"q": filename, "types": '["item"]'})['item'][0]
-    return "http://girder.hub.yt/api/v1/item/%s/download" % item['_id']
+    return "https://girder.hub.yt/api/v1/item/%s/download" % item['_id']
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
