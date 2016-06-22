@@ -119,6 +119,6 @@ The X-ray events files are standard events files which can be manipulated and an
 X-ray analysis tools, such as `ds9 <http://ds9.si.edu>`_, `CIAO <http://cxc.cfa.harvard.edu/ciao/>`_, and the 
 `HEASOFT software suite <http://heasarc.nasa.gov/lheasoft/>`_. The events have been generated using the
 |photon_simulator|_ and have been convolved with the ACIS-I on-axis responses, assuming
-an exposure time of 50~ks. The pixel size corresponds to the width of the finest simulation cell size as 
+an exposure time of 50 ks. The pixel size corresponds to the width of the finest simulation cell size as 
 before, assuming a redshift of z = 0.05 and the above cosmology. These files can be used to produce images 
 and spectra. 
