@@ -12,7 +12,7 @@
     <script>$('#dLabelGlobalToc').addClass('hidden');</script>
     <script>$('#dLabelLocalToc').addClass('hidden');</script>
 
-{{sim_name}}, {{time_str}}
+{{sim_name}}, {{timestr}}
 ==========================
 
 To make the best use out of this page:
