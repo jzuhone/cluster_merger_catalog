@@ -89,6 +89,7 @@ To make the best use out of this page:
     </figure>
     <br>
     <a id="cxo_evt_fits">FITS File Download</a><br>
+    <a href="ftp://cxc.cfa.harvard.edu/pub/caldb/CY18/acis_arfs_rmfs_cy18.tgz">Download Response Files</a><br>
     <a id="cxo_evt_js9">Open in JS9</a>
     <br><br>
     
