@@ -23,7 +23,7 @@ html_theme = 'bootstrap'
 html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()
 
 html_theme_options = dict(
-        bootswatch_theme = "readable",
+        bootswatch_theme = "flatly",
         navbar_sidebarrel = False,
         globaltoc_depth = 2,
 )
