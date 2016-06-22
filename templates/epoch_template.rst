@@ -14,7 +14,11 @@
 
     <h1 id="header"></h1>
 
-For directions on how to navigate this page, check out :ref:`how-to-use`.
+To make the best use out of this page:
+
+* Click on any image to enlarge it.
+* Download FITS files from the links or load them into JS9 below.
+* Change the axis of projection for the images and links using the drop-down menu. 
 
 .. raw:: html
 
