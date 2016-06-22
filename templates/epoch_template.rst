@@ -193,9 +193,9 @@ For directions on how to navigate this page, check out :ref:`how-to-use`.
             $('#fits_ext').val(default_name);
         }
         
-        function js9Load(url, type) {
+        function js9Load(url, itype) {
             JS9.CloseImage();
-            JS9.Load(url+"["+default_js9[type]+"]", {onload: getHDUList});
+            JS9.Load(url+"["+default_js9[itype]+"]", {onload: getHDUList});
         }
 
         var changeFits = function () {
