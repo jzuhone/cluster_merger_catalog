@@ -2,7 +2,7 @@
 .. raw:: html
    
     <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="../lightbox/js/lightbox.js"></script>
+    <script src="../../lightbox/js/lightbox.js"></script>
     <script>$('head').append('<link rel="stylesheet" href="../../lightbox/css/lightbox.css"/>');</script>
     <script>$('head').append('<link type="text/css" rel="stylesheet" href="../../js9/js9support.css">');</script>
     <script>$('head').append('<link type="text/css" rel="stylesheet" href="../../js9/js9.css">');</script>
@@ -142,7 +142,7 @@ For directions on how to navigate this page, check out :ref:`how-to-use`.
                 axisList.options.add(new_ax, 1);
             }
 
-        }
+        });
 
         function fits_link(itype, axis) {
             var fits_link = girder_data[itype][axis]["fits"];
