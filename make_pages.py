@@ -9,6 +9,7 @@ from sim_defs import \
     slosh_info, slosh_dict,\
     test_info, test_dict
 import argparse
+from collections import OrderedDict
 
 cadence = {"fiducial":0.02, "sloshing":0.01}
 
@@ -92,7 +93,7 @@ def make_epoch_pages(set_name, basenm, sim, sim_name, filenos):
                 axes = "xyz"
             data = {}
             for itype in itypes:
-                data[itype] = {}
+                data[itype] = OrderedDict()
                 for ax in axes:
                     if itype == "slice" and ax != "z":
                         continue
@@ -104,10 +105,10 @@ def make_epoch_pages(set_name, basenm, sim, sim_name, filenos):
                         imgs[link] = get_file(filename+"_"+field)
                     data[itype][ax]['pngs'] = imgs
             template_file = 'templates/epoch_template.rst'
-            context = {"sim": sim, "data": data,
-                       "fileno": fileno,
+            timestr = "t = %4.2f Gyr" % (fileno*cadence[basenm])
+            context = {"data": data,
                        "sim_name": sim_name,
-                       'cadence': cadence[basenm]}
+                       "timestr": timestr}
             make_template(outfile, template_file, context)
         pbar.update()
     pbar.finish()

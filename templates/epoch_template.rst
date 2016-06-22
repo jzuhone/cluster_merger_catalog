@@ -12,7 +12,8 @@
     <script>$('#dLabelGlobalToc').addClass('hidden');</script>
     <script>$('#dLabelLocalToc').addClass('hidden');</script>
 
-    <h1 id="header"></h1>
+{{sim_name}}, {{time_str}}
+==========================
 
 To make the best use out of this page:
 
@@ -44,8 +45,6 @@ To make the best use out of this page:
 
     Change the projection direction:
     <select id="proj_axis">
-        <option value="x">x</option>
-        <option value="z" selected="selected">z</option>
     </select>
 
     <br>
@@ -105,8 +104,6 @@ To make the best use out of this page:
     </div>
 
     <script>
-        var sim = "{{sim}}";
-        var timestr = "t = " + ({{fileno}}*{{cadence}}).toFixed(2) + " Gyr";
 
         var axisList = document.getElementById("proj_axis");
         var fitsList = document.getElementById("fits_ext");
@@ -114,6 +111,7 @@ To make the best use out of this page:
         var default_js9 = {"slice":"DENSITY","proj":"XRAY_EMISSIVITY","SZ":"180_GHZ","cxo_evt":"EVENTS"};
 
         var girder_data = {};
+        var axes = [];
 
         {% for itype, axes in data.items %}
         girder_data["{{itype}}"] = {};
@@ -127,6 +125,10 @@ To make the best use out of this page:
         {% endfor %}
         {% endfor %}
 
+        {% for ax in data.proj %}
+        axes.push("{{ax}}");
+        {% endfor %}
+        
         $(document).ready(function () {
 
             show_files('slice', 'z');
@@ -137,14 +139,13 @@ To make the best use out of this page:
             fits_link('SZ', 'z');
             show_files('cxo_evt', 'z');
             fits_link('cxo_evt', 'z');
-            document.getElementById('header').innerText = "{{sim_name}}, "+timestr;
-            document.title = "{{sim_name}}, "+timestr;
 
-            if (sim.substring(sim.length-2,sim.length) != "b0") {
+            for (var i = 0; i < axes.length; i++) {
                 var new_ax = document.createElement("option");
-                new_ax.text = "y";
-                axisList.options.add(new_ax, 1);
+                new_ax.text = axes[i];
+                axisList.options.add(new_ax, i);
             }
+            $('#proj_axis').val("z");
 
         });
 
