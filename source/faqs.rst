@@ -3,16 +3,27 @@
 Frequently Asked Questions
 ==========================
 
-Why are you giving this data away?
-----------------------------------
-
 What software can I use to analyze this data?
 ---------------------------------------------
 
-Why does the resolution appear to change in many of the images?
----------------------------------------------------------------
+Since the primary data products are FITS images and tables, you can use the standard tools
+that work with astronomical data in the FITS format, such as:
 
-This is because it actually is changing. These simulations are run with
+* `ds9 <http://ds9.si.edu>`_
+* `HEASOFT <http://heasarc.nasa.gov/lheasoft/>`_
+* `CIAO <http://cxc.cfa.harvard.edu/ciao/>`_
+* `AstroPy <http://www.astropy.org>`_
+* `pyregion <http://pyregion.readthedocs.io/en/latest/>`_
+* `APLpy <https://aplpy.github.io/>`_
+* `Glue <http://www.glueviz.org/>`_
+* etc. 
+
+`yt also has support for analyzing and visualizing FITS image and X-ray event data. <http://yt-project.org/doc/examining/loading_data.html#fits-data>`_
+
+Why does the resolution appear to be non-uniform in many of the images?
+-----------------------------------------------------------------------
+
+This is because it actually is non-uniform. These simulations are run with
 `adaptive mesh refinement (AMR) <https://en.wikipedia.org/wiki/Adaptive_mesh_refinement>`_,
 a technique for solving physics equations on a mesh which allows for different parts of the
 grid to be at higher resolution than others. In these simulations, the mesh is refined on
@@ -20,6 +31,20 @@ sharp jumps in the density and temperature (e.g., shocks and cold fronts), as we
 regions of high density (e.g., the cores of clusters). More details on how the AMR in these
 simulations works can be found in the original papers associated with the simulations or
 in the `most recent FLASH code paper <http://www.sciencedirect.com/science/article/pii/S0167819109000945>`_.
+
+Why are the *Chandra* events not at the normal resolution? Where are the chips?
+-------------------------------------------------------------------------------
+
+These are not "standard" X-ray events files. The main differences with normal events files are:
+
+* The pixel sizes correspond to the minimum resolution of the simulation, given the angular diameter
+  distance to the source
+* A uniform ACIS-I response has been assumed over the entire image
+* No PSF smoothing has been applied, since the pixel sizes are much larger than the PSF
+
+However, these differences should actually make the data easier to analyze, since they are much
+simpler. If you have any issues applying standard X-ray analysis to these files, 
+`submit a bug report <https://bitbucket.org/jzuhone/cluster_merger_catalog/issues/>`_.
 
 Why is background not included in the simulated X-ray event files?
 ------------------------------------------------------------------
