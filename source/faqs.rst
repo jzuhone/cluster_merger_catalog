@@ -6,8 +6,8 @@ Frequently Asked Questions
 Why are you giving this data away?
 ----------------------------------
 
-What software can I use to analysis this data?
-----------------------------------------------
+What software can I use to analyze this data?
+---------------------------------------------
 
 Why does the resolution appear to change in many of the images?
 ---------------------------------------------------------------
