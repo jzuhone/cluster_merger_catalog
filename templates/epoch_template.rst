@@ -93,6 +93,9 @@ To make the best use out of this page:
     <br><br>
     
     <h2>JS9 Interface</h2>
+    
+    Once an image file is loaded, use the drop-down menu below to switch between 
+    the different fields in the file.
 
     <select id="fits_ext"></select>
     <br>
