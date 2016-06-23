@@ -38,9 +38,13 @@ link_map = {"slice":["dens","temp","pden"],
 def make_set_page(set_info, set_dict):
     if not os.path.exists('source/%s' % set_info['name']):
         os.mkdir('source/%s' % set_info['name'])
-    sim_pages = []
     for sim, sim_info in set_dict.items():
-        make_sim_page(set_info['name'], set_info["basenm"], sim, sim_info[0], sim_info[1])
+        if sim[-2:] == "b0":
+            axes = "xz"
+        else:
+            axes = "xyz"
+        for ax in axes:
+            make_sim_page(set_info['name'], set_info["basenm"], sim, sim_info[0], sim_info[1], ax)
         make_epoch_pages(set_info['name'], set_info['basenm'], sim, sim_info[0], sim_info[1])
     context = {'name': set_info["name"],
                'sim_pages': list(set_dict.keys()),
@@ -52,18 +56,18 @@ def make_set_page(set_info, set_dict):
     template_file = 'templates/set_template.rst'
     make_template('source/%s/index.rst' % set_info["name"], template_file, context)
 
-def make_sim_page(set_name, basenm, sim, sim_name, filenos):
+def make_sim_page(set_name, basenm, sim, sim_name, filenos, ax):
     sim_dir = 'source/%s/%s' % (set_name, sim)
     if not os.path.exists(sim_dir):
         os.mkdir(sim_dir)
-    outfile = sim_dir+"/index.rst"
+    outfile = sim_dir+"/index_%s.rst" % ax
     if not os.path.exists(outfile):
         info = []
-        pbar = get_pbar("Setting up simulation page for "+sim, len(filenos))
+        pbar = get_pbar("Setting up simulation page for "+sim+", %s" % ax, len(filenos))
         for fileno in filenos:
             imgs = {}
             for field in ["xray_emissivity","kT","total_density","szy"]:
-                filename = basenm+"_%s_hdf5_plt_cnt_%04d_proj_z_%s" % (sim, fileno, field)
+                filename = basenm+"_%s_hdf5_plt_cnt_%04d_proj_%s_%s" % (sim, fileno, ax, field)
                 imgs[field] = get_file(filename)
             time = "t = %4.2f Gyr" % (fileno*cadence[basenm])
             info.append(["%04d" % fileno, time, imgs])
@@ -71,7 +75,8 @@ def make_sim_page(set_name, basenm, sim, sim_name, filenos):
         pbar.finish()
         context = {'sim': sim,
                    'sim_name': sim_name,
-                   'info': info}
+                   'info': info,
+                   'ax': ax}
         template_file = 'templates/sim_template.rst'
         make_template(outfile, template_file, context)
 
