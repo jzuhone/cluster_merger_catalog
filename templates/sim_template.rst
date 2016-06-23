@@ -5,13 +5,13 @@
    
    <script>$('#dLabelLocalToc').addClass('hidden');</script>
 
-   Click a link below to change the axis of projection.<br><br> 
+   <h2>Click a link below to change the axis of projection.</h2>
 {% if ax == "x" %}
-   x  <a href="index_y.html">y</a>  <a href="index_z.html">z</a>
+   <h3>x  <a href="index_y.html">y</a>  <a href="index_z.html">z</a></h3>
 {% elif ax == "y" %}
-   <a href="index_x.html">x</a>  y  <a href="index_z.html">z</a>
+   <h3><a href="index_x.html">x</a>  y  <a href="index_z.html">z</a></h3>
 {% elif ax == "z" %}
-   <a href="index_x.html">x</a>  <a href="index_y.html">y</a>  z
+   <h3><a href="index_x.html">x</a>  <a href="index_y.html">y</a>  z</h3>
 {% endif %}
  
 {% for fileno, time, imgs in info %}
