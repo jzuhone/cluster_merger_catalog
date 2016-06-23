@@ -71,6 +71,7 @@ def make_sim_page(set_name, basenm, sim, sim_name, filenos, ax):
         for fileno in filenos:
             imgs = {}
             for field in ["xray_emissivity","kT","total_density","szy"]:
+                basenm = basenm.replace("0.5", "0\.5")
                 filename = basenm+"_%s_hdf5_plt_cnt_%04d_proj_%s_%s" % (sim, fileno, ax, field)
                 imgs[field] = get_file(filename)
             time = "t = %4.2f Gyr" % (fileno*cadence[basenm])
