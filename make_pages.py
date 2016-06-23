@@ -71,7 +71,6 @@ def make_sim_page(set_name, basenm, sim, sim_name, filenos, ax):
         for fileno in filenos:
             imgs = {}
             for field in ["xray_emissivity","kT","total_density","szy"]:
-                basenm = basenm.replace("0.5", "0\.5")
                 filename = basenm+"_%s_hdf5_plt_cnt_%04d_proj_%s_%s" % (sim, fileno, ax, field)
                 imgs[field] = get_file(filename)
             time = "t = %4.2f Gyr" % (fileno*cadence[basenm])
@@ -109,7 +108,6 @@ def make_epoch_pages(set_name, basenm, sim, sim_name, filenos):
                     if itype == "slice" and ax != "z":
                         continue
                     data[itype][ax] = {}
-                    basenm = basenm.replace("0.5", "0\.5")
                     filename = basenm+"_%s_hdf5_plt_cnt_%04d_%s_%s" % (sim, fileno, itype, ax)
                     data[itype][ax]['fits'] = get_file(filename)
                     imgs = {}
@@ -126,7 +124,7 @@ def make_epoch_pages(set_name, basenm, sim, sim_name, filenos):
     pbar.finish()
 
 def get_file(filename):
-    item = gc.get("resource/search", {"q": filename, "types": '["item"]'})['item'][0]
+    item = gc.get("resource/search", {"q": '"'+filename+'"', "types": '["item"]'})['item'][0]
     return "https://girder.hub.yt/api/v1/item/%s/download" % item['_id']
 
 if __name__ == "__main__":
