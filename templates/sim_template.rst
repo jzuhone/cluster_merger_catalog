@@ -11,11 +11,11 @@
    <li>
 {% if ax != a %}
    <a href="index_{{a}}.html">
-{% endif}
+{% endif %}
    <h3>{{a}}</h3>
 {% if ax != a %}
    </a>
-{% endif}
+{% endif %}
    </li>
 {% endfor %}
    </ul>

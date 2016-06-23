@@ -109,6 +109,7 @@ def make_epoch_pages(set_name, basenm, sim, sim_name, filenos):
                     if itype == "slice" and ax != "z":
                         continue
                     data[itype][ax] = {}
+                    basenm = basenm.replace("0.5", "0\.5")
                     filename = basenm+"_%s_hdf5_plt_cnt_%04d_%s_%s" % (sim, fileno, itype, ax)
                     data[itype][ax]['fits'] = get_file(filename)
                     imgs = {}
