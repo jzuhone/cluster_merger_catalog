@@ -5,14 +5,14 @@
    
    <script>$('#dLabelLocalToc').addClass('hidden');</script>
 
-   <h2>Click on one of the axes below to change the axis of projection.</h2>
+   <h3>Click on one of the axes below to change the axis of projection.</h3>
    <ul>
 {% for a in axes %}
    <li>
 {% if ax != a %}
    <a href="index_{{a}}.html">
 {% endif %}
-   <h3>{{a}}</h3>
+   <h4>{{a}}</h4>
 {% if ax != a %}
    </a>
 {% endif %}
