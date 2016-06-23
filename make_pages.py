@@ -61,6 +61,10 @@ def make_sim_page(set_name, basenm, sim, sim_name, filenos, ax):
     if not os.path.exists(sim_dir):
         os.mkdir(sim_dir)
     outfile = sim_dir+"/index_%s.rst" % ax
+    if sim[-2:] == "b0":
+        axes = ["x","z"]
+    else:
+        axes = ["x", "y", "z"]
     if not os.path.exists(outfile):
         info = []
         pbar = get_pbar("Setting up simulation page for "+sim+", %s" % ax, len(filenos))
@@ -76,7 +80,8 @@ def make_sim_page(set_name, basenm, sim, sim_name, filenos, ax):
         context = {'sim': sim,
                    'sim_name': sim_name,
                    'info': info,
-                   'ax': ax}
+                   'ax': ax,
+                   'axes': axes}
         template_file = 'templates/sim_template.rst'
         make_template(outfile, template_file, context)
 
