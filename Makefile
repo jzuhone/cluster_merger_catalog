@@ -60,6 +60,7 @@ html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	cd js9 && ./configure --with-webdir=../build/html/js9 && make && make install
 	cp -rf lightbox $(BUILDDIR)/html
+	cp -rf files $(BUILDDIR)/html
 	echo `ls -d $(BUILDDIR)/html/zuhone2011/*/` | xargs -n 1 cp $(BUILDDIR)/html/js9/js9Prefs.json 
 	echo `ls -d $(BUILDDIR)/html/zuhone2010/*/` | xargs -n 1 cp $(BUILDDIR)/html/js9/js9Prefs.json 
 	@echo
