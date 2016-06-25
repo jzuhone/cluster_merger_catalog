@@ -6,7 +6,8 @@ fid_info = {"name": "zuhone2011",
             "set_journal": "ZuHone, J. A. 2011, ApJ, 728, 54",
             "ads_link": "http://adsabs.harvard.edu/abs/2011ApJ...728...54Z",
             "box_size": 14.26,
-            "cell_size": 6.96}
+            "cell_size": 6.96,
+            "sim_type": "AMR"}
 
 fid_dict = OrderedDict()
 fid_dict["1to1_b0"] = ("R = 1:1, b = 0 kpc",
@@ -56,7 +57,8 @@ slosh_info = {"name": "zuhone2010",
               "set_journal": "ZuHone, J. A., Markevitch, M., & Johnson, R. E. 2010, ApJ, 717, 908",
               "ads_link": "http://adsabs.harvard.edu/abs/2010ApJ...717..908Z",
               "box_size": 10.0,
-              "cell_size": 4.88}
+              "cell_size": 4.88,
+              "sim_type": "AMR"}
 
 slosh_dict = OrderedDict()
 slosh_dict["R5_b500"] = ("R = 1:5, b = 500 kpc, gasless subcluster",
@@ -70,9 +72,15 @@ slosh_dict["R5_b500"] = ("R = 1:5, b = 500 kpc, gasless subcluster",
                           430, 440, 450, 460, 470, 480, 490, 500,
                           510, 520, 530, 540, 550, 560, 570, 580,
                           590, 600])
-#slosh_dict["R20_b200"] = ("R = 1:20, b = 200 kpc", [])
+slosh_dict["R20_b200"] = ("R = 1:20, b = 200 kpc",
+                          [0, 90, 120, 125, 130, 131, 132, 133,
+                           134, 135, 136, 137, 138, 139, 140,
+                           145, 150, 155, 160, 165, 170, 180,
+                           190, 200, 210, 220, 240, 260, 280,
+                           300, 320, 340, 360, 380, 400, 420,
+                           430, 440, 450, 455, 456, 457, 458,
+                           459, 460, 461, 462, 463, 464, 465,
+                           470, 475, 480, 490, 500, 510, 530,
+                           550, 570, 590, 610, 630, 650, 670,
+                           690])
 #slosh_dict["R20_b1000"] = ("R = 1:20, b = 1000 kpc", [])
-
-test_info = fid_info
-test_dict = OrderedDict()
-test_dict["1to3_b1"] = ("R = 1:3, b = 1000 kpc", [0, 20, 30])
