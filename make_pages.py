@@ -6,8 +6,7 @@ import girder_client
 from yt.funcs import get_pbar
 from sim_defs import \
     fid_dict, fid_info, \
-    slosh_info, slosh_dict,\
-    test_info, test_dict
+    slosh_info, slosh_dict
 import argparse
 from collections import OrderedDict
 
@@ -53,7 +52,7 @@ def make_set_page(set_info, set_dict):
                'set_journal': set_info["set_journal"],
                'box_size': set_info["box_size"],
                'cell_size': set_info["cell_size"],
-               'sim_type': set_info['set_type']}
+               'sim_type': set_info['sim_type']}
     template_file = 'templates/set_template.rst'
     make_template('source/%s/index.rst' % set_info["name"], template_file, context)
 
