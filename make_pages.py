@@ -52,7 +52,8 @@ def make_set_page(set_info, set_dict):
                'ads_link': set_info["ads_link"],
                'set_journal': set_info["set_journal"],
                'box_size': set_info["box_size"],
-               'cell_size': set_info["cell_size"]}
+               'cell_size': set_info["cell_size"],
+               'sim_type': set_info['set_type']}
     template_file = 'templates/set_template.rst'
     make_template('source/%s/index.rst' % set_info["name"], template_file, context)
 
@@ -124,15 +125,15 @@ def make_epoch_pages(set_name, basenm, sim, sim_name, filenos):
     pbar.finish()
 
 def get_file(filename):
-    item = gc.get("resource/search", {"q": '"'+filename+'"', "types": '["item"]'})['item'][0]
-    return "https://girder.hub.yt/api/v1/item/%s/download" % item['_id']
+    items = gc.get("resource/search", {"q": '"'+filename+'"', "types": '["item"]'})['item']
+    if len(items) == 0:
+        return "https://girder.hub.yt/static/built/plugins/ythub/extra/img/yt_logo.png"
+    else:
+        return "https://girder.hub.yt/api/v1/item/%s/download" % items[0]['_id']
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--test", action='store_true')
     args = parser.parse_args()
-    if args.test:
-        make_set_page(test_info, test_dict)
-    else:
-        make_set_page(fid_info, fid_dict)
-        make_set_page(slosh_info, slosh_dict)
+    make_set_page(fid_info, fid_dict)
+    make_set_page(slosh_info, slosh_dict)
