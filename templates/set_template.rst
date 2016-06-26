@@ -10,7 +10,8 @@ Set Characteristics
 * Simulation type: {{sim_type}}
 * Box size: *L* = {{box_size}} Mpc
 * Finest cell size: :math:`\Delta{x}_{\rm min}` = {{cell_size}} kpc
-
+* Primary cluster mass: :math:`{{primary_mass}}`
+  
 Simulations
 -----------
 

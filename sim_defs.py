@@ -2,12 +2,13 @@ from collections import OrderedDict
 
 fid_info = {"name": "zuhone2011", 
             "basenm": "fiducial",
-            "set_name": "ZuHone 2011",
+            "set_name": "A Parameter Space Exploration of Galaxy Cluster Mergers",
             "set_journal": "ZuHone, J. A. 2011, ApJ, 728, 54",
             "ads_link": "http://adsabs.harvard.edu/abs/2011ApJ...728...54Z",
             "box_size": 14.26,
             "cell_size": 6.96,
-            "sim_type": "AMR"}
+            "sim_type": "AMR",
+            "primary_mass": "M_{200} = 6~{\\times}~10^{14}~M_{\odot}"}
 
 fid_dict = OrderedDict()
 fid_dict["1to1_b0"] = ("R = 1:1, b = 0 kpc",
@@ -53,12 +54,13 @@ fid_dict["1to3_b1"] = ("R = 1:3, b = 1000 kpc",
                         380, 400, 450, 500])
 slosh_info = {"name": "zuhone2010",
               "basenm": "sloshing",
-              "set_name": "ZuHone, Markevitch, & Johnson 2010",
+              "set_name": "Sloshing of the Cold Gas in Galaxy Cluster Cores",
               "set_journal": "ZuHone, J. A., Markevitch, M., & Johnson, R. E. 2010, ApJ, 717, 908",
               "ads_link": "http://adsabs.harvard.edu/abs/2010ApJ...717..908Z",
               "box_size": 10.0,
               "cell_size": 4.88,
-              "sim_type": "AMR"}
+              "sim_type": "AMR",
+              "primary_mass": "M_{200} = 8.83~{\\times}~10^{14}\\frac{R}{R+1}~M_{\odot}"}
 
 slosh_dict = OrderedDict()
 slosh_dict["R5_b500"] = ("R = 1:5, b = 500 kpc, gasless subcluster",

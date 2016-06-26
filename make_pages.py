@@ -52,7 +52,8 @@ def make_set_page(set_info, set_dict):
                'set_journal': set_info["set_journal"],
                'box_size': set_info["box_size"],
                'cell_size': set_info["cell_size"],
-               'sim_type': set_info['sim_type']}
+               'sim_type': set_info['sim_type'],
+               'primary_mass': set_info["primary_mass"]}
     template_file = 'templates/set_template.rst'
     make_template('source/%s/index.rst' % set_info["name"], template_file, context)
 
