@@ -68,22 +68,24 @@ def make_sim_page(set_name, basenm, sim, sim_name, filenos, ax):
     else:
         axes = ["x", "y", "z"]
     if not os.path.exists(outfile):
-        info = []
         pbar = get_pbar("Setting up simulation page for "+sim+", %s" % ax, len(filenos))
+        epochs = {}
+        imgs = {}
         for fileno in filenos:
-            imgs = {}
-            for field in ["xray_emissivity","kT","total_density","szy"]:
+            fn = "%04d" % fileno
+            pngs = {}
+            for fd, field in zip(link_map["proj"], ["xray_emissivity","kT","total_density","szy"]):
                 filename = basenm+"_%s_hdf5_plt_cnt_%04d_proj_%s_%s" % (sim, fileno, ax, field)
-                imgs[field] = get_file(filename)
-            time = "t = %4.2f Gyr" % (fileno*cadence[basenm])
-            info.append(["%04d" % fileno, time, imgs])
+                pngs[fd] = get_file(filename)
+            epochs[fn] = "t = %4.2f Gyr" % (fileno*cadence[basenm])
+            imgs[fn] = pngs
             pbar.update()
         pbar.finish()
-        context = {'sim': sim,
-                   'sim_name': sim_name,
-                   'info': info,
+        context = {'sim_name': sim_name,
                    'ax': ax,
-                   'axes': axes}
+                   'axes': axes,
+                   'epochs': epochs,
+                   'imgs': imgs}
         template_file = 'templates/sim_template.rst'
         make_template(outfile, template_file, context)
 
