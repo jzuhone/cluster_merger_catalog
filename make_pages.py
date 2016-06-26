@@ -10,7 +10,8 @@ from sim_defs import \
 import argparse
 from collections import OrderedDict
 
-cadence = {"fiducial":0.02, "sloshing":0.01}
+cadence = {"fiducial": 0.02, 
+           "sloshing": 0.01}
 
 try:
     django.conf.settings.configure()

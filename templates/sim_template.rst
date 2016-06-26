@@ -27,6 +27,18 @@
 
 .. raw:: html
 
+   <div class="row">
+     <div class="small-10 medium-11 columns">
+       <div class="range-slider" data-slider data-options="display_selector: #sliderOutput3;">
+         <span class="range-slider-handle" role="slider" tabindex="0"></span>
+         <span class="range-slider-active-segment"></span>
+       </div>
+     </div>
+     <div class="small-2 medium-1 columns">
+       <span id="sliderOutput3"></span>
+     </div>
+   </div>
+
    <a href="{{fileno}}.html" target="_blank">
    <figure style="display: inline-block;">
    <figcaption><h4>X-ray Emissivity</h4></figcaption>
