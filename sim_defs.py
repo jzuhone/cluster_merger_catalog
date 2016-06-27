@@ -60,7 +60,8 @@ slosh_info = {"name": "zuhone2010",
               "box_size": 10.0,
               "cell_size": 4.88,
               "sim_type": "AMR",
-              "primary_mass": "M_{200} = 8.83~{\\times}~10^{14}\\frac{R}{R+1}~M_{\odot}"}
+              "primary_mass": "M_{200} = 8.83~{\\times}~10^{14}\\frac{R}{R+1}~M_{\odot}" + \
+                  "~\\rm{(where}~\\it{R}~\\rm{is~the~mass~ratio)}"}
 
 slosh_dict = OrderedDict()
 slosh_dict["R5_b500"] = ("R = 1:5, b = 500 kpc, gasless subcluster",

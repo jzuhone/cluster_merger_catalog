@@ -87,7 +87,7 @@ def make_sim_page(set_name, basenm, sim, sim_name, filenos, ax):
                    'axes': axes,
                    'epochs': epochs,
                    'imgs': imgs,
-                   'num_epochs': num_epochs,
+                   'num_epochs': num_epochs-1,
                    'filenos': ["%04d" % i for i in filenos]}
         template_file = 'templates/sim_template.rst'
         make_template(outfile, template_file, context)
