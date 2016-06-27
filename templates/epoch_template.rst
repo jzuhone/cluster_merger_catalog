@@ -115,25 +115,27 @@ To make the best use out of this page:
 
         var default_js9 = {"slice":"DENSITY","proj":"XRAY_EMISSIVITY","SZ":"180_GHZ","cxo_evt":"EVENTS"};
 
-        var girder_data = {};
-        var axes = [];
-
+        var girder_data = {
         {% for itype, axes in data.items %}
-        girder_data["{{itype}}"] = {};
+            "{{itype}}": {
         {% for ax, ftypes in axes.items %}
-        girder_data["{{itype}}"]["{{ax}}"] = {};
-        girder_data["{{itype}}"]["{{ax}}"]["fits"] = "{{ftypes.fits}}";
-        girder_data["{{itype}}"]["{{ax}}"]["pngs"] = {};
+                "{{ax}}": {"fits": "{{ftypes.fits}}",
+                           "pngs": {
         {% for key, link in ftypes.pngs.items %}
-        girder_data["{{itype}}"]["{{ax}}"]["pngs"]["{{key}}"] = "{{link}}";
+                               "{{key}}": "{{link}}",
         {% endfor %}
+	                   },},
         {% endfor %}
+	    },
         {% endfor %}
-
+	};
+	
+	var axes = [
         {% for ax in data.proj %}
-        axes.push("{{ax}}");
+            "{{ax}}",
         {% endfor %}
-        
+        ];
+	
         $(document).ready(function () {
 
             show_files('slice', 'z');
@@ -165,7 +167,9 @@ To make the best use out of this page:
         function show_files(itype, axis) {
             var pngs = girder_data[itype][axis]["pngs"];
             $.each(pngs, function(key, value) {
-                document.getElementById(itype+'_'+key).src = value;
+	        var img = document.getElementById(itype+'_'+key);
+		img.src = "../../images/loader.gif";
+		img.src = value;
                 document.getElementById('big_'+itype+'_'+key).href = value;
             });
         }

@@ -69,8 +69,8 @@ def make_sim_page(set_name, basenm, sim, sim_name, filenos, ax):
         axes = ["x", "y", "z"]
     if not os.path.exists(outfile):
         pbar = get_pbar("Setting up simulation page for "+sim+", %s" % ax, len(filenos))
-        epochs = {}
-        imgs = {}
+        epochs = OrderedDict()
+        imgs = OrderedDict()
         for fileno in filenos:
             fn = "%04d" % fileno
             pngs = {}
@@ -81,11 +81,14 @@ def make_sim_page(set_name, basenm, sim, sim_name, filenos, ax):
             imgs[fn] = pngs
             pbar.update()
         pbar.finish()
+        num_epochs = len(epochs.keys())
         context = {'sim_name': sim_name,
                    'ax': ax,
                    'axes': axes,
                    'epochs': epochs,
-                   'imgs': imgs}
+                   'imgs': imgs,
+                   'num_epochs': num_epochs,
+                   'filenos': ["%04d" % i for i in filenos]}
         template_file = 'templates/sim_template.rst'
         make_template(outfile, template_file, context)
 
