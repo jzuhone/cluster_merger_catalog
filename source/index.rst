@@ -15,7 +15,7 @@ wavebands, from millimeter to X-ray. The goal is to provide both observers and t
 area of galaxy clusters a resource for studying mergers and comparing simulated data to real
 observations. The simulation data has been post-processed using `yt <http://yt-project.org>`_.
 
-The catalog and its data is hosted on the `yt Hub <http://hub.yt>`_, provided by the
+The catalog and its data are hosted on the `yt Hub <http://hub.yt>`_, provided by the
 `Data Exploration Lab <https://dxl.ncsa.illinois.edu/>`_ at the
 `National Center for Supercomputing Applications <http://www.ncsa.illinois.edu/>`_, at the
 `University of Illinois at Urbana-Champaign <http://www.illinois.edu>`_.
