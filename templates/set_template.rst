@@ -17,7 +17,10 @@ Set Characteristics
 * Box size: *L* = {{box_size}} Mpc
 * Finest cell size: :math:`\Delta{x}_{\rm min}` = {{cell_size}} kpc
 * Primary cluster mass: :math:`{{primary_mass}}`
-  
+
+For the following simulations, :math:`R` is the mass ratio betwen the two clusters and :math:`b` is the initial
+impact parameter in kpc. 
+
 Simulations
 -----------
 
