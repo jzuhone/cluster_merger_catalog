@@ -52,8 +52,9 @@ accompanying papers, the links to which are given on each simulation set's page.
 FITS Files
 ----------
 
-The data consists of FITS image and table files. The various fields that make up the data are
-described here. The pixel scale of each FITS image is equivalent to the finest cell size of the
+The data presented here consists of FITS image and table files, either slices or projections of the original
+3D data along particular lines of sight. The various fields that make up the data are
+described below. The pixel scale of each FITS image is equivalent to the finest cell size of the
 simulation, which is given on each simulation set's page. 
 
 Slices

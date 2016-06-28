@@ -7,23 +7,18 @@
    <script type="text/javascript" src="../../scripts/bootstrap-slider.js"></script>
    <script>$('head').append('<link type="text/css" rel="stylesheet" href="../../scripts/bootstrap-slider.css">');</script>
    <script>$('#dLabelLocalToc').addClass('hidden');</script>
-
+   <script>$('.navbar-nav').first().append('<li><a href="../index.html">&#10094;  {{set_name}} Simulations</a></li>');</script>
+   
    <h3>Click on one of the axes below to change the axis of projection.</h3>
-   <ul>
 {% for a in axes %}
-   <li>
 {% if ax != a %}
-   <a href="index_{{a}}.html">
+   <a class="btn btn-primary" href="index_{{a}}.html" role="button">{{a}}</a>
+{% else %}
+   <a class="btn btn-primary" href="index_{{a}}.html" role="button" disabled>{{a}}</a> 
 {% endif %}
-   <h4>{{a}}</h4>
-{% if ax != a %}
-   </a>
-{% endif %}
-   </li>
 {% endfor %}
-   </ul>
 
-   <h3>Use the slider to change the epoch of the merger.</h3>
+   <h3>Use the slider to change the epoch of the merger, and click on the images to access the files.</h3>
    <br>
    
    <input id="epoch" data-slider-id='epochSlider' type="text" data-slider-min="0"
@@ -89,6 +84,7 @@
    function set_links(num) {
        var fileno = filenos[num];
        document.getElementById("epoch_header").innerText = epochs[fileno];
+       document.getElementById("epoch_header").textContent = epochs[fileno];
        document.getElementById("epoch_link").href = fileno+".html";
        for (var i = 0; i < names.length; i++) {
 	   var img = document.getElementById('img_'+names[i]);

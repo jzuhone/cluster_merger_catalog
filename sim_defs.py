@@ -2,7 +2,7 @@ from collections import OrderedDict
 
 fid_info = {"name": "zuhone2011", 
             "basenm": "fiducial",
-            "set_name": "A Parameter Space Exploration of Galaxy Cluster Mergers",
+            "set_name": "ZuHone 2011: A Parameter Space Exploration of Galaxy Cluster Mergers",
             "set_journal": "ZuHone, J. A. 2011, ApJ, 728, 54",
             "ads_link": "http://adsabs.harvard.edu/abs/2011ApJ...728...54Z",
             "box_size": 14.26,
@@ -54,7 +54,7 @@ fid_dict["1to3_b1"] = ("R = 1:3, b = 1000 kpc",
                         380, 400, 450, 500])
 slosh_info = {"name": "zuhone2010",
               "basenm": "sloshing",
-              "set_name": "Sloshing of the Cold Gas in Galaxy Cluster Cores",
+              "set_name": "ZuHone et al. 2010: Sloshing of the Cold Gas in Galaxy Cluster Cores",
               "set_journal": "ZuHone, J. A., Markevitch, M., & Johnson, R. E. 2010, ApJ, 717, 908",
               "ads_link": "http://adsabs.harvard.edu/abs/2010ApJ...717..908Z",
               "box_size": 10.0,
@@ -86,4 +86,12 @@ slosh_dict["R20_b200g"] = ("R = 1:20, b = 200 kpc",
                             470, 475, 480, 490, 500, 510, 530,
                             550, 570, 590, 610, 630, 650, 670,
                             690])
-#slosh_dict["R20_b1000g"] = ("R = 1:20, b = 1000 kpc", [])
+slosh_dict["R20_b1000g"] = ("R = 1:20, b = 1000 kpc",
+                            [0, 90, 100, 110, 120, 125, 130,
+                             135, 136, 137, 138, 139, 140, 141,
+                             142, 143, 144, 145, 150, 155, 160,
+                             165, 170, 175, 180, 190, 200, 210,
+                             220, 230, 240, 250, 260, 270, 280,
+                             300, 320, 340, 360, 380, 400, 420,
+                             440, 460, 480, 500, 520, 540, 550])
+

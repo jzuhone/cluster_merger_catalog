@@ -11,7 +11,8 @@
     <script type="text/javascript" src="../../js9/js9plugins.js"></script>
     <script>$('#dLabelGlobalToc').addClass('hidden');</script>
     <script>$('#dLabelLocalToc').addClass('hidden');</script>
-
+    <script>$('.navbar-nav').first().append('<li><a href="index_z.html">&#10094;  {{sim_name}}</a></li>');</script>
+   
 {{sim_name}}, {{timestr}}
 ==========================
 
@@ -39,7 +40,7 @@ To make the best use out of this page:
     </figure>
     <br>
     <a id="slice_fits">FITS File Download</a><br>
-    <a id="slice_js9">Open in JS9</a>
+    <a id="slice_js9">Open in JS9 below</a>
     <br><br>
 
     <h2>Projections</h2>
@@ -67,7 +68,7 @@ To make the best use out of this page:
     </figure>
     <br>
     <a id="proj_fits">FITS File Download</a><br>
-    <a id="proj_js9">Open in JS9</a>
+    <a id="proj_js9">Open in JS9 below</a>
 
     <br><br>
     
@@ -81,7 +82,7 @@ To make the best use out of this page:
     </figure>
     <br>
     <a id="SZ_fits">FITS File Download</a><br>
-    <a id="SZ_js9">Open in JS9</a>
+    <a id="SZ_js9">Open in JS9 below</a>
     <br><br>
     
     <figure style="display: inline-block;">
@@ -91,7 +92,7 @@ To make the best use out of this page:
     <br>
     <a id="cxo_evt_fits">FITS File Download</a><br>
     <a href="../../files/acisi_rmfs.tar.gz">Download Response Files</a><br>
-    <a id="cxo_evt_js9">Open in JS9</a>
+    <a id="cxo_evt_js9">Open in JS9 below</a>
     <br><br>
     
     <h2>JS9 Interface</h2>
@@ -160,8 +161,10 @@ To make the best use out of this page:
             var fits_link = girder_data[itype][axis]["fits"];
             document.getElementById(itype+'_fits').href = fits_link;
             document.getElementById(itype+'_fits').innerText = "FITS File Download ("+axis+"-axis)";
-            document.getElementById(itype+'_js9').href = "javascript:js9Load('"+fits_link+"','"+itype+"');";
-            document.getElementById(itype+'_js9').innerText = "Open in JS9 ("+axis+"-axis)";
+            document.getElementById(itype+'_fits').textContent = "FITS File Download ("+axis+"-axis)";
+	    document.getElementById(itype+'_js9').href = "javascript:js9Load('"+fits_link+"','"+itype+"');";
+            document.getElementById(itype+'_js9').innerText = "Open in JS9 below ("+axis+"-axis)";
+            document.getElementById(itype+'_js9').textContent = "Open in JS9 below ("+axis+"-axis)";
         }
         
         function show_files(itype, axis) {

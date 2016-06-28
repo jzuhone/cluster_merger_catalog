@@ -13,6 +13,9 @@ from collections import OrderedDict
 cadence = {"fiducial": 0.02, 
            "sloshing": 0.01}
 
+short_set = {"zuhone2011": "ZuHone 2011",
+             "zuhone2010": "ZuHone et al. 2010"}
+
 try:
     django.conf.settings.configure()
     django.setup()
@@ -83,6 +86,7 @@ def make_sim_page(set_name, basenm, sim, sim_name, filenos, ax):
         pbar.finish()
         num_epochs = len(epochs.keys())
         context = {'sim_name': sim_name,
+                   'set_name': short_set[set_name],
                    'ax': ax,
                    'axes': axes,
                    'epochs': epochs,
