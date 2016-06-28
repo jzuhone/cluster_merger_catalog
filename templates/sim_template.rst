@@ -27,7 +27,7 @@
    <br><br>
 
    <h2 id="epoch_header"></h2>
-   <a id="epoch_link" target="_blank">
+   <a id="epoch_link">
    <figure style="display: inline-block;">
    <figcaption><h4>X-ray Emissivity</h4></figcaption>
    <img id="img_xray" width="450" />
