@@ -71,6 +71,11 @@ set up.
 How do I cite the catalog?
 --------------------------
 
+Is the data licensed?
+---------------------
+
+The data is made available under `CC BY 4.0. <https://creativecommons.org/licenses/by/4.0/>`_
+
 I found a problem! How do I report it?
 --------------------------------------
 
