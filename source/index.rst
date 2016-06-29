@@ -32,9 +32,9 @@ The catalog and its data are hosted on the `yt Hub <http://hub.yt>`_, provided b
 .. raw:: html
 
    <h3>In collaboration with</h3>
-   <a href="http://www.cfa.harvard.edu"><img src="images/cfa-logo.gif" width="70" hspace="20"/></a>
-   <a href="http://www.ncsa.illinois.edu"><img src="images/ncsa_vertical.png" width="80" hspace="20"/></a>   
-   <a href="http://yt-project.org"><img src="images/yt_logo.png" width="70" hspace="20"/></a>
+   <a href="http://www.cfa.harvard.edu"><img src="images/cfa-logo.gif" width="70" vspace="20" hspace="20"/></a>
+   <a href="http://www.ncsa.illinois.edu"><img src="images/ncsa_vertical.png" width="80" vspace="20" hspace="20"/></a>   
+   <a href="http://yt-project.org"><img src="images/yt_logo.png" width="70" vspace="20" hspace="20"/></a>
    <br><br>
 
 	 
