@@ -3,10 +3,10 @@
     <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script>$('#dLabelLocalToc').addClass('hidden');</script>
 
-Binary Cluster Merger Catalog
+Galaxy Cluster Merger Catalog
 =============================
 
-Welcome to the Binary Cluster Merger Catalog!
+Welcome to the Galaxy Cluster Merger Catalog!
 
 This catalog provides data from a number of simulations of galaxy cluster mergers. Specifically,
 for each simulation you will find projections of simulated observable quantities related to galaxy
