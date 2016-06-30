@@ -6,6 +6,18 @@
 Galaxy Cluster Merger Catalog
 =============================
 
+.. raw:: html
+
+   <figure style="display: table; float: right; margin: 0 0 0 20px;">
+   <a href="fiducial/1to3_b1/0190.html">
+   <img src="images/gcmc_logo.png" width="400" style="float: right;"/></a>
+   <figcaption style="display: table-caption; caption-side: bottom;">
+   Binary cluster merger with mass ratio of 1:3, initial impact parameter
+   of 1 Mpc. Magenta indicates X-ray emissivity, blue indicates mass density.
+   Image credit Joseph DePasquale (CfA).
+   </figcaption>
+   </figure>
+				 
 Welcome to the Galaxy Cluster Merger Catalog!
 
 This catalog provides data from a number of simulations of galaxy cluster mergers. Specifically,
@@ -19,7 +31,7 @@ The catalog and its data are hosted on the `yt Hub <http://hub.yt>`_, provided b
 `Data Exploration Lab <https://dxl.ncsa.illinois.edu/>`_ at the
 `National Center for Supercomputing Applications <http://www.ncsa.illinois.edu/>`_, at the
 `University of Illinois at Urbana-Champaign <http://www.illinois.edu>`_.
-   
+				 
 .. toctree::
    :maxdepth: 1
    
