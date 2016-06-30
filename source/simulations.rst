@@ -11,8 +11,13 @@ The Simulation Data
 The following pages provide the data from various simulation investigations. General information
 about the types of data found in these sets can be found at :ref:`description`.
 
+N-body/Hydrodynamics Binary Mergers
+-----------------------------------
 .. toctree::
     :maxdepth: 1
         
-    zuhone2011/index
-    zuhone2010/index
+    fiducial/index
+    sloshing/index
+
+Hydrodynamics Binary Mergers with Rigid Gravitational Potentials
+----------------------------------------------------------------

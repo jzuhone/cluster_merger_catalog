@@ -49,7 +49,10 @@ help:
 .PHONY: clean
 clean:
 	rm -rf $(BUILDDIR)/*
-	rm -rf source/zuhone2011 source/zuhone2010
+	rm -rf source/fiducial source/sloshing
+
+.PHONY: all
+all: pages html deploy
 
 .PHONY: pages
 pages:
@@ -63,8 +66,8 @@ html:
 	cp -rf scripts $(BUILDDIR)/html                                       
 	cp -rf files $(BUILDDIR)/html
 	cp -rf images $(BUILDDIR)/html
-	echo `ls -d $(BUILDDIR)/html/zuhone2011/*/` | xargs -n 1 cp $(BUILDDIR)/html/js9/js9Prefs.json 
-	echo `ls -d $(BUILDDIR)/html/zuhone2010/*/` | xargs -n 1 cp $(BUILDDIR)/html/js9/js9Prefs.json 
+	echo `ls -d $(BUILDDIR)/html/fiducial/*/` | xargs -n 1 cp $(BUILDDIR)/html/js9/js9Prefs.json 
+	echo `ls -d $(BUILDDIR)/html/sloshing/*/` | xargs -n 1 cp $(BUILDDIR)/html/js9/js9Prefs.json 
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 

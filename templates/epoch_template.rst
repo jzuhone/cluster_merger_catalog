@@ -11,7 +11,7 @@
     <script type="text/javascript" src="../../js9/js9plugins.js"></script>
     <script>$('#dLabelGlobalToc').addClass('hidden');</script>
     <script>$('#dLabelLocalToc').addClass('hidden');</script>
-    <script>$('.navbar-nav').first().append('<li><a href="index_z.html">&#10094;  {{sim_name}}</a></li>');</script>
+    <script>$('.navbar-nav').first().append('<li><a href="index_z.html">&#10094; Back to Simulation</a></li>');</script>
    
 {{sim_name}}, {{timestr}}
 ==========================

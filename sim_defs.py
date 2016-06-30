@@ -1,8 +1,8 @@
 from collections import OrderedDict
 
-fid_info = {"name": "zuhone2011", 
+fid_info = {"name": "fiducial", 
             "basenm": "fiducial",
-            "set_name": "ZuHone 2011: A Parameter Space Exploration of Galaxy Cluster Mergers",
+            "set_name": "A Parameter Space Exploration of Galaxy Cluster Mergers (ZuHone 2011)",
             "set_journal": "ZuHone, J. A. 2011, ApJ, 728, 54",
             "ads_link": "http://adsabs.harvard.edu/abs/2011ApJ...728...54Z",
             "box_size": 14.26,
@@ -62,9 +62,9 @@ fid_dict["1to3_b1"] = ("R = 1:3, b = 1000 kpc",
                         221, 222, 223, 224, 225, 230, 240, 250,
                         260, 270, 280, 290, 300, 320, 340, 360,
                         380, 400, 450, 500])
-slosh_info = {"name": "zuhone2010",
+slosh_info = {"name": "sloshing",
               "basenm": "sloshing",
-              "set_name": "ZuHone et al. 2010: Sloshing of the Cold Gas in Galaxy Cluster Cores",
+              "set_name": "Sloshing of the Cold Gas in Galaxy Cluster Cores (ZuHone, Markevitch, & Johnson 2010)",
               "set_journal": "ZuHone, J. A., Markevitch, M., & Johnson, R. E. 2010, ApJ, 717, 908",
               "ads_link": "http://adsabs.harvard.edu/abs/2010ApJ...717..908Z",
               "box_size": 10.0,

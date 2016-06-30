@@ -2,8 +2,7 @@
 
    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
    <script>$('#dLabelLocalToc').addClass('hidden');</script>
-   <script>$('.navbar-nav').first().append('<li><a href="../simulations.html">&#10094; Simulation Data</a></li>');</script>
-   
+      
 .. _{{name}}:
 
 {{set_name|safe}}
