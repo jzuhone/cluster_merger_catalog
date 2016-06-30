@@ -19,13 +19,24 @@
 To make the best use out of this page:
 
 * Click on any image to enlarge it.
-* Download FITS files from the links or load them into JS9 below.
+* Download FITS files from the links or load them into the JS9 window at the bottom of the page.
 * Change the axis of projection for the images and links using the drop-down menu. 
-* The FITS files have more fields than the images shown here. See :ref:`description` for details.
 
 .. raw:: html
 
     <h2>Slices</h2>
+
+The slice FITS file contains the following fields:
+
+{% for field, descr in slice_fields.items %}
+* ``"{{field}}"``: {{descr}}
+{% endfor %}
+  
+.. raw:: html
+
+    <a id="slice_fits">FITS File Download</a><br>
+    <a id="slice_js9">Open in JS9 below</a>
+    <br><br>	       
     <figure style="display: inline-block;">
     <figcaption><h4>Density</h4></figcaption>
     <a id="big_slice_dens" data-lightbox="lb_slice_dens" ><img id="slice_dens" width="350" /></a>
@@ -39,17 +50,25 @@ To make the best use out of this page:
     <a id="big_slice_pden" data-lightbox="lb_slice_pden" ><img id="slice_pden" width="350" /></a>
     </figure>
     <br>
-    <a id="slice_fits">FITS File Download</a><br>
-    <a id="slice_js9">Open in JS9 below</a>
-    <br><br>
 
     <h2>Projections</h2>
 
     Change the projection direction:
     <select id="proj_axis">
     </select>
+    <br><br>
 
-    <br>
+The projection FITS file contains the following fields:
+
+{% for field, descr in proj_fields.items %}
+* ``"{{field}}"``: {{descr}}
+{% endfor %}
+
+.. raw:: html
+
+    <a id="proj_fits">FITS File Download</a><br>
+    <a id="proj_js9">Open in JS9 below</a>
+    <br><br>
     <figure style="display: inline-block;">
     <figcaption><h4>X-ray Emissivity</h4></figcaption>
     <a id="big_proj_xray" data-lightbox="lb_proj_xray" ><img id="proj_xray" width="450" /></a>
@@ -66,12 +85,19 @@ To make the best use out of this page:
     <figcaption><h4>Compton-y</h4></figcaption>
     <a id="big_proj_szy" data-lightbox="lb_proj_szy" ><img id="proj_szy" width="450" /></a>
     </figure>
-    <br>
-    <a id="proj_fits">FITS File Download</a><br>
-    <a id="proj_js9">Open in JS9 below</a>
-
     <br><br>
-    
+
+The SZ FITS file contains the following fields:
+
+{% for field, descr in sz_fields.items %}
+* ``"{{field}}"``: {{descr}}
+{% endfor %}
+
+.. raw:: html
+	 
+    <a id="SZ_fits">FITS File Download</a><br>
+    <a id="SZ_js9">Open in JS9 below</a>
+    <br><br>    
     <figure style="display: inline-block;">
     <figcaption><h4>Compton Optical Depth</h4></figcaption>
     <a id="big_SZ_tau" data-lightbox="lb_SZ_tau" ><img id="SZ_tau" width="450" /></a>
@@ -80,19 +106,18 @@ To make the best use out of this page:
     <figcaption><h4>S-Z Signal (240 GHz)</h4></figcaption>
     <a id="big_SZ_inty" data-lightbox="lb_SZ_inty" ><img id="SZ_inty" width="450" /></a>
     </figure>
-    <br>
-    <a id="SZ_fits">FITS File Download</a><br>
-    <a id="SZ_js9">Open in JS9 below</a>
     <br><br>
-    
+
+    The events FITS file contains an X-ray event list.
+    <br><br>	 
+    <a id="cxo_evt_fits">FITS File Download</a><br>
+    <a href="../../files/acisi_rmfs.tar.gz">Download Response Files</a><br>
+    <a id="cxo_evt_js9">Open in JS9 below</a>
+    <br><br>
     <figure style="display: inline-block;">
     <figcaption><h4>X-ray Counts (<em>Chandra</em> ACIS-I, 50 ks)</h4></figcaption>
     <a id="big_cxo_evt_counts" data-lightbox="lb_cxo_evt_counts" ><img id="cxo_evt_counts" width="450" /></a>
     </figure>
-    <br>
-    <a id="cxo_evt_fits">FITS File Download</a><br>
-    <a href="../../files/acisi_rmfs.tar.gz">Download Response Files</a><br>
-    <a id="cxo_evt_js9">Open in JS9 below</a>
     <br><br>
     
     <h2>JS9 Interface</h2>

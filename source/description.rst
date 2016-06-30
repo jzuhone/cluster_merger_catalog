@@ -53,62 +53,31 @@ FITS Files
 ----------
 
 The data presented here consists of FITS image and table files, either slices or projections of the original
-3D data along particular lines of sight. The various fields that make up the data are
-described below. The pixel scale of each FITS image is equivalent to the finest cell size of the
-simulation, which is given on each simulation set's page. 
+3D data along particular lines of sight. The various types of files that make up the data are
+described below. The pixel scale of each FITS file is equivalent to the finest cell size of the
+simulation, which is given on each simulation set's page. The fields which are stored in each file are files
+are listed on the page for a particlar epoch's files.
 
 Slices
 ++++++
 
-Slices are taken along the z = 0 plane of the simulation axis, for a number of different fields. These
-include:
-
-* ``"density"``: Gas density in units of :math:`{\rm M_\odot~kpc^{-3}}`.
-* ``"dark_matter_density"``: Dark matter density in units of :math:`{\rm M_\odot~kpc^{-3}}`.
-* ``"kT"``: Gas temperature in units of keV. 
-* ``"velocity_x"``: The x-component of the gas velocity in units of :math:`{\rm km~s^{-1}}`.
-* ``"velocity_y"``: The y-component of the gas velocity in units of :math:`{\rm km~s^{-1}}`.
-
-Some datasets may also include the following fields:
-
-* ``"clr1"``: The mass fraction of gas from the primary cluster. 
-* ``"clr2"``: The mass fraction of gas from the secondary cluster. 
+Slices are taken along the z = 0 plane of the simulation axis, for a number of different fields. Which fields
+are in the FITS file depends on the simulation, but most of them contain fields such as density, temperature,
+velocity, etc.
 
 Projections
 +++++++++++
 
 Projections are taken along several lines of sight. Currently, these include the three 
 major axes of the simulation domain: x, y, and z. In the future, projections along off-axis 
-directions will be added. For distance/redshift dependent quantities, the redshift is z = 0.05
-assuming a :math:`\Lambda{\rm CDM}` cosmology with:
-
-* :math:`H_0 = 71~{\rm km~s^{-1}~Mpc^{-1}}` 
-* :math:`\Omega_m = 0.27` 
-* :math:`\Omega_\Lambda = 0.73` 
-
-The various projected quantities are:
-
-* ``"xray_emissivity"``: X-ray photon surface brightness in the 0.5-7.0 keV (observer) band, 
-  computed using an `APEC <http://www.atomdb.org>`_ model, assuming a spatially constant metallicity
-  of :math:`{\rm Z = 0.3~Z_\odot}`, in units of :math:`{\rm photons~s^{-1}~{cm}^{-2}~{arcsec}^{-2}}`.
-* ``"kT"``: Emission-weighted projected temperature, using the emissivity described above, in
-  units of keV.
-* ``"total_density"``: Total mass density (gas and dark matter) in units of :math:`{\rm M_\odot~{kpc}^{-3}}`.
-* ``"szy"``: The integrated y-parameter for the thermal Sunyaev-Zeldovich (S-Z) effect, given by
-  :math:`y_{\rm tSZ} = \int{\frac{k_BT}{m_e{c^2}}\sigma_T{n_e}{\rm d\ell}}`. 
-* ``"sz_kinetic"``: The integrated y-parameter for the kinetic S-Z effect, given by
-  :math:`y_{\rm kSZ} = \int{\frac{v_\ell}{c}\sigma_T{n_e}{\rm d\ell}}`. 
+directions will be added. For distance/redshift dependent quantities, the angular scale is determined by
+the redshift and the given cosmology, which is in the notes for the simulation. Projected quantities typically
+include X-ray emissivity, total matter density, projected temperature, etc.
 
 Fields related to the (S-Z) effect are also computed, using the `SZpack library <http://www.cita.utoronto.ca/~jchluba/Science_Jens/SZpack/SZpack.html>`_
 to compute the S-Z signal, including thermal and kinetic contributions as well as relativistic
 corrections. More details on how these projections were computed can be found `here <http://yt-project.org/doc/analyzing/analysis_modules/sunyaev_zeldovich.html>`_.
-They are stored in separate FITS files from the other projections. The fields are:
-
-* ``"tau"``: The Compton optical depth of the cluster gas, given by :math:`\tau_e = \int{\sigma_T{n_e}{\rm d\ell}}`. 
-* ``"TeSZ"``: The mass-weighted projected temperature of the cluster gas, in units of keV.
-* ``"90_GHz``: The S-Z signal at 90 GHz in units of :math:`{\rm MJy~{steradian}^{-1}}`. 
-* ``"180_GHz``: The S-Z signal at 180 GHz in units of :math:`{\rm MJy~{steradian}^{-1}}`. 
-* ``"240_GHz``: The S-Z signal at 240 GHz in units of :math:`{\rm MJy~{steradian}^{-1}}`. 
+They are stored in separate FITS files from the other projections. 
 
 .. |photon_simulator| replace:: ``photon_simulator`` analysis module of yt
 .. _photon_simulator: http://yt-project.org/doc/analyzing/analysis_modules/photon_simulator.html
@@ -119,7 +88,6 @@ X-ray Events
 The X-ray events files are standard events files which can be manipulated and analyzed with standard
 X-ray analysis tools, such as `ds9 <http://ds9.si.edu>`_, `CIAO <http://cxc.cfa.harvard.edu/ciao/>`_, and the 
 `HEASOFT software suite <http://heasarc.nasa.gov/lheasoft/>`_. The events have been generated using the
-|photon_simulator|_ and have been convolved with the ACIS-I on-axis responses, assuming
-an exposure time of 50 ks. The pixel size corresponds to the width of the finest simulation cell size as 
-before, assuming a redshift of z = 0.05 and the above cosmology. These files can be used to produce images 
-and spectra. 
+|photon_simulator|_ and have been convolved with the ACIS-I on-axis responses, assuming an exposure time of
+50 ks. The pixel size corresponds to the width of the finest simulation cell size, instead of the pixel scale of
+the detector. These files can be used to produce images and spectra. 

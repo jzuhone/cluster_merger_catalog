@@ -6,7 +6,8 @@ import girder_client
 from yt.funcs import get_pbar
 from sim_defs import \
     fid_dict, fid_info, \
-    slosh_info, slosh_dict
+    slosh_info, slosh_dict, \
+    fid_fields, slosh_fields
 import argparse
 from collections import OrderedDict
 
@@ -35,7 +36,7 @@ link_map = {"slice":["dens","temp","pden"],
             "SZ":["tau","inty"],
             "cxo_evt":["counts"]}
 
-def make_set_page(set_info, set_dict):
+def make_set_page(set_info, set_dict, set_fields):
     if not os.path.exists('source/%s' % set_info['name']):
         os.mkdir('source/%s' % set_info['name'])
     for sim, sim_info in set_dict.items():
@@ -45,7 +46,7 @@ def make_set_page(set_info, set_dict):
             axes = "xyz"
         for ax in axes:
             make_sim_page(set_info['name'], set_info["basenm"], sim, sim_info[0], sim_info[1], ax)
-        make_epoch_pages(set_info['name'], set_info['basenm'], sim, sim_info[0], sim_info[1])
+        make_epoch_pages(set_info['name'], set_info['basenm'], sim, sim_info[0], sim_info[1], set_fields)
     context = {'name': set_info["name"],
                'sim_pages': list(set_dict.keys()),
                'set_name': set_info["set_name"],
@@ -99,7 +100,7 @@ def make_template(outfile, template_file, context):
     template = django.template.Template(template)
     open(outfile, 'w').write(template.render(django_context))
 
-def make_epoch_pages(set_name, basenm, sim, sim_name, filenos):
+def make_epoch_pages(set_name, basenm, sim, sim_name, filenos, set_fields):
     pbar = get_pbar("Setting up epoch pages for simulation "+sim, len(filenos))
     for fileno in filenos:
         outfile = "source/%s/%s/%04d.rst" % (set_name, sim, fileno)
@@ -125,7 +126,10 @@ def make_epoch_pages(set_name, basenm, sim, sim_name, filenos):
             timestr = "t = %4.2f Gyr" % (fileno*cadence[basenm])
             context = {"data": data,
                        "sim_name": sim_name,
-                       "timestr": timestr}
+                       "timestr": timestr,
+                       "slice_fields": set_fields["slice"],
+                       "proj_fields": set_fields["proj"],
+                       "sz_fields": set_fields["SZ"]}
             make_template(outfile, template_file, context)
         pbar.update()
     pbar.finish()
@@ -141,5 +145,5 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--test", action='store_true')
     args = parser.parse_args()
-    make_set_page(fid_info, fid_dict)
-    make_set_page(slosh_info, slosh_dict)
+    make_set_page(fid_info, fid_dict, fid_fields)
+    make_set_page(slosh_info, slosh_dict, slosh_fields)

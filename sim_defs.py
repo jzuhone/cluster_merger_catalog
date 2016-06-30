@@ -10,6 +10,26 @@ fid_info = {"name": "fiducial",
             "sim_type": "AMR",
             "primary_mass": "M_{200} = 6~{\\times}~10^{14}~M_{\odot}"}
 
+fid_fields = OrderedDict()
+fid_fields["slice"] = OrderedDict([("density", "Gas density in units of :math:`{\\rm M_\odot~kpc^{-3}}`"),
+                                   ("dark_matter_density", "Dark matter density in units of :math:`{\\rm M_\odot~kpc^{-3}}`"),
+                                   ("kT", "Gas temperature in units of keV"),
+                                   ("velocity_x", "The x-component of the gas velocity in units of :math:`{\\rm km~s^{-1}}`"),
+                                   ("velocity_y", "The y-component of the gas velocity in units of :math:`{\\rm km~s^{-1}}`"),
+                                   ("clr1", "Mass fraction of gas from the primary cluster"),
+                                   ("clr2", "Mass fraction of gas from the secondary cluster")])
+fid_fields["proj"] = OrderedDict([("xray_emissivity", "X-ray photon surface brightness in the 0.5-7.0 keV (observer) band," + \
+                                   "in units of :math:`{\\rm photons~s^{-1}~{cm}^{-2}~{arcsec}^{-2}}`"),
+                                  ("kT", "Emission-weighted projected temperature in units of keV"),
+                                  ("total_density", "Total mass density (gas and dark matter) in units of :math:`{\\rm M_\odot~{kpc}^{-2}}`"),
+                                  ("szy", "Integrated y-parameter for the thermal Sunyaev-Zeldovich (S-Z) effect"),
+                                  ("sz_kinetic", "Integrated y-parameter for the kinetic S-Z effect")])
+fid_fields["SZ"] = OrderedDict([("tau", "Compton optical depth of the cluster gas"),
+                                ("TeSZ", "Mass-weighted projected temperature in units of keV"),
+                                ("90_GHz", "S-Z signal at 90 GHz in units of :math:`{\\rm MJy~{steradian}^{-1}}`"), 
+                                ("180_GHz", "S-Z signal at 180 GHz in units of :math:`{\\rm MJy~{steradian}^{-1}}`"),
+                                ( "240_GHz", "S-Z signal at 240 GHz in units of :math:`{\\rm MJy~{steradian}^{-1}}`")]) 
+
 fid_dict = OrderedDict()
 fid_dict["1to1_b0"] = ("R = 1:1, b = 0 kpc",
                        [0, 20, 30, 40, 50, 60, 61, 62, 63,
@@ -72,6 +92,10 @@ slosh_info = {"name": "sloshing",
               "sim_type": "AMR",
               "primary_mass": "M_{200} = 8.83~{\\times}~10^{14}\\frac{R}{R+1}~M_{\odot}" + \
                   "~\\rm{(where}~\\it{R}~\\rm{is~the~mass~ratio)}"}
+
+slosh_fields = fid_fields.copy()
+slosh_fields["slice"].pop("clr1")
+slosh_fields["slice"].pop("clr2")
 
 slosh_dict = OrderedDict()
 slosh_dict["R5_b500"] = ("R = 1:5, b = 500 kpc, gasless subcluster",

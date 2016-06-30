@@ -17,11 +17,22 @@ Set Characteristics
 * Finest cell size: :math:`\Delta{x}_{\rm min}` = {{cell_size}} kpc
 * Primary cluster mass: :math:`{{primary_mass}}`
 
-For the following simulations, :math:`R` is the mass ratio betwen the two clusters and :math:`b` is the initial
-impact parameter in kpc. 
+Cosmology
++++++++++
+
+The following parameters determine the angular scale of the images:
+
+* :math:`\Lambda{\rm CDM}` cosmology
+* :math:`z = 0.05` for all epochs
+* :math:`H_0 = 71~{\rm km~s^{-1}~Mpc^{-1}}`
+* :math:`\Omega_m = 0.27`
+* :math:`\Omega_\Lambda = 0.73`
 
 Simulations
 -----------
+
+For the following simulations, :math:`R` is the mass ratio betwen the two clusters and :math:`b` is the initial
+impact parameter in kpc.
 
 .. toctree::
    :maxdepth: 1
