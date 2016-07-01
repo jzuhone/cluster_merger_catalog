@@ -15,11 +15,13 @@ exact physics and algorithms employed by the simulations vary, but in general:
 
 * Each simulation is simulated on an adaptive mesh refinement (AMR) grid, with varying resolution throughout
   the domain based, with refinement occuring on criteria such as a) sharp jumps in density and temperature, b) matter
-  density, and c) selected regions such as the cluster center.  
+  density, and c) selected regions such as the cluster center. Eventually, the catalog will include particle-based
+  simulations as well.
 * The equations of hydrodynamics or magnetohydrodynamics are modeled using a conservative finite-volume scheme (e.g.,
   PPM, `Colella & Woodward 1984 <http://adsabs.harvard.edu/abs/1984JCoPh..54..174C>`_). Magnetic fields are evolved
   such that the condition :math:`\nabla \cdot \bf{B} = 0` is met, whether by a constrained transport scheme or a
-  divergence-cleaning method.
+  divergence-cleaning method. Eventually, the catalog will include simulations peformed with smoothed particle
+  hydrodynamics.
 * Each simulation assumes an ideal gas law equation of state with :math:`\gamma = 5/3` and primordial
   abundances of H/He with trace amounts of metals, yielding a mean molecular weight of :math:`\mu = 0.6`.
 * If dark matter is included, it is modeled by an N-body solver for a collection of collisionless
