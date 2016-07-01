@@ -8,6 +8,7 @@ fid_info = {"name": "fiducial",
             "box_size": 14.26,
             "cell_size": 6.96,
             "sim_type": "AMR",
+            "code": "FLASH",
             "primary_mass": "M_{200} = 6~{\\times}~10^{14}~M_{\odot}"}
 
 fid_fields = OrderedDict()
@@ -90,6 +91,7 @@ slosh_info = {"name": "sloshing",
               "box_size": 10.0,
               "cell_size": 4.88,
               "sim_type": "AMR",
+              "code": "FLASH",
               "primary_mass": "M_{200} = 8.83~{\\times}~10^{14}\\frac{R}{R+1}~M_{\odot}" + \
                   "~\\rm{(where}~\\it{R}~\\rm{is~the~mass~ratio)}"}
 

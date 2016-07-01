@@ -12,16 +12,20 @@ Set Characteristics
 -------------------
 
 * Original paper: `{{set_journal|safe}} <{{ads_link}}>`_
+* Code: {{code}}
 * Simulation type: {{sim_type}}
 * Box size: *L* = {{box_size}} Mpc
 * Finest cell size: :math:`\Delta{x}_{\rm min}` = {{cell_size}} kpc
 * Primary cluster mass: :math:`{{primary_mass}}`
 
 Cosmology
-+++++++++
+---------
 
-The following parameters determine the angular scale of the images:
+.. note::
 
+   For non-cosmological simulations such as this one, a cosmology is assumed for the
+   purposes of calculating distance and redshift-dependent quantities.
+   
 * :math:`\Lambda{\rm CDM}` cosmology
 * :math:`z = 0.05` for all epochs
 * :math:`H_0 = 71~{\rm km~s^{-1}~Mpc^{-1}}`

@@ -55,6 +55,7 @@ def make_set_page(set_info, set_dict, set_fields):
                'box_size': set_info["box_size"],
                'cell_size': set_info["cell_size"],
                'sim_type': set_info['sim_type'],
+               'code': set_info['code'],
                'primary_mass': set_info["primary_mass"]}
     template_file = 'templates/set_template.rst'
     make_template('source/%s/index.rst' % set_info["name"], template_file, context)

@@ -9,45 +9,71 @@ catalog.
 General Simulation Physics and Algorithms
 -----------------------------------------
 
-The binary merger simulation data presented here comes from simulations performed using the
-`FLASH code <http://flash.uchicago.edu>`_, an N-body/hydrodynamics adaptive mesh refinement
-astrophysical simulation code. In general, each simulation employs the following physics and 
-algorithms:
+The galaxy cluster merger simulation data presented here comes from state-of-the-art N-body and hydrodynamics
+codes such as `FLASH <http://flash.uchicago.edu>`_ and `Athena <https://trac.princeton.edu/Athena/>`_. The
+exact physics and algorithms employed by the simulations vary, but in general:
 
 * Each simulation is simulated on an adaptive mesh refinement (AMR) grid, with varying resolution throughout
-  the domain based on the refinement criteria of a) sharp jumps in density and temperature and b) matter
-  density. 
-* The hydrodynamics of the simulations are modeled using the Piecewise-Parabolic Method (PPM, 
-  `Colella & Woodward 1984 <http://adsabs.harvard.edu/abs/1984JCoPh..54..174C>`_). 
+  the domain based, with refinement occuring on criteria such as a) sharp jumps in density and temperature, b) matter
+  density, and c) selected regions such as the cluster center.  
+* The equations of hydrodynamics or magnetohydrodynamics are modeled using a conservative finite-volume scheme (e.g.,
+  PPM, `Colella & Woodward 1984 <http://adsabs.harvard.edu/abs/1984JCoPh..54..174C>`_). Magnetic fields are evolved
+  such that the condition :math:`\nabla \cdot \bf{B} = 0` is met, whether by a constrained transport scheme or a
+  divergence-cleaning method.
 * Each simulation assumes an ideal gas law equation of state with :math:`\gamma = 5/3` and primordial
   abundances of H/He with trace amounts of metals, yielding a mean molecular weight of :math:`\mu = 0.6`.
-* The dark matter in the simulations is modeled by an N-body solver for a collection of collisionless
-  massive particles, which have their masses mapped onto the grid cells for interaction with the gas. 
-* The self-gravity of the gas and dark matter in the simulations is computed using a multigrid solver.
-* The simulations do not include non-adiabatic processes such as heating or cooling. 
-
+* If dark matter is included, it is modeled by an N-body solver for a collection of collisionless
+  massive particles, which interact with the gas component only via gravity.
+* The gravity in the simulations is either modeled as a rigid gravitational potential associated with each cluster
+  or by computing the self-gravity of the gas and dark matter using a Poisson solver.
+* Depending on the goals of the simulation study, other physics, such as viscosity, thermal conduction, radiative
+  cooling, etc., may be included.
+  
 More information on the particular physical and algorithmic characteristics of the simulations can be found
 in the accompanying papers, the links to which are given on each simulation set's page.
 
-General Simulation Initial Conditions
--------------------------------------
+Types of Simulations
+--------------------
 
-Generally, the simulations are set up as two spherically symmetric galaxy clusters. The thermodynamic gas 
-profiles are set up in hydrostatic equilibrium with the gravitational potential defined by both the dark 
-matter and the gas mass. The dark matter particle radii and speeds are set up such that the dark matter
-is in virial equilibrium with the gravitational potential defined by both the dark matter and the gas mass. 
-The particle position vectors are set assuming spherical symmetry, and the velocity vectors are set assuming
-isotropy. 
+The simulations presented here are of a number of different types. We describe each of these types in turn.
 
-The two clusters are situated in a large simulation domain, separated by roughly the sum of their virial
-radii, on a mutual bound orbit, with a relative velocity roughly equivalent to their free-fall velocity 
-from infinity. Where the initial profiles of the gas quantities overlap, per-volume quantities such as
-density and pressure are simply summed in each cell, whereas per-mass quantities such as velocity and
-temperature are computed by mass-weighting. 
+N-body/Hydrodynamic Binary Mergers
+++++++++++++++++++++++++++++++++++
+
+In these simulations, the two galaxy clusters are set up as two spherically symmetric, self-gravitating
+collections of gas and dark matter. The thermodynamic gas profiles are set up in hydrostatic equilibrium
+with the gravitational potential defined by both the dark matter and the gas mass. The dark matter particle
+radii and speeds are set up such that the dark matter is in virial equilibrium with the gravitational
+potential defined by both the dark matter and the gas mass. The particle position vectors are set assuming
+spherical symmetry, and the velocity vectors are set assuming isotropy. 
+
+The two clusters are situated in a large simulation domain, separated by a distance that is typically on the
+order of the sum of their virial radii. They are given a relative velocity such that the clusters are moving
+toward each other at the beginning of the simulation. They may or may not be on a bound orbit, and the impact
+parameter may be nonzero.
+
+If a magnetic field is included in the simulation, it is typically set up as a turbulent, tangled field with
+using a power spectrum of fluctuations with minimum and maximum length scales. The field strength is such that
+the magnetic pressure is a small fraction of the thermal pressure, and the average strength of the magnetic
+field declines with radius from the cluster center.
 
 The specific details of the simulations, including the initial radial profiles of the gas and dark matter, 
 the initial masses, bulk velocities, and impact parameters, and other information can be found in the 
 accompanying papers, the links to which are given on each simulation set's page. 
+
+Hydrodynamic Binary Mergers with Rigid Gravitational Potentials
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+This type of simulation is set up in much the same way as the previous kind, except that there is no dark matter,
+the gas is not self-gravitating, and the gravitational potential is modeled by a sum of two rigid gravitational
+potentials representing the dark matter halos which are evolved on a mutual orbit. This approximation is used when
+a) computational speed is desired and b) the relevant characteristics of the simulations do not depend on accurately
+modeling the effects of dynamical friction, mass loss, and tidal forces on the dark matter.
+
+Cluster Mergers in Cosmological Simulations
++++++++++++++++++++++++++++++++++++++++++++
+
+Coming soon! Watch this space.
 
 FITS Files
 ----------
@@ -70,9 +96,10 @@ Projections
 
 Projections are taken along several lines of sight. Currently, these include the three 
 major axes of the simulation domain: x, y, and z. In the future, projections along off-axis 
-directions will be added. For distance/redshift dependent quantities, the angular scale is determined by
-the redshift and the given cosmology, which is in the notes for the simulation. Projected quantities typically
-include X-ray emissivity, total matter density, projected temperature, etc.
+directions will be added. Distance/redshift dependent quantitie are determined by
+the redshift and the given cosmology, which is given in the notes for the simulation. If the simulation
+is not cosmological (such as the binary merger simulations), a standard cosmology and constant redshift is assumed.
+Projected quantities typically include X-ray emissivity, total matter density, projected temperature, etc.
 
 Fields related to the (S-Z) effect are also computed, using the `SZpack library <http://www.cita.utoronto.ca/~jchluba/Science_Jens/SZpack/SZpack.html>`_
 to compute the S-Z signal, including thermal and kinetic contributions as well as relativistic
