@@ -19,7 +19,7 @@ fid_fields["slice"] = OrderedDict([("density", "Gas density in units of :math:`{
                                    ("velocity_y", "The y-component of the gas velocity in units of :math:`{\\rm km~s^{-1}}`"),
                                    ("clr1", "Mass fraction of gas from the primary cluster"),
                                    ("clr2", "Mass fraction of gas from the secondary cluster")])
-fid_fields["proj"] = OrderedDict([("xray_emissivity", "X-ray photon surface brightness in the 0.5-7.0 keV (observer) band," + \
+fid_fields["proj"] = OrderedDict([("xray_emissivity", "X-ray photon surface brightness in the 0.5-7.0 keV (observer) band, " + \
                                    "in units of :math:`{\\rm photons~s^{-1}~{cm}^{-2}~{arcsec}^{-2}}`"),
                                   ("kT", "Emission-weighted projected temperature in units of keV"),
                                   ("total_density", "Total mass density (gas and dark matter) in units of :math:`{\\rm M_\odot~{kpc}^{-2}}`"),
