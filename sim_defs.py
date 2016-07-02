@@ -100,7 +100,7 @@ slosh_fields["slice"].pop("clr1")
 slosh_fields["slice"].pop("clr2")
 
 slosh_dict = OrderedDict()
-slosh_dict["R5_b500"] = ("R = 1:5, b = 500 kpc, gasless subcluster",
+slosh_dict["R5_b500"] = ("R = 1:5, b = 500 kpc, gasless secondary",
                          [0, 90, 120, 130, 131, 132,
                           133, 134, 135, 136, 137, 138, 139, 140,
                           145, 150, 160, 170, 180, 190, 200, 210,
@@ -111,6 +111,8 @@ slosh_dict["R5_b500"] = ("R = 1:5, b = 500 kpc, gasless subcluster",
                           430, 440, 450, 460, 470, 480, 490, 500,
                           510, 520, 530, 540, 550, 560, 570, 580,
                           590, 600])
+slosh_dict["R5_b500_visc"] = ("R = 1:5, b = 500 kpc, gasless secondary with viscosity",
+                              slosh_dict["R5_b500"][1])
 slosh_dict["R20_b200g"] = ("R = 1:20, b = 200 kpc",
                            [0, 90, 120, 125, 130, 131, 132, 133,
                             134, 135, 136, 137, 138, 139, 140,
