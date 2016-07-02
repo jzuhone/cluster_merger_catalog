@@ -20,35 +20,34 @@
 
    <h3>Use the slider to change the epoch of the merger, and click on the images to access the files.</h3>
    <br>
-   
+
+   <button type="button" id="left_button" class="btn btn-primary">&#10094;</button>
+   <span>  </span>
    <input id="epoch" data-slider-id='epochSlider' type="text" data-slider-min="0"
     data-slider-max="{{num_epochs}}" data-slider-step="1" data-slider-value="0"
     data-slider-tooltip="hide"/>
+   <span>  </span>
+   <button type="button" id="right_button" class="btn btn-primary">&#10095;</button>   
    <br><br>
 
-   <h2 id="epoch_header"></h2>
    <a id="epoch_link">
+   <h2 id="epoch_header"></h2>
+   {% for short_name, long_name in names.items %}
    <figure style="display: inline-block;">
-   <figcaption><h4>X-ray Emissivity</h4></figcaption>
-   <img id="img_xray" width="450" />
+   <figcaption><h4>{{long_name}}</h4></figcaption>
+   <img id="img_{{short_name}}" width="450" />
    </figure>
-   <figure style="display: inline-block;">
-   <figcaption><h4>Projected Temperature</h4></figcaption>
-   <img id="img_temp" width="450" />
-   </figure>
-   <figure id="fig_dens" style="display: inline-block;">
-   <figcaption><h4>Total Density</h4></figcaption>
-   <img id="img_dens" width="450" />
-   </figure>
-   <figure id="fig_szy" style="display: inline-block;">
-   <figcaption><h4>Compton-y</h4></figcaption>
-   <img id="img_szy" width="450" />
-   </figure>
+   {% endfor %}
    </a>
    
    <script>
-   
-   var names = ["xray", "temp", "dens", "szy"];
+
+   var num_epochs = {{num_epochs}};
+   var names = [
+   {% for short_name in names %}
+       "{{short_name}}",
+   {% endfor %}    
+   ];
 
    var filenos = [
    {% for fileno in filenos %}
@@ -72,11 +71,27 @@
    {% endfor %}
    };
    
-   $("#epoch").slider();
+   var epochSlider = $("#epoch").slider();
    $("#epoch").on("slide", function(slideEvt) {
        set_links(slideEvt.value);
    });
 
+   $("#left_button").click(function() {
+       var value = epochSlider.slider("getValue");
+       if (value > 0) {
+           set_links(value-1);
+           epochSlider.slider("setValue", value-1);
+       }
+   });
+
+   $("#right_button").click(function() {
+       var value = epochSlider.slider("getValue");
+       if (value < num_epochs) {
+           set_links(value+1);
+           epochSlider.slider("setValue", value+1);
+       }	   
+   });
+	     
    $(document).ready(function () {
        set_links(0);
    });

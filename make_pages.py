@@ -103,7 +103,8 @@ def make_template(outfile, template_file, context):
 
 def make_epoch_pages(set_name, basenm, sim, sim_name, filenos, set_fields):
     pbar = get_pbar("Setting up epoch pages for simulation "+sim, len(filenos))
-    for fileno in filenos:
+    num_epochs = len(filenos)
+    for noi, fileno in enumerate(filenos):
         outfile = "source/%s/%s/%04d.rst" % (set_name, sim, fileno)
         if not os.path.exists(outfile):
             if sim[-2:] == "b0":
@@ -125,12 +126,28 @@ def make_epoch_pages(set_name, basenm, sim, sim_name, filenos, set_fields):
                     data[itype][ax]['pngs'] = imgs
             template_file = 'templates/epoch_template.rst'
             timestr = "t = %4.2f Gyr" % (fileno*cadence[basenm])
+            if noi == 0:
+                prev_link = ""
+                dis_prev = "disabled"
+            else:
+                prev_link = "%04d.html" % filenos[noi-1]
+                dis_prev = ""
+            if noi == num_epochs-1:
+                next_link = ""
+                dis_next =  "disabled"
+            else:
+                next_link = "%04d.html" % filenos[noi+1]
+                dis_next = ""
             context = {"data": data,
                        "sim_name": sim_name,
                        "timestr": timestr,
                        "slice_fields": set_fields["slice"],
                        "proj_fields": set_fields["proj"],
-                       "sz_fields": set_fields["SZ"]}
+                       "sz_fields": set_fields["SZ"],
+                       "prev_link": prev_link,
+                       "next_link": next_link,            
+                       "dis_prev": dis_prev,
+                       "dis_next": dis_next}
             make_template(outfile, template_file, context)
         pbar.update()
     pbar.finish()

@@ -89,7 +89,7 @@ are listed on the page for a particlar epoch's files.
 Slices
 ++++++
 
-Slices are taken along the z = 0 plane of the simulation axis, for a number of different fields. Which fields
+Slices are taken along the merger plane for a number of different fields. Which fields
 are in the FITS file depends on the simulation, but most of them contain fields such as density, temperature,
 velocity, etc.
 

@@ -13,8 +13,14 @@
     <script>$('#dLabelLocalToc').addClass('hidden');</script>
     <script>$('.navbar-nav').first().append('<li><a href="index_z.html">&#10094; Back to Simulation</a></li>');</script>
    
-{{sim_name}}, {{timestr}}
-==========================
+{{sim_name}}: {{timestr}}
+=========================
+
+.. raw:: html
+
+   <a class="btn btn-primary" href="{{prev_link}}" role="button" {{dis_prev}}>&#10094; Previous Epoch</a>
+   <a class="btn btn-primary" href="{{next_link}}" role="button" {{dis_next}}>&#10095; Next Epoch</a>
+   <br><br>
 
 To make the best use out of this page:
 
