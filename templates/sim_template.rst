@@ -21,13 +21,13 @@
    <h3>Use the slider to change the epoch of the merger, and click on the images to access the files.</h3>
    <br>
 
-   <button type="button" id="left_button" class="btn btn-primary btn-sm">&#10094;</button>
-   <span>     </span>
+   <span style="margin-right: 20px;">
+   <button type="button" id="left_button" class="btn btn-primary btn-sm">&#10094;</button></span>
    <input id="epoch" data-slider-id='epochSlider' type="text" data-slider-min="0"
     data-slider-max="{{num_epochs}}" data-slider-step="1" data-slider-value="0"
     data-slider-tooltip="hide"/>
-   <span>     </span>
-   <button type="button" id="right_button" class="btn btn-primary btn-sm">&#10095;</button>   
+   <span style="margin-left: 20px;">
+   <button type="button" id="right_button" class="btn btn-primary btn-sm">&#10095;</button></span>  
    <br><br>
 
    <a id="epoch_link">
