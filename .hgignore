@@ -12,3 +12,5 @@ source/fiducial/*
 js9/config.log
 js9/config.status
 js9/Makefile
+js9/js9Prefs.json-orig
+js9/js9helper.pc
