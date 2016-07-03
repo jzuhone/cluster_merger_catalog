@@ -43,18 +43,12 @@ The slice FITS file contains the following fields:
     <a id="slice_fits">FITS File Download</a><br>
     <a id="slice_js9">Open in JS9 below</a>
     <br><br>	       
+    {% for key, name in slice_names.items %}
     <figure style="display: inline-block;">
-    <figcaption><h4>Density</h4></figcaption>
-    <a id="big_slice_dens" data-lightbox="lb_slice_dens" ><img id="slice_dens" width="350" /></a>
+    <figcaption><h4>{{name}}</h4></figcaption>
+    <a id="big_slice_{{key}}" data-lightbox="lb_slice_{{key}}" ><img id="slice_{{key}}" width="350" /></a>
     </figure>
-    <figure style="display: inline-block;">
-    <figcaption><h4>Temperature</h4></figcaption>
-    <a id="big_slice_temp" data-lightbox="lb_slice_temp" ><img id="slice_temp" width="350" /></a>
-    </figure>
-    <figure style="display: inline-block;">
-    <figcaption><h4>Dark Matter Density</h4></figcaption>
-    <a id="big_slice_pden" data-lightbox="lb_slice_pden" ><img id="slice_pden" width="350" /></a>
-    </figure>
+    {% endfor %}
     <br>
 
     <h2>Projections</h2>
@@ -75,22 +69,12 @@ The projection FITS file contains the following fields:
     <a id="proj_fits">FITS File Download</a><br>
     <a id="proj_js9">Open in JS9 below</a>
     <br><br>
+    {% for key, name in proj_names.items %}
     <figure style="display: inline-block;">
-    <figcaption><h4>X-ray Emissivity</h4></figcaption>
-    <a id="big_proj_xray" data-lightbox="lb_proj_xray" ><img id="proj_xray" width="450" /></a>
+    <figcaption><h4>{{name}}</h4></figcaption>
+    <a id="big_proj_{{key}}" data-lightbox="lb_proj_{{key}}" ><img id="proj_{{key}}" width="450" /></a>
     </figure>
-    <figure style="display: inline-block;">
-    <figcaption><h4>Projected Temperature</h4></figcaption>
-    <a id="big_proj_temp" data-lightbox="lb_proj_temp" ><img id="proj_temp" width="450" /></a>
-    </figure>
-    <figure style="display: inline-block;">
-    <figcaption><h4>Total Density</h4></figcaption>
-    <a id="big_proj_dens" data-lightbox="lb_proj_dens" ><img id="proj_dens" width="450" /></a>
-    </figure>
-    <figure style="display: inline-block;">
-    <figcaption><h4>Compton-y</h4></figcaption>
-    <a id="big_proj_szy" data-lightbox="lb_proj_szy" ><img id="proj_szy" width="450" /></a>
-    </figure>
+    {% endfor %}
     <br><br>
 
 The SZ FITS file contains the following fields:
@@ -104,14 +88,13 @@ The SZ FITS file contains the following fields:
     <a id="SZ_fits">FITS File Download</a><br>
     <a id="SZ_js9">Open in JS9 below</a>
     <br><br>    
+    {% for key, name in sz_names.items %}
     <figure style="display: inline-block;">
-    <figcaption><h4>Compton Optical Depth</h4></figcaption>
-    <a id="big_SZ_tau" data-lightbox="lb_SZ_tau" ><img id="SZ_tau" width="450" /></a>
+    <figcaption><h4>{{name}}</h4></figcaption>
+    <a id="big_SZ_{{key}}" data-lightbox="lb_SZ_{{key}}" ><img id="SZ_{{key}}" width="450" /></a>
     </figure>
-    <figure style="display: inline-block;">
-    <figcaption><h4>S-Z Signal (240 GHz)</h4></figcaption>
-    <a id="big_SZ_inty" data-lightbox="lb_SZ_inty" ><img id="SZ_inty" width="450" /></a>
-    </figure>
+    {% endfor %}
+			
     <br><br>
 
     The events FITS file contains an X-ray event list.

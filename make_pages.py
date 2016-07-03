@@ -4,10 +4,8 @@ import django.conf
 import re
 import girder_client
 from yt.funcs import get_pbar
-from sim_defs import \
-    fid_dict, fid_info, \
-    slosh_info, slosh_dict, \
-    fid_fields, slosh_fields
+from fiducial_defs import fid_dict, fid_info
+from sloshing_defs import slosh_dict, slosh_info
 import argparse
 from collections import OrderedDict
 
@@ -35,8 +33,8 @@ link_map = {"slice":["dens","temp","pden"],
             "proj":["xray","temp","dens","szy"],
             "SZ":["tau","inty"],
             "cxo_evt":["counts"]}
-
-def make_set_page(set_info, set_dict, set_fields):
+            
+def make_set_page(set_info, set_dict):
     if not os.path.exists('source/%s' % set_info['name']):
         os.mkdir('source/%s' % set_info['name'])
     for sim, sim_info in set_dict.items():
@@ -45,8 +43,10 @@ def make_set_page(set_info, set_dict, set_fields):
         else:
             axes = "xyz"
         for ax in axes:
-            make_sim_page(set_info['name'], set_info["basenm"], sim, sim_info[0], sim_info[1], ax)
-        make_epoch_pages(set_info['name'], set_info['basenm'], sim, sim_info[0], sim_info[1], set_fields)
+            make_sim_page(set_info['name'], set_info["basenm"], sim, sim_info.name,
+                          sim_info.filenos, sim_info.sname_map, sim_info.lname_map, ax)
+        make_epoch_pages(set_info['name'], set_info['basenm'], sim, sim_info.name,
+                         sim_info.filenos, sim_info.sname_map, sim_info.lname_map, sim_info.unit_map)
     context = {'name': set_info["name"],
                'sim_pages': list(set_dict.keys()),
                'set_name': set_info["set_name"],
@@ -60,7 +60,7 @@ def make_set_page(set_info, set_dict, set_fields):
     template_file = 'templates/set_template.rst'
     make_template('source/%s/index.rst' % set_info["name"], template_file, context)
 
-def make_sim_page(set_name, basenm, sim, sim_name, filenos, ax):
+def make_sim_page(set_name, basenm, sim, sim_name, filenos, sname_map, lname_map, ax):
     sim_dir = 'source/%s/%s' % (set_name, sim)
     if not os.path.exists(sim_dir):
         os.mkdir(sim_dir)
@@ -76,7 +76,7 @@ def make_sim_page(set_name, basenm, sim, sim_name, filenos, ax):
         for fileno in filenos:
             fn = "%04d" % fileno
             pngs = {}
-            for fd, field in zip(link_map["proj"], ["xray_emissivity","kT","total_density","szy"]):
+            for fd, field in sname_map["proj"].items():
                 filename = basenm+"_%s_hdf5_plt_cnt_%04d_proj_%s_%s" % (sim, fileno, ax, field)
                 pngs[fd] = get_file(filename)
             epochs[fn] = "t = %4.2f Gyr" % (fileno*cadence[basenm])
@@ -90,7 +90,8 @@ def make_sim_page(set_name, basenm, sim, sim_name, filenos, ax):
                    'epochs': epochs,
                    'imgs': imgs,
                    'num_epochs': num_epochs-1,
-                   'filenos': ["%04d" % i for i in filenos]}
+                   'filenos': ["%04d" % i for i in filenos],
+                   'names': lname_map["proj"]}
         template_file = 'templates/sim_template.rst'
         make_template(outfile, template_file, context)
 
@@ -101,7 +102,7 @@ def make_template(outfile, template_file, context):
     template = django.template.Template(template)
     open(outfile, 'w').write(template.render(django_context))
 
-def make_epoch_pages(set_name, basenm, sim, sim_name, filenos, set_fields):
+def make_epoch_pages(set_name, basenm, sim, sim_name, filenos, sname_map, lname_map, unit_map):
     pbar = get_pbar("Setting up epoch pages for simulation "+sim, len(filenos))
     num_epochs = len(filenos)
     for noi, fileno in enumerate(filenos):
@@ -121,7 +122,7 @@ def make_epoch_pages(set_name, basenm, sim, sim_name, filenos, set_fields):
                     filename = basenm+"_%s_hdf5_plt_cnt_%04d_%s_%s" % (sim, fileno, itype, ax)
                     data[itype][ax]['fits'] = get_file(filename)
                     imgs = {}
-                    for field, link in zip(type_map[itype], link_map[itype]):
+                    for link, field in sname_map[itype].items():
                         imgs[link] = get_file(filename+"_"+field)
                     data[itype][ax]['pngs'] = imgs
             template_file = 'templates/epoch_template.rst'
@@ -141,9 +142,12 @@ def make_epoch_pages(set_name, basenm, sim, sim_name, filenos, set_fields):
             context = {"data": data,
                        "sim_name": sim_name,
                        "timestr": timestr,
-                       "slice_fields": set_fields["slice"],
-                       "proj_fields": set_fields["proj"],
-                       "sz_fields": set_fields["SZ"],
+                       "slice_names": lname_map["slice"],
+                       "proj_names": lname_map["proj"],
+                       "sz_names": lname_map["SZ"],
+                       "slice_fields": unit_map["slice"],
+                       "proj_fields": unit_map["proj"],
+                       "sz_fields": unit_map["SZ"],
                        "prev_link": prev_link,
                        "next_link": next_link,            
                        "dis_prev": dis_prev,
@@ -163,5 +167,5 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--test", action='store_true')
     args = parser.parse_args()
-    make_set_page(fid_info, fid_dict, fid_fields)
-    make_set_page(slosh_info, slosh_dict, slosh_fields)
+    make_set_page(fid_info, fid_dict)
+    make_set_page(slosh_info, slosh_dict)
