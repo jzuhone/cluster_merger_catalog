@@ -46,7 +46,7 @@ The slice FITS file contains the following fields:
     {% for key, name in slice_names.items %}
     <figure style="display: inline-block;">
     <figcaption><h4>{{name}}</h4></figcaption>
-    <a id="big_slice_{{key}}" data-lightbox="lb_slice_{{key}}" ><img id="slice_{{key}}" width="350" /></a>
+    <a id="big_slice_{{key}}" data-lightbox="lb_slice_{{key}}" ><img id="slice_{{key}}" width="450" /></a>
     </figure>
     {% endfor %}
     <br>
