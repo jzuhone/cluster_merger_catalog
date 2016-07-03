@@ -2,7 +2,8 @@ from collections import OrderedDict
 from sim_defs import Simulation
     
 slosh_info = {"name": "sloshing",
-              "basenm": "sloshing",
+              "cadence": 0.01,
+              "filespec": "sloshing_%s_hdf5_plt_cnt_%04d",
               "set_name": "Sloshing of the Cold Gas in Galaxy Cluster Cores (ZuHone, Markevitch, & Johnson 2010)",
               "set_journal": "ZuHone, J. A., Markevitch, M., & Johnson, R. E. 2010, ApJ, 717, 908",
               "ads_link": "http://adsabs.harvard.edu/abs/2010ApJ...717..908Z",
@@ -34,7 +35,7 @@ slosh_dict["R5_b500"] = Simulation("R = 1:5, b = 500 kpc, gasless secondary",
                                     401, 402, 403, 404, 405, 410, 415, 420,
                                     430, 440, 450, 460, 470, 480, 490, 500,
                                     510, 520, 530, 540, 550, 560, 570, 580,
-                                    590, 600], fields, pngs)
+                                    590, 600], fields, pngs, ["x", "y", "z"])
 slosh_dict["R5_b500_visc"] = Simulation("R = 1:5, b = 500 kpc, gasless secondary with viscosity",
                                         [0, 90, 120, 130, 131, 132,
                                          133, 134, 135, 136, 137, 138, 139, 140,
@@ -45,7 +46,7 @@ slosh_dict["R5_b500_visc"] = Simulation("R = 1:5, b = 500 kpc, gasless secondary
                                          401, 402, 403, 404, 405, 410, 415, 420,
                                          430, 440, 450, 460, 470, 480, 490, 500,
                                          510, 520, 530, 540, 550, 560, 570, 580,
-                                         590, 600], fields, pngs)
+                                         590, 600], fields, pngs, ["x", "y", "z"])
 slosh_dict["R20_b200g"] = Simulation("R = 1:20, b = 200 kpc",
                                      [0, 90, 120, 125, 130, 131, 132, 133,
                                       134, 135, 136, 137, 138, 139, 140,
@@ -56,7 +57,7 @@ slosh_dict["R20_b200g"] = Simulation("R = 1:20, b = 200 kpc",
                                       459, 460, 461, 462, 463, 464, 465,
                                       470, 475, 480, 490, 500, 510, 530,
                                       550, 570, 590, 610, 630, 650, 670,
-                                      690], fields, pngs)
+                                      690], fields, pngs, ["x", "y", "z"])
 slosh_dict["R20_b1000g"] = Simulation("R = 1:20, b = 1000 kpc",
                                       [0, 90, 100, 110, 120, 125, 130,
                                        135, 136, 137, 138, 139, 140, 141,
@@ -65,4 +66,4 @@ slosh_dict["R20_b1000g"] = Simulation("R = 1:20, b = 1000 kpc",
                                        220, 230, 240, 250, 260, 270, 280,
                                        300, 320, 340, 360, 380, 400, 420,
                                        440, 460, 480, 500, 520, 540, 550],
-                                      fields, pngs)
+                                      fields, pngs, ["x", "y", "z"])

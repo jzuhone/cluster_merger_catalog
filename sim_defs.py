@@ -44,12 +44,13 @@ name_map["cxo_evt"] = {"counts":("counts","ACIS-I Counts Map")}
 
 class Simulation(object):
 
-    def __init__(self, sim_name, filenos, fields, pngs):
+    def __init__(self, sim_name, filenos, fields, pngs, axes):
         self.name = sim_name
         self.filenos = filenos
         self.lname_map = {}
         self.sname_map = {}
         self.unit_map = {}
+        self.axes = axes
         for itype in pngs:
             self.lname_map[itype] = OrderedDict()
             self.sname_map[itype] = OrderedDict()

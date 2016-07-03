@@ -77,6 +77,8 @@ The projection FITS file contains the following fields:
     {% endfor %}
     <br><br>
 
+{% if sz_fields|length > 0 %}
+
 The SZ FITS file contains the following fields:
 
 {% for field, descr in sz_fields.items %}
@@ -84,7 +86,7 @@ The SZ FITS file contains the following fields:
 {% endfor %}
 
 .. raw:: html
-	 
+
     <a id="SZ_fits">FITS File Download</a><br>
     <a id="SZ_js9">Open in JS9 below</a>
     <br><br>    
@@ -96,7 +98,8 @@ The SZ FITS file contains the following fields:
     {% endfor %}
 			
     <br><br>
-
+{% endif %}
+    
     The events FITS file contains an X-ray event list.
     <br><br>	 
     <a id="cxo_evt_fits">FITS File Download</a><br>
@@ -157,8 +160,10 @@ The SZ FITS file contains the following fields:
             fits_link('slice', 'z');
             show_files('proj', 'z');
             fits_link('proj', 'z');
-            show_files('SZ', 'z');
-            fits_link('SZ', 'z');
+            if (girder_data["SZ"]["z"]["pngs"].length > 0) {
+                show_files('SZ', 'z');
+                fits_link('SZ', 'z');
+	    }
             show_files('cxo_evt', 'z');
             fits_link('cxo_evt', 'z');
 
@@ -195,8 +200,10 @@ The SZ FITS file contains the following fields:
             var axis = this.options[this.selectedIndex].value;
             show_files('proj', axis);
             fits_link('proj', axis);
-            show_files('SZ', axis);
-            fits_link('SZ', axis);
+            if (girder_data["SZ"]["z"]["pngs"].length > 0) {
+                show_files('SZ', axis);
+                fits_link('SZ', axis);
+	    }
             show_files('cxo_evt', axis);
             fits_link('cxo_evt', axis);
             $('#fits_ext').empty();
