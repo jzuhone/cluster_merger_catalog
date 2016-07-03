@@ -1,4 +1,4 @@
-{{sim_name}}
+{{sim_name|safe}}
 ============
 
 .. raw:: html

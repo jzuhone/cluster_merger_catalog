@@ -13,7 +13,7 @@
     <script>$('#dLabelLocalToc').addClass('hidden');</script>
     <script>$('.navbar-nav').first().append('<li><a href="index_z.html">&#10094; Back to Simulation</a></li>');</script>
    
-{{sim_name}}: {{timestr}}
+{{sim_name|safe}}: {{timestr}}
 =========================
 
 .. raw:: html
