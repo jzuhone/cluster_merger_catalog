@@ -12,8 +12,9 @@ Galaxy Cluster Merger Catalog
    <a href="fiducial/1to3_b1/0190.html">
    <img src="images/gcmc_logo.png" width="400" style="float: right;"/></a>
    <figcaption style="display: table-caption; caption-side: bottom;">
-   Binary cluster merger with mass ratio of 1:3, initial impact parameter
-   of 1 Mpc. Magenta indicates X-ray emissivity, blue indicates mass density.
+   Binary cluster merger with <a href="fiducial/1to3_b1/0190.html">mass ratio
+   of 1:3, initial impact parameter of 1 Mpc, at an epoch of 3.8 Gyr.</a>
+   Magenta indicates X-ray emissivity, blue indicates mass density.
    Image credit Joseph DePasquale (CfA).
    </figcaption>
    </figure>

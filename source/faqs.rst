@@ -58,18 +58,20 @@ You didn't include projections in my favorite wavelength range. Why not?
 ------------------------------------------------------------------------
 
 Mainly for lack of time, but also for lack of knowledge about the best way to go about it. If
-you have some ideas of other derived data products that may be useful, do not hesitate to contact
-`John ZuHone <mailto:jzuhone@gmail.com>`_.
+you have some ideas of other derived data products that may be useful, do not hesitate to
+`hit up the mailing list <https://groups.google.com/forum/#!forum/gcmc>`_.
 
 I have some really cool data I'd like to include in the catalog. How can I do this?
 -----------------------------------------------------------------------------------
 
 If you have some galaxy cluster-related simulation data that fits within the goals of the catalog,
-pease get in touch with `John ZuHone <mailto:jzuhone@gmail.com>`_ and we can discuss getting it
+please `contact the mailing list <https://groups.google.com/forum/#!forum/gcmc>`_ and we can discuss getting it
 set up. 
 
 How do I cite the catalog?
 --------------------------
+
+Watch this space for a future journal reference.
 
 Is the data licensed?
 ---------------------
@@ -84,5 +86,5 @@ Please report any problems on our `Bitbucket issues page <https://bitbucket.org/
 I have a question that isn't answered here. How do I get more information?
 --------------------------------------------------------------------------
 
-If you have a question related to the catalog itself, contact `John ZuHone <mailto:jzuhone@gmail.com>`_.
+If you have a question related to the catalog itself, contact `the mailing list <https://groups.google.com/forum/#!forum/gcmc>`_.
 If you have questions regarding yt, send mail to the `yt-users list <mailto:yt-users@lists.spacepope.org>`_.
