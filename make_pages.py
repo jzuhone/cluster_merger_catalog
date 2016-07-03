@@ -40,7 +40,10 @@ def make_set_page(set_info, set_dict):
                'cell_size': set_info["cell_size"],
                'sim_type': set_info['sim_type'],
                'code': set_info['code'],
-               'primary_mass': set_info["primary_mass"]}
+               'primary_mass': set_info["primary_mass"],
+               'sim_notes': set_info['sim_notes'],
+               'notes': set_info['notes'],
+               'cosmo_warning': set_info['cosmo_warning']}
     template_file = 'templates/set_template.rst'
     make_template('source/%s/index.rst' % set_info["name"], template_file, context)
 

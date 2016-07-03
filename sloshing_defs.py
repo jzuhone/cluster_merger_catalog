@@ -1,18 +1,24 @@
 from collections import OrderedDict
 from sim_defs import Simulation
-    
+
+slosh_notes = ["There is no metallicity field in these simulations; hence for computing X-ray " +
+               "emissivities a constant metallicity of :math:`Z = 0.3~Z_\odot` is assumed."]
+
 slosh_info = {"name": "sloshing",
               "cadence": 0.01,
               "filespec": "sloshing_%s_hdf5_plt_cnt_%04d",
               "set_name": "Sloshing of the Cold Gas in Galaxy Cluster Cores (ZuHone, Markevitch, & Johnson 2010)",
               "set_journal": "ZuHone, J. A., Markevitch, M., & Johnson, R. E. 2010, ApJ, 717, 908",
               "ads_link": "http://adsabs.harvard.edu/abs/2010ApJ...717..908Z",
-              "box_size": 10.0,
-              "cell_size": 4.88,
+              "box_size": "10 Mpc",
+              "cell_size": "4.88 kpc",
               "sim_type": "AMR",
               "code": "FLASH",
               "primary_mass": "M_{200} = 8.83~{\\times}~10^{14}\\frac{R}{R+1}~M_{\odot}" + \
-              "~\\rm{(where}~\\it{R}~\\rm{is~the~mass~ratio)}"}
+                              "~\\rm{(where}~\\it{R}~\\rm{is~the~mass~ratio)}",
+              "sim_notes": "For the following simulations, :math:`R` is the mass ratio between " + \
+                           "the two clusters and :math:`b` is the initial impact parameter in kpc.",
+              "notes": slosh_notes, "cosmo_warning": True}
 
 fields = {}
 fields["slice"] = ["dens","temp","pden","velx","vely"]

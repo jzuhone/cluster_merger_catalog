@@ -1,17 +1,23 @@
 from collections import OrderedDict
 from sim_defs import Simulation
 
+fid_notes = ["There is no metallicity field in these simulations; hence for computing X-ray "+
+             "emissivities a constant metallicity of :math:`Z = 0.3~Z_\odot` is assumed."]
+
 fid_info = {"name": "fiducial", 
             "cadence": 0.02,
             "filespec": "fiducial_%s_hdf5_plt_cnt_%04d",
             "set_name": "A Parameter Space Exploration of Galaxy Cluster Mergers (ZuHone 2011)",
             "set_journal": "ZuHone, J. A. 2011, ApJ, 728, 54",
             "ads_link": "http://adsabs.harvard.edu/abs/2011ApJ...728...54Z",
-            "box_size": 14.26,
-            "cell_size": 6.96,
+            "box_size": "14.26 Mpc",
+            "cell_size": "6.96 kpc",
             "sim_type": "AMR",
             "code": "FLASH",
-            "primary_mass": "M_{200} = 6~{\\times}~10^{14}~M_{\odot}"}
+            "primary_mass": "M_{200} = 6~{\\times}~10^{14}~M_{\odot}",
+            "sim_notes": "For the following simulations, :math:`R` is the mass ratio between " + \
+                         "the two clusters and :math:`b` is the initial impact parameter in kpc.",
+            "notes": fid_notes, "cosmo_warning": True}
 
 fields = {}
 fields["slice"] = ["dens","temp","pden","velx","vely","clr1","clr2"]

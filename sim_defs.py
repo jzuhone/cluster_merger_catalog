@@ -14,7 +14,8 @@ unit_map["proj"] = {"xray": "X-ray photon surface brightness in the 0.5-7.0 keV 
                     "temp": "Emission-weighted projected temperature in units of keV",
                     "dens": "Total mass density (gas and dark matter) in units of :math:`{\\rm M_\odot~{kpc}^{-2}}`",
                     "szy": "Integrated y-parameter for the thermal Sunyaev-Zeldovich (S-Z) effect",
-                    "szk": "Integrated y-parameter for the kinetic S-Z effect"}
+                    "szk": "Integrated y-parameter for the kinetic S-Z effect",
+                    "rm": "Faraday rotation measure in units of :math:`{\\rm rad~m^{-2}}`"}
 unit_map["SZ"] = {"tau": "Compton optical depth of the cluster gas",
                   "temp": "Mass-weighted projected temperature in units of keV",
                   "inty90": "S-Z signal at 90 GHz in units of :math:`{\\rm MJy~{steradian}^{-1}}`",
@@ -34,7 +35,8 @@ name_map["proj"] = {"xray": ("xray_emissivity", "X-ray Emissivity"),
                     "temp": ("kT", "Temperature"),
                     "dens": ("total_density", "Total Density"),
                     "szy": ("szy", "Compton-y"),
-                    "szk": ("sz_kinetic", "Compton-y Kinetic")}
+                    "szk": ("sz_kinetic", "Compton-y Kinetic"),
+                    "rm": ("rotation_measure", "Faraday Rotation Measure")}
 name_map["SZ"] = {"tau": ("Tau", "Compton Optical Depth"),
                   "temp": ("TeSZ", "Temperature"),
                   "inty90": ("90_GHz", "S-Z Signal (90 GHz)"),

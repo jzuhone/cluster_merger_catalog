@@ -14,18 +14,29 @@ Set Characteristics
 * Original paper: `{{set_journal|safe}} <{{ads_link}}>`_
 * Code: {{code}}
 * Simulation type: {{sim_type}}
-* Box size: *L* = {{box_size}} Mpc
-* Finest cell size: :math:`\Delta{x}_{\rm min}` = {{cell_size}} kpc
+* Box size: *L* = {{box_size}}
+* Finest cell size: :math:`\Delta{x}_{\rm min}` = {{cell_size}}
 * Primary cluster mass: :math:`{{primary_mass}}`
+
+Notes
+-----
+
+{% for note in notes %}
+* {{note|safe}}
+{% endfor %}
 
 Cosmology
 ---------
+
+{% if cosmo_warning %}
 
 .. note::
 
    For non-cosmological simulations such as this one, a cosmology is assumed for the
    purposes of calculating distance and redshift-dependent quantities.
-   
+
+{% endif %}
+
 * :math:`\Lambda{\rm CDM}` cosmology
 * :math:`z = 0.05` for all epochs
 * :math:`H_0 = 71~{\rm km~s^{-1}~Mpc^{-1}}`
@@ -35,8 +46,7 @@ Cosmology
 Simulations
 -----------
 
-For the following simulations, :math:`R` is the mass ratio betwen the two clusters and :math:`b` is the initial
-impact parameter in kpc.
+{{sim_notes|safe}}
 
 .. toctree::
    :maxdepth: 1
