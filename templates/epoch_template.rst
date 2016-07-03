@@ -160,10 +160,10 @@ The SZ FITS file contains the following fields:
             fits_link('slice', 'z');
             show_files('proj', 'z');
             fits_link('proj', 'z');
-            if (girder_data["SZ"]["z"]["pngs"].length > 0) {
-                show_files('SZ', 'z');
-                fits_link('SZ', 'z');
-	    }
+            {% if sz_fields|length > 0 %}
+            show_files('SZ', 'z');
+            fits_link('SZ', 'z');
+	    {% endif %}
             show_files('cxo_evt', 'z');
             fits_link('cxo_evt', 'z');
 
@@ -200,10 +200,10 @@ The SZ FITS file contains the following fields:
             var axis = this.options[this.selectedIndex].value;
             show_files('proj', axis);
             fits_link('proj', axis);
-            if (girder_data["SZ"]["z"]["pngs"].length > 0) {
-                show_files('SZ', axis);
-                fits_link('SZ', axis);
-	    }
+            {% if sz_fields|length > 0 %}
+            show_files('SZ', axis);
+            fits_link('SZ', axis);
+	    {% endif %}
             show_files('cxo_evt', axis);
             fits_link('cxo_evt', axis);
             $('#fits_ext').empty();
