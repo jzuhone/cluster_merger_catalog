@@ -26,7 +26,7 @@ fields["proj"] = ["xray","temp","szy","szk","rm"]
 fields["SZ"] = []
 pngs = {}
 pngs["slice"] = ["dens","temp","bmag"]
-pngs["proj"] = ["xray","temp","rm"]
+pngs["proj"] = ["xray","temp","szy","rm"]
 pngs["cxo_evt"] = ["counts"]
 pngs["SZ"] = []
 
