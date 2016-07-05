@@ -4,10 +4,10 @@
 .. raw:: html
 
    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-   <script type="text/javascript" src="../../scripts/bootstrap-slider.js"></script>
-   <script>$('head').append('<link type="text/css" rel="stylesheet" href="../../scripts/bootstrap-slider.css">');</script>
    <script>$('#dLabelLocalToc').addClass('hidden');</script>
    <script>$('.navbar-nav').first().append('<li><a href="../index.html">&#10094; Back to Simulation Set</a></li>');</script>
+   <script type="text/javascript" src="../../scripts/bootstrap-slider.js"></script>
+   <script>$('head').append('<link type="text/css" rel="stylesheet" href="../../scripts/bootstrap-slider.css">');</script>
    
    <h3>Click on one of the axes below to change the axis of projection.</h3>
 {% for a in axes %}
