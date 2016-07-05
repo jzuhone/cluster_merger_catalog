@@ -11,7 +11,10 @@
 Set Characteristics
 -------------------
 
-* Original paper: `{{set_journal|safe}} <{{ads_link}}>`_
+* Relevant papers: 
+{% for set_journal in set_journals %}
+  * `{{set_journal.0|safe}} <{{set_journal.1}}>`_
+{% endfor %}
 * Code: {{code}}
 * Simulation type: {{sim_type}}
 * Box size: *L* = {{box_size}}
