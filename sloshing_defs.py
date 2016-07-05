@@ -20,7 +20,7 @@ slosh_info = {"name": "sloshing",
                               "~\\rm{(where}~\\it{R}~\\rm{is~the~mass~ratio)}",
               "sim_notes": "For the following simulations, :math:`R` is the mass ratio between " + \
                            "the two clusters and :math:`b` is the initial impact parameter in kpc.",
-              "notes": slosh_notes, "cosmo_warning": True}
+              "notes": slosh_notes, "cosmo_warning": True, 'redshift': 0.05}
 
 fields = {}
 fields["slice"] = ["dens","temp","pden","velx","vely"]
