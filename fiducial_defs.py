@@ -17,7 +17,7 @@ fid_info = {"name": "fiducial",
             "primary_mass": "M_{200} = 6~{\\times}~10^{14}~M_{\odot}",
             "sim_notes": "For the following simulations, :math:`R` is the mass ratio between " + \
                          "the two clusters and :math:`b` is the initial impact parameter in kpc.",
-            "notes": fid_notes, "cosmo_warning": True}
+            "notes": fid_notes, "cosmo_warning": True, 'redshift': 0.05}
 
 fields = {}
 fields["slice"] = ["dens","temp","pden","velx","vely","clr1","clr2"]

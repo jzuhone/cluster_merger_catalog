@@ -38,16 +38,18 @@ Cosmology
 
 .. note::
 
-   For non-cosmological simulations such as this one, a cosmology is assumed for the
-   purposes of calculating distance and redshift-dependent quantities.
+   For non-cosmological simulations such as this one, a cosmology and redshift
+   are assumed for the purposes of calculating distance and redshift-dependent quantities.
 
 {% endif %}
 
 * :math:`\Lambda{\rm CDM}` cosmology
-* :math:`z = 0.05` for all epochs
 * :math:`H_0 = 71~{\rm km~s^{-1}~Mpc^{-1}}`
 * :math:`\Omega_m = 0.27`
-* :math:`\Omega_\Lambda = 0.73`
+* :math:`\Omega_\Lambda = 0.73`	  
+{% if cosmo_warning %}
+* :math:`z = {{redshift}}` for all epochs
+{% endif %}
 
 Simulations
 -----------

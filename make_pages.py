@@ -42,7 +42,8 @@ def make_set_page(set_info, set_dict):
                'primary_mass': set_info["primary_mass"],
                'sim_notes': set_info['sim_notes'],
                'notes': set_info['notes'],
-               'cosmo_warning': set_info['cosmo_warning']}
+               'cosmo_warning': set_info['cosmo_warning'],
+               'redshift': set_info['redshift']}
     template_file = 'templates/set_template.rst'
     make_template('source/%s/index.rst' % set_info["name"], template_file, context)
 

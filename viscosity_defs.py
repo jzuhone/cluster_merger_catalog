@@ -18,7 +18,7 @@ visc_info = {"name": "viscosity",
              "code": "Athena",
              "primary_mass": "TBD",
              "sim_notes": "For the following simulations, :math:`\\beta = p_{\\rm th}/p_B`.",
-             "notes": visc_notes, "cosmo_warning": True}
+             "notes": visc_notes, "cosmo_warning": True, 'redshift': 0.0036}
 
 fields = {}
 fields["slice"] = ["dens","temp","bmag","velx","vely"]
