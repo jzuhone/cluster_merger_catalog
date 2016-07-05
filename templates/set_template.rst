@@ -8,13 +8,16 @@
 {{set_name|safe}}
 ============
 
+Relevant Papers
+---------------
+
+{% for set_journal in set_journals %}
+* `{{set_journal.0|safe}} <{{set_journal.1}}>`_
+{% endfor %}
+
 Set Characteristics
 -------------------
 
-* Relevant papers: 
-{% for set_journal in set_journals %}
-  * `{{set_journal.0|safe}} <{{set_journal.1}}>`_
-{% endfor %}
 * Code: {{code}}
 * Simulation type: {{sim_type}}
 * Box size: *L* = {{box_size}}
