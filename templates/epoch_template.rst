@@ -166,7 +166,6 @@ The SZ FITS file contains the following fields:
 	    {% endif %}
             show_files('cxo_evt', 'z');
             fits_link('cxo_evt', 'z');
-
             for (var i = 0; i < axes.length; i++) {
                 var new_ax = document.createElement("option");
                 new_ax.text = axes[i];
