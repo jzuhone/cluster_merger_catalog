@@ -43,6 +43,7 @@ name_map["SZ"] = {"tau": ("Tau", "Compton Optical Depth"),
                   "inty180": ("180_GHz", "S-Z Signal (180 GHz)"),
                   "inty240": ("240_GHz", "S-Z Signal (240 GHz)")}
 name_map["cxo_evt"] = {"counts":("counts","ACIS-I Counts Map")}
+name_map["galaxies"] = {"galaxies":("galaxies","Galaxy Positions and Velocities")}
 
 class Simulation(object):
 

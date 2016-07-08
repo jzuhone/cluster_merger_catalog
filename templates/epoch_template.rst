@@ -41,7 +41,7 @@ The slice FITS file contains the following fields:
 .. raw:: html
 
     <a id="slice_fits">FITS File Download</a><br>
-    <a id="slice_js9">Open in JS9 below</a>
+    <a id="slice_js9">Open FITS file in JS9 below</a>
     <br><br>	       
     {% for key, name in slice_names.items %}
     <figure style="display: inline-block;">
@@ -67,7 +67,7 @@ The projection FITS file contains the following fields:
 .. raw:: html
 
     <a id="proj_fits">FITS File Download</a><br>
-    <a id="proj_js9">Open in JS9 below</a>
+    <a id="proj_js9">Open FITS file in JS9 below</a>
     <br><br>
     {% for key, name in proj_names.items %}
     <figure style="display: inline-block;">
@@ -76,6 +76,20 @@ The projection FITS file contains the following fields:
     </figure>
     {% endfor %}
     <br><br>
+
+    {% if galaxies %}
+    The galaxies FITS file contains positions, velocities, IDs, and original halo information
+    for a set of galaxy particles. 
+    <a id="gal_fits">FITS File Download</a><br>
+    <a id="gal_reg">Region File Download</a><br>
+    <a id="gal_js9">Open region file in JS9 below</a>
+    <br><br>
+    <figure style="display: inline-block;">
+    <figcaption><h4>Galaxy Positions and Velocities</h4></figcaption>
+    <a id="big_gal_ppv" data-lightbox="lb_gal_ppv" ><img id="gal_ppv" width="450" /></a>
+    </figure>	
+    <br><br>
+    {% endif %}
 
 {% if sz_fields|length > 0 %}
 
@@ -88,7 +102,7 @@ The SZ FITS file contains the following fields:
 .. raw:: html
 
     <a id="SZ_fits">FITS File Download</a><br>
-    <a id="SZ_js9">Open in JS9 below</a>
+    <a id="SZ_js9">Open FITS file in JS9 below</a>
     <br><br>    
     {% for key, name in sz_names.items %}
     <figure style="display: inline-block;">
@@ -98,13 +112,14 @@ The SZ FITS file contains the following fields:
     {% endfor %}
 			
     <br><br>
+    
 {% endif %}
     
     The events FITS file contains an X-ray event list.
     <br><br>	 
     <a id="cxo_evt_fits">FITS File Download</a><br>
     <a href="../../files/acisi_rmfs.tar.gz">Download Response Files</a><br>
-    <a id="cxo_evt_js9">Open in JS9 below</a>
+    <a id="cxo_evt_js9">Open FITS file in JS9 below</a>
     <br><br>
     <figure style="display: inline-block;">
     <figcaption><h4>X-ray Counts (<em>Chandra</em> ACIS-I, 50 ks)</h4></figcaption>
@@ -131,24 +146,30 @@ The SZ FITS file contains the following fields:
         var axisList = document.getElementById("proj_axis");
         var fitsList = document.getElementById("fits_ext");
 
-        var default_js9 = {"slice":"DENSITY","proj":"XRAY_EMISSIVITY","SZ":"180_GHZ","cxo_evt":"EVENTS"};
+        var default_js9 = {"slice":"DENSITY",
+                           "proj":"XRAY_EMISSIVITY",
+                           "SZ":"180_GHZ",
+                           "cxo_evt":"EVENTS"};
 
         var girder_data = {
         {% for itype, axes in data.items %}
             "{{itype}}": {
         {% for ax, ftypes in axes.items %}
                 "{{ax}}": {"fits": "{{ftypes.fits}}",
+        {% if itype|stringformat:"s" == "galaxies" %}
+                           "reg": "{{ftypes.reg}}",
+        {% endif %}                   
                            "pngs": {
         {% for key, link in ftypes.pngs.items %}
                                "{{key}}": "{{link}}",
         {% endfor %}
 	                   },},
         {% endfor %}
-	    },
+            },
         {% endfor %}
-	};
+	    };
 	
-	var axes = [
+	    var axes = [
         {% for ax in data.proj %}
             "{{ax}}",
         {% endfor %}
@@ -163,9 +184,13 @@ The SZ FITS file contains the following fields:
             {% if sz_fields|length > 0 %}
             show_files('SZ', 'z');
             fits_link('SZ', 'z');
-	    {% endif %}
+	        {% endif %}
             show_files('cxo_evt', 'z');
             fits_link('cxo_evt', 'z');
+            {% if galaxies %}
+            show_files('galaxies', 'z');
+            fits_link('galaxies', 'z');
+            {% endif %}
             for (var i = 0; i < axes.length; i++) {
                 var new_ax = document.createElement("option");
                 new_ax.text = axes[i];
@@ -180,17 +205,25 @@ The SZ FITS file contains the following fields:
             document.getElementById(itype+'_fits').href = fits_link;
             document.getElementById(itype+'_fits').innerText = "FITS File Download ("+axis+"-axis)";
             document.getElementById(itype+'_fits').textContent = "FITS File Download ("+axis+"-axis)";
-	    document.getElementById(itype+'_js9').href = "javascript:js9Load('"+fits_link+"','"+itype+"');";
-            document.getElementById(itype+'_js9').innerText = "Open in JS9 below ("+axis+"-axis)";
-            document.getElementById(itype+'_js9').textContent = "Open in JS9 below ("+axis+"-axis)";
+            var descr = "";
+            if (itype == "galaxies") {
+                descr = "region";
+                var reg_link = girder_data["galaxies"][axis]["reg"];
+                document.getElementById(itype+'_js9').href = "javascript:JS9.LoadRegions('"+reg_link+"');";
+            } else {
+                descr = "FITS";
+	            document.getElementById(itype+'_js9').href = "javascript:js9Load('"+fits_link+"','"+itype+"');";
+            }
+            document.getElementById(itype+'_js9').innerText = "Open "+descr+" file in JS9 below ("+axis+"-axis)";
+            document.getElementById(itype+'_js9').textContent = "Open "+descr+" file in JS9 below ("+axis+"-axis)";
         }
         
         function show_files(itype, axis) {
             var pngs = girder_data[itype][axis]["pngs"];
             $.each(pngs, function(key, value) {
-	        var img = document.getElementById(itype+'_'+key);
-		img.src = "../../images/loader.gif";
-		img.src = value;
+	            var img = document.getElementById(itype+'_'+key);
+		        img.src = "../../images/loader.gif";
+		        img.src = value;
                 document.getElementById('big_'+itype+'_'+key).href = value;
             });
         }
@@ -202,9 +235,13 @@ The SZ FITS file contains the following fields:
             {% if sz_fields|length > 0 %}
             show_files('SZ', axis);
             fits_link('SZ', axis);
-	    {% endif %}
+	        {% endif %}
             show_files('cxo_evt', axis);
             fits_link('cxo_evt', axis);
+            {% if galaxies %}
+            show_files('galaxies', axis);
+            fits_link('galaxies', axis);
+            {% endif %}
             $('#fits_ext').empty();
             JS9.CloseImage();
         }

@@ -100,11 +100,20 @@ def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
                     if itype == "slice" and ax != "z":
                         continue
                     data[itype][ax] = {}
-                    filename = filespec % (sim, fileno) + "_%s_%s" % (itype, ax)
+                    if itype == "galaxies":
+                        filename = "_".join([set_name, sim, "%04d" % fileno]) + "_%s_%s" % (itype, ax)
+                    else:
+                        filename = filespec % (sim, fileno) + "_%s_%s" % (itype, ax)
                     data[itype][ax]['fits'] = get_file(filename)
+                    if itype == "galaxies":
+                        data[itype][ax]['reg'] = get_file(filename+".reg")
                     imgs = {}
                     for link, field in sname_map[itype].items():
-                        imgs[link] = get_file(filename+"_"+field)
+                        if itype == "galaxies":
+                            imgfn = filename
+                        else:
+                            imgfn = filename+"_"+field
+                        imgs[link] = get_file(imgfn)
                     data[itype][ax]['pngs'] = imgs
             template_file = 'templates/epoch_template.rst'
             timestr = "t = %4.2f Gyr" % (fileno*cadence)
@@ -129,6 +138,7 @@ def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
                        "slice_fields": unit_map["slice"],
                        "proj_fields": unit_map["proj"],
                        "sz_fields": unit_map["SZ"],
+                       "galaxies": "galaxies" in sname_map.keys(),
                        "prev_link": prev_link,
                        "next_link": next_link,            
                        "dis_prev": dis_prev,
