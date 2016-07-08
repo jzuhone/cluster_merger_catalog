@@ -46,7 +46,7 @@ The slice FITS file contains the following fields:
 .. raw:: html
 
     <a id="slice_fits">FITS File Download</a><br>
-    <a id="slice_js9">Open FITS file in JS9 below</a>
+    <a id="slice_js9" href="#js9">Open FITS file in JS9 below</a>
     <br><br>	       
     {% for key, name in slice_names.items %}
     <figure style="display: inline-block;">
@@ -74,7 +74,7 @@ The projection FITS file contains the following fields:
 .. raw:: html
     
     <a id="proj_fits">FITS File Download</a><br>
-    <a id="proj_js9">Open FITS file in JS9 below</a>
+    <a id="proj_js9" href="#js9">Open FITS file in JS9 below</a>
     <br><br>
     {% for key, name in proj_names.items %}
     <figure style="display: inline-block;">
@@ -115,7 +115,7 @@ The S-Z FITS file contains the following fields:
 .. raw:: html
 
     <a id="SZ_fits">FITS File Download</a><br>
-    <a id="SZ_js9">Open FITS file in JS9 below</a>
+    <a id="SZ_js9" href="#js9">Open FITS file in JS9 below</a>
     <br><br>    
     {% for key, name in sz_names.items %}
     <figure style="display: inline-block;">
@@ -134,7 +134,7 @@ The S-Z FITS file contains the following fields:
     <br><br>	 
     <a id="cxo_evt_fits">FITS File Download</a><br>
     <a href="../../files/acisi_rmfs.tar.gz">Download Response Files</a><br>
-    <a id="cxo_evt_js9">Open FITS file in JS9 below</a>
+    <a id="cxo_evt_js9" href="#js9">Open FITS file in JS9 below</a>
     <br><br>
     <figure style="display: inline-block;">
     <figcaption><h4>X-ray Counts (<em>Chandra</em> ACIS-I, 50 ks)</h4></figcaption>
@@ -142,6 +142,7 @@ The S-Z FITS file contains the following fields:
     </figure>
     <br><br>
     
+    <a name="js9"></a>
     <h2>JS9 Interface</h2>
     
     Once an image file is loaded, use the drop-down menu below to switch between 
@@ -230,7 +231,7 @@ The S-Z FITS file contains the following fields:
 		document.getElementById(itype+'_reg').textContent = "Region File Download ("+axis+"-axis)";				  
             } else {
                 descr = "FITS";
-	        document.getElementById(itype+'_js9').href = "javascript:js9Load('"+fits_link+"','"+itype+"');";
+	        document.getElementById(itype+'_js9').onclick = function(){js9Load(fits_link, itype)};
 		document.getElementById(itype+'_js9').innerText = "Open "+descr+" file in JS9 below ("+axis+"-axis)";
 		document.getElementById(itype+'_js9').textContent = "Open "+descr+" file in JS9 below ("+axis+"-axis)";			
             }
