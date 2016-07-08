@@ -52,7 +52,7 @@ The catalog and its data are hosted on the `yt Hub <http://hub.yt>`_, provided b
    <h3>Made possible by these technologies</h3>
    <a href="http://yt-project.org"><img src="images/yt_logo.png" width="70" vspace="20" hspace="20"/></a>
    <a href="http://girder.readthedocs.io/"><img src="images/Girder_Mark.png" width="70" vspace="20" hspace="20"/></a>
-   <a href="http://www.astropy.org"><img src="images/astropy_logo_small.png" width="70" vspace="20" hspace="20"/></a>
+   <a href="http://www.astropy.org"><img src="images/astropy_logo_notext.png" width="70" vspace="20" hspace="20"/></a>
    <a href="http://js9.si.edu"><img src="images/sun.gif" width="80" vspace="20" hspace="20"/></a>
    <br><br>
 	 
