@@ -29,7 +29,7 @@ pngs["slice"] = ["dens","temp","pden"]
 pngs["proj"] = ["xray","temp","dens","szy"]
 pngs["SZ"] = ["tau","inty240"]
 pngs["cxo_evt"] = ["counts"]
-pngs["galaxies"] = ["galaxies"]
+pngs["galaxies"] = ["ppv"]
 
 fid_dict = OrderedDict()
 fid_dict["1to1_b0"] = Simulation("R = 1:1, b = 0 kpc",

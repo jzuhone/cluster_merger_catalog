@@ -62,7 +62,7 @@ def make_sim_page(set_name, filespec, sim, sim_name, filenos, sname_map,
             pngs = {}
             for fd, field in sname_map["proj"].items():
                 filename = filespec % (sim, fileno) + "_proj_%s_%s" % (ax, field)
-                pngs[fd] = get_file(filename)
+                pngs[fd] = get_file(filename, "proj")
             epochs[fn] = "t = %4.2f Gyr" % (fileno*cadence)
             imgs[fn] = pngs
             pbar.update()
@@ -104,16 +104,14 @@ def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
                         filename = "_".join([set_name, sim, "%04d" % fileno]) + "_%s_%s" % (itype, ax)
                     else:
                         filename = filespec % (sim, fileno) + "_%s_%s" % (itype, ax)
-                    data[itype][ax]['fits'] = get_file(filename)
+                    data[itype][ax]['fits'] = get_file(filename, itype)
                     if itype == "galaxies":
-                        data[itype][ax]['reg'] = get_file(filename+".reg")
+                        data[itype][ax]['reg'] = data[itype][ax]['fits'][0]
+                        data[itype][ax]['fits'] = data[itype][ax]['fits'][1]
                     imgs = {}
                     for link, field in sname_map[itype].items():
-                        if itype == "galaxies":
-                            imgfn = filename
-                        else:
-                            imgfn = filename+"_"+field
-                        imgs[link] = get_file(imgfn)
+                        imgfn = filename+"_"+field
+                        imgs[link] = get_file(imgfn, itype)
                     data[itype][ax]['pngs'] = imgs
             template_file = 'templates/epoch_template.rst'
             timestr = "t = %4.2f Gyr" % (fileno*cadence)
@@ -147,10 +145,14 @@ def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
         pbar.update()
     pbar.finish()
 
-def get_file(filename):
+def get_file(filename, itype):
     items = gc.get("resource/search", {"q": '"'+filename+'"', "types": '["item"]'})['item']
+    #if "galaxies" in filename:
+    #    print(filename, items, len(items))
     if len(items) == 0:
         return "https://girder.hub.yt/static/built/plugins/ythub/extra/img/yt_logo.png"
+    elif itype == "galaxies" and len(items) == 2:
+        return ["https://girder.hub.yt/api/v1/item/%s/download" % item['_id'] for item in items]
     else:
         return "https://girder.hub.yt/api/v1/item/%s/download" % items[0]['_id']
 
