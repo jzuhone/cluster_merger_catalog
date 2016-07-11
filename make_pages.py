@@ -4,9 +4,9 @@ import django.conf
 import re
 import girder_client
 from yt.funcs import get_pbar
-from fiducial_defs import fid_dict, fid_info
-from sloshing_defs import slosh_dict, slosh_info
-from viscosity_defs import visc_dict, visc_info
+from fiducial_defs import fid_dict, fid_info, fid_physics
+from sloshing_defs import slosh_dict, slosh_info, slosh_physics
+from viscosity_defs import visc_dict, visc_info, visc_physics
 import argparse
 from collections import OrderedDict
 
@@ -20,7 +20,8 @@ GIRDER_API_URL = "https://girder.hub.yt/api/v1"
 
 gc = girder_client.GirderClient(apiUrl=GIRDER_API_URL)
 
-def make_set_page(set_info, set_dict):
+def make_set_page(set_info, set_dict, set_physics):
+    set_physics_dict = OrderedDict([(k, set_dict[k].name) for k in set_physics])
     if not os.path.exists('source/%s' % set_info['name']):
         os.mkdir('source/%s' % set_info['name'])
     for sim, sim_info in set_dict.items():
@@ -30,7 +31,8 @@ def make_set_page(set_info, set_dict):
                           set_info["cadence"], sim_info.axes)
         make_epoch_pages(set_info['name'], set_info['filespec'], sim, sim_info.name,
                          sim_info.filenos, sim_info.sname_map, sim_info.lname_map,
-                         sim_info.unit_map, set_info["cadence"], sim_info.axes)
+                         sim_info.unit_map, set_info["cadence"], sim_info.axes,
+                         set_physics_dict)
     context = {'name': set_info["name"],
                'sim_pages': list(set_dict.keys()),
                'set_name': set_info["set_name"],
@@ -87,7 +89,7 @@ def make_template(outfile, template_file, context):
     open(outfile, 'w').write(template.render(django_context))
 
 def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
-                     lname_map, unit_map, cadence, axes):
+                     lname_map, unit_map, cadence, axes, set_physics):
     pbar = get_pbar("Setting up epoch pages for simulation "+sim, len(filenos))
     num_epochs = len(filenos)
     for noi, fileno in enumerate(filenos):
@@ -128,6 +130,8 @@ def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
                 next_link = "%04d.html" % filenos[noi+1]
                 dis_next = ""
             context = {"data": data,
+                       "sim": sim,
+                       "fileno": "%04d" % fileno,
                        "sim_name": sim_name,
                        "timestr": timestr,
                        "slice_names": lname_map["slice"],
@@ -140,7 +144,8 @@ def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
                        "prev_link": prev_link,
                        "next_link": next_link,            
                        "dis_prev": dis_prev,
-                       "dis_next": dis_next}
+                       "dis_next": dis_next,
+                       "set_physics": set_physics if sim in set_physics else {}}
             make_template(outfile, template_file, context)
         pbar.update()
     pbar.finish()
@@ -160,7 +165,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--test", action='store_true')
     args = parser.parse_args()
-    make_set_page(fid_info, fid_dict)
-    make_set_page(slosh_info, slosh_dict)
-    make_set_page(visc_info, visc_dict)
+    make_set_page(fid_info, fid_dict, fid_physics)
+    make_set_page(slosh_info, slosh_dict, slosh_physics)
+    make_set_page(visc_info, visc_dict, visc_physics)
     

@@ -32,6 +32,8 @@ pngs["proj"] = ["xray","temp","dens","szy"]
 pngs["SZ"] = ["tau","inty240"]
 pngs["cxo_evt"] = ["counts"]
 
+slosh_physics = ["R5_b500", "R5_b500_visc"]
+
 slosh_dict = OrderedDict()
 slosh_dict["R5_b500"] = Simulation("R = 1:5, b = 500 kpc, gasless secondary",
                                    [0, 90, 120, 130, 131, 132,

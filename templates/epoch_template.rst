@@ -22,6 +22,20 @@
    <a class="btn btn-primary" href="{{next_link}}" role="button" {{dis_next}}>&#10095; Next Epoch</a>
    <br><br>
 
+{% if set_physics|length > 0 %}
+   Explore similar simulations with different input physics
+   at the same epoch using these buttons.
+   <br><br>
+{% for key, value in set_physics.items %}
+{% if key == sim %}
+   <a class="btn btn-primary" href="../{{key}}/{{fileno}}.html" role="button" disabled>{{value}}</a>
+{% else %}
+   <a class="btn btn-primary" href="../{{key}}/{{fileno}}.html" role="button">{{value}}</a>   
+{% endif %} 
+{% endfor %}
+   <br><br>
+{% endif %}
+
 To make the best use out of this page:
 
 * Click on any image to enlarge it.

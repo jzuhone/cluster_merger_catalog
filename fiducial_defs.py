@@ -31,6 +31,8 @@ pngs["SZ"] = ["tau","inty240"]
 pngs["cxo_evt"] = ["counts"]
 pngs["galaxies"] = ["ppv"]
 
+fid_physics = []
+
 fid_dict = OrderedDict()
 fid_dict["1to1_b0"] = Simulation("R = 1:1, b = 0 kpc",
                                  [0, 20, 30, 40, 50, 60, 61, 62, 63,
