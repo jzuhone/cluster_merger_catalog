@@ -21,11 +21,10 @@
    <a class="btn btn-primary" href="{{prev_link}}" role="button" {{dis_prev}}>&#10094; Previous Epoch</a>
    <a class="btn btn-primary" href="{{next_link}}" role="button" {{dis_next}}>&#10095; Next Epoch</a>
    <br><br>
-
+   
 {% if set_physics|length > 0 %}
-   Explore similar simulations with different input physics
-   at the same epoch using these buttons.
-   <br><br>
+   <h4>Explore similar simulations with different input physics
+   at the same epoch using these buttons:</h4>
 {% for key, value in set_physics.items %}
 {% if key == sim %}
    <a class="btn btn-primary" href="../{{key}}/{{fileno}}.html" role="button" disabled>{{value}}</a>
