@@ -71,7 +71,7 @@ set up.
 How do I cite the catalog?
 --------------------------
 
-Watch this space for a future journal reference.
+Watch this space for a future journal reference. For now, just make sure you provide the link to http://gcmc.hub.yt.
 
 Is the data licensed?
 ---------------------
