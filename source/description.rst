@@ -103,10 +103,25 @@ the redshift and the given cosmology, which is given in the notes for the simula
 is not cosmological (such as the binary merger simulations), a standard cosmology and constant redshift is assumed.
 Projected quantities typically include X-ray emissivity, total matter density, projected temperature, etc.
 
-Fields related to the (S-Z) effect are also computed, using the `SZpack library <http://www.cita.utoronto.ca/~jchluba/Science_Jens/SZpack/SZpack.html>`_
-to compute the S-Z signal, including thermal and kinetic contributions as well as relativistic
-corrections. More details on how these projections were computed can be found `here <http://yt-project.org/doc/analyzing/analysis_modules/sunyaev_zeldovich.html>`_.
+Fields related to the (S-Z) effect are also computed for some simulations, using the
+`SZpack library <http://www.cita.utoronto.ca/~jchluba/Science_Jens/SZpack/SZpack.html>`_ to compute the S-Z signal,
+including thermal and kinetic contributions as well as relativistic corrections. More details on how these projections
+were computed can be found `here <http://yt-project.org/doc/analyzing/analysis_modules/sunyaev_zeldovich.html>`_.
 They are stored in separate FITS files from the other projections. 
+
+Galaxies
+++++++++
+
+Some of the simulations with dark matter particles have mock "galaxies". These are dark matter particles which have been
+randomly drawn from the simulation, with a number per halo given by the mass-richness relation of
+`Andreon & Hurn 2010 <http://adsabs.harvard.edu/abs/2010MNRAS.404.1922A>`_. The galaxies are contained in FITS binary tables,
+which include sky positions, line-of-sight velocities, an identifier for which halo each galaxy originally belonged to, and
+unique IDs for every galaxy. These particles provide a way of measuring the kinematics of the merger from the perspective of
+the collisionless material with a statistical significance that is comparable to that obtained from measured redshifts of
+galaxies in real clusters. No redshift errors have been applied to the galaxy velocities, which is an exercise left to the end-user.
+
+A ds9 region file is provided for each epoch and line-of-sight in addition to the FITS file, which allows the galaxy positions
+to be plotted over the projections of the other fields. 
 
 .. |photon_simulator| replace:: ``photon_simulator`` analysis module of yt
 .. _photon_simulator: http://yt-project.org/doc/analyzing/analysis_modules/photon_simulator.html
