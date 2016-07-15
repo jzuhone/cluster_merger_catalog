@@ -23,16 +23,20 @@
    <br><br>
    
 {% if set_physics|length > 0 %}
-   <h4>Explore similar simulations with different input physics
-   at the same epoch using these buttons:</h4>
+Explore similar simulations with different input physics at the same epoch using these links:
+
 {% for key, value in set_physics.items %}
-{% if key == sim %}
-   <a class="btn btn-primary" href="../{{key}}/{{fileno}}.html" role="button" disabled>{{value}}</a>
-{% else %}
-   <a class="btn btn-primary" href="../{{key}}/{{fileno}}.html" role="button">{{value}}</a>   
+{% if key != sim %}
+.. |{{key}}_epoch_link| replace:: {{value|safe}}: {{timestr}}
+.. _{{key}}_epoch_link: ../{{key}}/{{fileno}}.html
+{% endif %}
+{% endfor %}
+  
+{% for key in set_physics %}
+{% if key != sim %}
+* |{{key}}_epoch_link|_
 {% endif %} 
 {% endfor %}
-   <br><br>
 {% endif %}
 
 To make the best use out of this page:
