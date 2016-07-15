@@ -21,7 +21,8 @@ GIRDER_API_URL = "https://girder.hub.yt/api/v1"
 gc = girder_client.GirderClient(apiUrl=GIRDER_API_URL)
 
 def make_set_page(set_info, set_dict, set_physics):
-    set_physics_dict = OrderedDict([(k, set_dict[k].name) for k in set_physics])
+    set_physics_dict = OrderedDict([(k, (set_dict[k].name, set_dict[k].filenos)) 
+                                    for k in set_physics])
     if not os.path.exists('source/%s' % set_info['name']):
         os.mkdir('source/%s' % set_info['name'])
     for sim, sim_info in set_dict.items():
@@ -94,6 +95,8 @@ def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
     num_epochs = len(filenos)
     for noi, fileno in enumerate(filenos):
         outfile = "source/%s/%s/%04d.rst" % (set_name, sim, fileno)
+        setp = OrderedDict([(sim, val[0]) for sim, val in set_physics.items() 
+                           if fileno in val[-1]])
         if not os.path.exists(outfile):
             data = {}
             for itype in sname_map.keys():
@@ -142,10 +145,10 @@ def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
                        "sz_fields": unit_map["SZ"],
                        "galaxies": "galaxies" in sname_map.keys(),
                        "prev_link": prev_link,
-                       "next_link": next_link,            
+                       "next_link": next_link,
                        "dis_prev": dis_prev,
                        "dis_next": dis_next,
-                       "set_physics": set_physics if sim in set_physics else {}}
+                       "set_physics": setp if sim in setp else {}}
             make_template(outfile, template_file, context)
         pbar.update()
     pbar.finish()
