@@ -5,7 +5,11 @@ virgo_notes = ["There is no metallicity field in these simulations; hence for co
                "emissivities a constant metallicity of :math:`Z = 0.3~Z_\odot` is assumed.",
                "Simulations with viscosity and/or thermal conduction were restarted from their "+
                "corresponding ideal HD/MHD simulations at core passage, hence for these simulations "+
-               "there are no earlier snapshots available."]
+               "there are no earlier snapshots available.",
+               "For each simulation, the main cluster is fixed at **r** = [0, 0, 0] kpc. "+
+               "A tab-separated ASCII table containing the subcluster position, velocity, "+
+               "and acceleration as a function of time may be found "+
+               "`here <https://girder.hub.yt/api/v1/item/57891d847b6f0800011e2f6a/download>`_"]
 
 virgo_info = {"name": "virgo",
              "cadence": 0.05,
