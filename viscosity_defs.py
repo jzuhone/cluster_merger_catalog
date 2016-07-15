@@ -41,10 +41,11 @@ visc_dict["avisc1"] = Simulation(":math:`\\beta` = 1000, Braginskii Viscosity",
                                  [22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42,
                                   44, 46, 48, 50, 52, 54], fields, pngs,
                                  ["x", "y", "z"])
-"""
 visc_dict["ivisc1"] = Simulation(":math:`\\beta` = 1000, Spitzer Viscosity",
-                                 filenos, fields, pngs,
+                                 [22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42,
+                                  44, 46, 48, 50, 52, 54], fields, pngs,
                                  ["x", "y", "z"])
+"""
 visc_dict["ivisc0.1"] = Simulation(":math:`\\beta` = 1000, 10\% Spitzer Viscosity",
                                    filenos, fields, pngs,
                                    ["x", "y", "z"])
