@@ -49,7 +49,7 @@ help:
 .PHONY: clean
 clean:
 	rm -rf $(BUILDDIR)/*
-	rm -rf source/fiducial source/sloshing source/viscosity
+	rm -rf source/fiducial source/sloshing source/virgo
 
 .PHONY: all
 all: pages html deploy
@@ -68,7 +68,7 @@ html:
 	cp -rf images $(BUILDDIR)/html
 	echo `ls -d $(BUILDDIR)/html/fiducial/*/` | xargs -n 1 cp $(BUILDDIR)/html/js9/js9Prefs.json 
 	echo `ls -d $(BUILDDIR)/html/sloshing/*/` | xargs -n 1 cp $(BUILDDIR)/html/js9/js9Prefs.json 
-	echo `ls -d $(BUILDDIR)/html/viscosity/*/` | xargs -n 1 cp $(BUILDDIR)/html/js9/js9Prefs.json 
+	echo `ls -d $(BUILDDIR)/html/virgo/*/` | xargs -n 1 cp $(BUILDDIR)/html/js9/js9Prefs.json 
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 

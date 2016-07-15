@@ -7,7 +7,7 @@ slosh_notes = ["There is no metallicity field in these simulations; hence for co
 slosh_info = {"name": "sloshing",
               "cadence": 0.01,
               "filespec": "sloshing_%s_hdf5_plt_cnt_%04d",
-              "set_name": "Sloshing of the Cold Gas in Galaxy Cluster Cores (ZuHone, Markevitch, & Johnson 2010)",
+              "set_name": "Sloshing of Cold Gas in Galaxy Cluster Cores",
               "set_journals": [("ZuHone, J. A., Markevitch, M., & Johnson, R. E. 2010, ApJ, 717, 908",
                                 "http://adsabs.harvard.edu/abs/2010ApJ...717..908Z"),
                                ("ZuHone, J. A., Miller, E. D., Simionescu, A., & Bautz, M. W. 2016, ApJ, 821, 6",

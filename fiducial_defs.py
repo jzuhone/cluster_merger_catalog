@@ -7,7 +7,7 @@ fid_notes = ["There is no metallicity field in these simulations; hence for comp
 fid_info = {"name": "fiducial", 
             "cadence": 0.02,
             "filespec": "fiducial_%s_hdf5_plt_cnt_%04d",
-            "set_name": "A Parameter Space Exploration of Galaxy Cluster Mergers (ZuHone 2011)",
+            "set_name": "A Parameter Space Exploration of Galaxy Cluster Mergers",
             "set_journals": [("ZuHone, J. A. 2011, ApJ, 728, 54",
                               "http://adsabs.harvard.edu/abs/2011ApJ...728...54Z")],
             "box_size": "14.26 Mpc",
