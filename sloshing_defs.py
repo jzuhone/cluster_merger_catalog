@@ -46,7 +46,7 @@ slosh_dict["R5_b500"] = Simulation("R = 1:5, b = 500 kpc, gasless secondary",
                                     430, 440, 450, 460, 470, 480, 490, 500,
                                     510, 520, 530, 540, 550, 560, 570, 580,
                                     590, 600], fields, pngs, ["x", "y", "z"])
-slosh_dict["R5_b500_visc"] = Simulation("R = 1:5, b = 500 kpc, gasless secondary with viscosity",
+slosh_dict["R5_b500_visc"] = Simulation("R = 1:5, b = 500 kpc, gasless secondary, Spitzer viscosity",
                                         [0, 90, 120, 130, 131, 132,
                                          133, 134, 135, 136, 137, 138, 139, 140,
                                          145, 150, 160, 170, 180, 190, 200, 210,
