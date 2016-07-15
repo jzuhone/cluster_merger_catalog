@@ -114,7 +114,7 @@ Galaxies
 
 Some of the simulations with dark matter particles have mock "galaxies". These are dark matter particles which have been
 randomly drawn from the simulation, with a number per halo given by the mass-richness relation of
-`Andreon & Hurn 2010 <http://adsabs.harvard.edu/abs/2010MNRAS.404.1922A>`_. The galaxies are contained in FITS binary tables,
+`Ford et al. 2014 <http://adsabs.harvard.edu/abs/2014MNRAS.439.3755F>`_. The galaxies are contained in FITS binary tables,
 which include sky positions, line-of-sight velocities, an identifier for which halo each galaxy originally belonged to, and
 unique IDs for every galaxy. These particles provide a way of measuring the kinematics of the merger from the perspective of
 the collisionless material with a statistical significance that is comparable to that obtained from measured redshifts of
