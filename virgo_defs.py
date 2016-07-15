@@ -9,7 +9,7 @@ virgo_notes = ["There is no metallicity field in these simulations; hence for co
                "For each simulation, the main cluster is fixed at **r** = [0, 0, 0] kpc. "+
                "A tab-separated ASCII table containing the subcluster position, velocity, "+
                "and acceleration as a function of time may be found "+
-               "`here <https://girder.hub.yt/api/v1/item/57891d847b6f0800011e2f6a/download>`_"]
+               "`here <https://girder.hub.yt/api/v1/item/57891d847b6f0800011e2f6a/download>`_."]
 
 virgo_info = {"name": "virgo",
              "cadence": 0.05,
@@ -37,7 +37,7 @@ pngs["proj"] = ["xray","temp","szy","rm"]
 pngs["cxo_evt"] = ["counts"]
 pngs["SZ"] = []
 
-virgo_physics = ["novisc", "avisc1", "ivisc1"]
+virgo_physics = ["novisc", "avisc1", "ivisc1", "ivisc0.1"]
 
 virgo_dict = OrderedDict()
 virgo_dict["novisc"] = Simulation(":math:`\\beta` = 1000, Inviscid",
@@ -48,14 +48,15 @@ virgo_dict["avisc1"] = Simulation(":math:`\\beta` = 1000, Braginskii Viscosity",
                                  [22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42,
                                   44, 46, 48, 50, 52, 54], fields, pngs,
                                  ["x", "y", "z"])
-virgo_dict["ivisc1"] = Simulation(":math:`\\beta` = 1000, Spitzer Viscosity",
+virgo_dict["ivisc1"] = Simulation(":math:`\\beta` = 1000, Isotropic Spitzer Viscosity",
                                  [22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42,
                                   44, 46, 48, 50, 52, 54], fields, pngs,
                                  ["x", "y", "z"])
+virgo_dict["ivisc0.1"] = Simulation(":math:`\\beta` = 1000, 10\% Isotropic Spitzer Viscosity",
+                                    [22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42,
+                                     44, 46, 48, 50, 52, 54], fields, pngs,
+                                    ["x", "y", "z"])
 """
-virgo_dict["ivisc0.1"] = Simulation(":math:`\\beta` = 1000, 10\% Spitzer Viscosity",
-                                   filenos, fields, pngs,
-                                   ["x", "y", "z"])
 virgo_dict["nomag"] = Simulation("**B** = 0, Inviscid",
                                 filenos, fields, pngs,
                                 ["x", "y", "z"])
