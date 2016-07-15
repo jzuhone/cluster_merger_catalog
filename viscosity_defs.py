@@ -30,12 +30,37 @@ pngs["proj"] = ["xray","temp","szy","rm"]
 pngs["cxo_evt"] = ["counts"]
 pngs["SZ"] = []
 
-visc_physics = []
+visc_physics = ["novisc", "avisc1"]
 
-filenos = [0, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36,
-           38, 40, 42, 44, 46, 48, 50, 52, 54]
-           
 visc_dict = OrderedDict()
 visc_dict["novisc"] = Simulation(":math:`\\beta` = 1000, Inviscid",
+                                 [0, 18, 20, 22, 24, 26, 28, 30, 32, 
+                                  34, 36, 38, 40, 42, 44, 46, 48, 50, 
+                                  52, 54], fields, pngs, ["x", "y", "z"])
+visc_dict["avisc1"] = Simulation(":math:`\\beta` = 1000, Braginskii Viscosity",
+                                 [22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42,
+                                  44, 46, 48, 50, 52, 54], fields, pngs,
+                                 ["x", "y", "z"])
+"""
+visc_dict["ivisc1"] = Simulation(":math:`\\beta` = 1000, Spitzer Viscosity",
                                  filenos, fields, pngs,
                                  ["x", "y", "z"])
+visc_dict["ivisc0.1"] = Simulation(":math:`\\beta` = 1000, 10\% Spitzer Viscosity",
+                                   filenos, fields, pngs,
+                                   ["x", "y", "z"])
+visc_dict["nomag"] = Simulation("**B** = 0, Inviscid",
+                                filenos, fields, pngs,
+                                ["x", "y", "z"])
+visc_dict["nomag_visc"] = Simulation("**B** = 0, 10\% Spitzer Viscosity",
+                                     filenos, fields, pngs,
+                                     ["x", "y", "z"])
+visc_dict["beta_100"] = Simulation(":math:`\\beta` = 100, Inviscid",
+                                   filenos, fields, pngs,
+                                   ["x", "y", "z"])
+visc_dict["cond"] = Simulation(":math:`\\beta` = 1000, Anisotropic Thermal Conduction",
+                               filenos, fields, pngs,
+                               ["x", "y", "z"])
+visc_dict["cond_visc"] = Simulation(":math:`\\beta` = 1000, Braginskii Viscosity, Anisotropic Thermal Conduction",
+                                    filenos, fields, pngs,
+                                    ["x", "y", "z"])
+"""
