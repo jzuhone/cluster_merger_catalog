@@ -10,15 +10,18 @@ N-body/Hydrodynamic Binary Mergers
 ----------------------------------
 
 .. toctree::
-    :maxdepth: 1
-        
-    fiducial/index
-    sloshing/index
+   :maxdepth: 1
+              
+   fiducial/index
+   sloshing/index
 
 Hydrodynamic Binary Mergers with Rigid Gravitational Potentials
 ---------------------------------------------------------------
 
-Coming soon! Watch this space.
+.. toctree::
+   :maxdepth: 1
+
+   viscosity/index   			  
 
 Cluster Mergers in Cosmological Simulations
 -------------------------------------------
