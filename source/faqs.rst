@@ -42,8 +42,10 @@ These are not "standard" X-ray events files. The main differences with normal ev
 * A uniform ACIS-I response has been assumed over the entire image
 * No PSF smoothing has been applied, since the pixel sizes are much larger than the PSF
 
-However, these differences should actually make the data easier to analyze, since they are much
-simpler. If you have any issues applying standard X-ray analysis to these files, 
+The idea is not to create an exact simulation, but one that approximates the statistical
+properties of what the source would look like while allowing one to use standard X-ray tools
+to analyze the spectral and spatial properties of the data. If you have any issues applying
+standard X-ray analysis to these files,
 `submit a bug report <https://bitbucket.org/jzuhone/cluster_merger_catalog/issues/>`_.
 
 Why is background not included in the simulated X-ray event files?
