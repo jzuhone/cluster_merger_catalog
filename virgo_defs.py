@@ -1,5 +1,6 @@
 from collections import OrderedDict
 from sim_defs import Simulation
+from copy import deepcopy
 
 virgo_notes = ["There is no metallicity field in these simulations; hence for computing X-ray "+
                "emissivities a constant metallicity of :math:`Z = 0.3~Z_\odot` is assumed.",
@@ -23,7 +24,7 @@ virgo_info = {"name": "virgo",
              "cell_size": "0.488-0.977 kpc",
              "sim_type": "SMR",
              "code": "Athena",
-             "primary_mass": "TBD",
+             "primary_mass": "M_{200} = 1.51\\times10^{14}~M_{\odot}",
              "sim_notes": "For the following simulations, :math:`\\beta = p_{\\rm th}/p_B`.",
              "notes": virgo_notes, "cosmo_warning": True, 'redshift': 0.0036}
 
@@ -37,16 +38,13 @@ pngs["proj"] = ["xray","temp","szy","rm"]
 pngs["cxo_evt"] = ["counts"]
 pngs["SZ"] = []
 
-fields_nomag = fields.copy()
+fields_nomag = deepcopy(fields)
 fields_nomag["slice"].remove("bmag")
 fields_nomag["proj"].remove("rm")
 
-pngs_nomag = pngs.copy()
+pngs_nomag = deepcopy(pngs)
 pngs_nomag["slice"].remove("bmag")
 pngs_nomag["proj"].remove("rm")
-
-virgo_physics = ["novisc", "avisc1", "ivisc1", "ivisc0.1",
-                 "nomag", "nomag_visc", "cond"]
 
 virgo_dict = OrderedDict()
 virgo_dict["nomag"] = Simulation("Unmagnetized, Inviscid",
@@ -63,6 +61,10 @@ virgo_dict["novisc"] = Simulation(":math:`\\beta` = 1000, Inviscid",
                                  [0, 18, 20, 22, 24, 26, 28, 30, 32, 
                                   34, 36, 38, 40, 42, 44, 46, 48, 50, 
                                   52, 54], fields, pngs, ["x", "y", "z"])
+virgo_dict["beta_100"] = Simulation(":math:`\\beta` = 100, Inviscid",
+                                    [0, 18, 20, 22, 24, 26, 28, 30, 32,
+                                     34, 36, 40, 42, 44, 46, 48, 50,
+                                     52, 54], fields, pngs, ["x", "y", "z"])
 virgo_dict["avisc1"] = Simulation(":math:`\\beta` = 1000, Braginskii Viscosity",
                                  [22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42,
                                   44, 46, 48, 50, 52, 54], fields, pngs,
@@ -75,15 +77,13 @@ virgo_dict["ivisc0.1"] = Simulation(":math:`\\beta` = 1000, 10\% Isotropic Spitz
                                     [22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42,
                                      44, 46, 48, 50, 52, 54], fields, pngs,
                                     ["x", "y", "z"])
-virgp_dict["cond"] = Simulation(":math:`\\beta` = 1000, Anisotropic Thermal Conduction",
+virgo_dict["cond"] = Simulation(":math:`\\beta` = 1000, Anisotropic Thermal Conduction",
                                 [22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42,
                                  44, 46, 48, 50, 52, 54], fields, pngs,
                                 ["x", "y", "z"])
-"""
-virgo_dict["beta_100"] = Simulation(":math:`\\beta` = 100, Inviscid",
-                                   filenos, fields, pngs,
-                                   ["x", "y", "z"])
 virgo_dict["cond_visc"] = Simulation(":math:`\\beta` = 1000, Braginskii Viscosity, Anisotropic Thermal Conduction",
-                                    filenos, fields, pngs,
-                                    ["x", "y", "z"])
-"""
+                                     [22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42,
+                                      44, 46, 48, 50, 52, 54], fields, pngs,
+                                     ["x", "y", "z"])
+
+virgo_physics = list(virgo_dict.keys())

@@ -16,8 +16,7 @@ slosh_info = {"name": "sloshing",
               "cell_size": "4.88 kpc",
               "sim_type": "AMR",
               "code": "FLASH",
-              "primary_mass": "M_{200} = 8.83~{\\times}~10^{14}\\frac{R}{R+1}~M_{\odot}" + \
-                              "~\\rm{(where}~\\it{R}~\\rm{is~the~mass~ratio)}",
+              "primary_mass": "M_{200} = 10^{15}~M_{\odot}",
               "sim_notes": "For the following simulations, :math:`R` is the mass ratio between " + \
                            "the two clusters and :math:`b` is the initial impact parameter in kpc.",
               "notes": slosh_notes, "cosmo_warning": True, 'redshift': 0.05}

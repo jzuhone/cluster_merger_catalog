@@ -7,6 +7,7 @@ from yt.funcs import get_pbar
 from fiducial_defs import fid_dict, fid_info, fid_physics
 from sloshing_defs import slosh_dict, slosh_info, slosh_physics
 from virgo_defs import virgo_dict, virgo_info, virgo_physics
+from magnetic_defs import mag_dict, mag_info, mag_physics
 import argparse
 from collections import OrderedDict
 
@@ -171,4 +172,4 @@ if __name__ == "__main__":
     make_set_page(fid_info, fid_dict, fid_physics)
     make_set_page(slosh_info, slosh_dict, slosh_physics)
     make_set_page(virgo_info, virgo_dict, virgo_physics)
-    
+    make_set_page(mag_info, mag_dict, mag_physics)
