@@ -60,10 +60,8 @@ mag_dict["nomag"] = Simulation("Unmagnetized", filenos,
                                ["x", "y", "z"])
 mag_dict["beta1000"] = Simulation(":math:`\\beta` = 1000", filenos,
                                   fields, pngs, ["x", "y", "z"])
-"""
 mag_dict["beta500"] = Simulation(":math:`\\beta` = 500", filenos,
                                  fields, pngs, ["x", "y", "z"])
-"""
 mag_dict["beta200"] = Simulation(":math:`\\beta` = 200", filenos,
                                  fields, pngs, ["x", "y", "z"])
 mag_dict["beta100"] = Simulation(":math:`\\beta` = 100", filenos,
