@@ -138,5 +138,68 @@ X-ray analysis tools, such as `ds9 <http://ds9.si.edu>`_, `CIAO <http://cxc.cfa.
 50 ks. The pixel size corresponds to the width of the finest simulation cell size, instead of the pixel scale of
 the detector. These files can be used to produce images and spectra. 
 
+Important Things to Know About the Data
+---------------------------------------
 
+Coordinate Systems
+++++++++++++++++++
 
+The FITS image and table files contain one or more `WCS coordinate systems <http://fits.gsfc.nasa.gov/fits_wcs.html>`_.
+The two most common are:
+
+* Linear coordinates: This is a simple linear coordinate system which corresponds to the coordinate
+  system of the original dataset. The length units are in kpc. For most of the FITS files, this is the
+  first and primary WCS (i.e., the one that appears by default in ds9).
+* Celestial coordinates: This is a celestial coordinate system in RA and Dec using the tangential
+  projection. The angle units are in degrees. For most of the FITS files, this is the secondary WCS
+  (i.e., "WCS a" in ds9).
+
+For example, a header for one of the FITS images corresponding to a projected quantity may look like
+this (only showing some keywords for clarity):
+
+.. code::
+
+   # HDU 4 in AM06_beta200_hdf5_plt_cnt_0130_proj_z.fits:
+   NAXIS   =                    2 / number of array dimensions
+   NAXIS1  =                 2048
+   NAXIS2  =                 2048
+   EXTNAME = 'KT      '           / extension name
+   BTYPE   = 'kT      '
+   BUNIT   = 'keV     '
+   WCSAXES =                    2
+   CRPIX1  =               1024.5
+   CRPIX2  =               1024.5
+   CDELT1  =     0.97653794699453
+   CDELT2  =     0.97653794699453
+   CUNIT1  = 'kpc     '
+   CUNIT2  = 'kpc     '
+   CTYPE1  = 'LINEAR  '
+   CTYPE2  = 'LINEAR  '
+   CRVAL1  =                  0.0
+   CRVAL2  =                  0.0
+   LATPOLE =                 90.0
+   WCSNAME = 'yt      '
+   WCSAXESA=                    2
+   CRPIX1A =               1024.5
+   CRPIX2A =               1024.5
+   CDELT1A = -0.00028118222874698
+   CDELT2A =  0.00028118222874698
+   CUNIT1A = 'deg     '
+   CUNIT2A = 'deg     '
+   CTYPE1A = 'RA---TAN'
+   CTYPE2A = 'DEC--TAN'
+   CRVAL1A =                 30.0
+   CRVAL2A =                 45.0
+   LONPOLEA=                180.0
+   LATPOLEA=                 45.0
+   WCSNAMEA= 'celestial'
+   RADESYSA= 'ICRS    '
+   TIME    =    1.300254073176463
+
+It can be seen here that the default WCS, ``WCSNAME = 'yt'``, is in linear coordinates, and the second
+WCS, ``WCSNAMEA = 'celestial'``, is in celestial coordinates. The relationship between the two depends
+on the angular diameter distance to the source, which depends on the redshift and the given cosmology.
+This information is shown on each simulation set page.
+
+To select a particular WCS in the JS9 interface, Use the "WCS" drop-down menu item and choose
+the "alternate wcs" option to show the different options.
