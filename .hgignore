@@ -1,18 +1,9 @@
 .idea
 build
 syntax: glob
-js9/js/jquery.ui.touch-punch.js
-js9/js/jquery.ui.touch-punch.min.js
-js9/plugins/core/mousetouch.css
-js9/plugins/core/mousetouch.js
-js9/plugins/help/mousetouch.html
+js9/*
 source/sloshing/*
 source/fiducial/*
 source/virgo/*
 source/sloshing_magnetic/*
 *.pyc
-js9/config.log
-js9/config.status
-js9/Makefile
-js9/js9Prefs.json-orig
-js9/js9helper.pc
