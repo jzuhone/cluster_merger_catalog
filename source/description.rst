@@ -17,11 +17,11 @@ exact physics and algorithms employed by the simulations vary, but in general:
   the domain based, with refinement occuring on criteria such as a) sharp jumps in density and temperature, b) matter
   density, and c) selected regions such as the cluster center. Eventually, the catalog will include particle-based
   simulations as well.
-* The equations of hydrodynamics or magnetohydrodynamics are modeled using a conservative finite-volume scheme (e.g.,
-  PPM, `Colella & Woodward 1984 <http://adsabs.harvard.edu/abs/1984JCoPh..54..174C>`_). Magnetic fields are evolved
-  such that the condition :math:`\nabla \cdot \bf{B} = 0` is met, whether by a constrained transport scheme or a
-  divergence-cleaning method. Eventually, the catalog will include simulations peformed with smoothed particle
-  hydrodynamics.
+* The equations of hydrodynamics or magnetohydrodynamics are modeled using a conservative finite-volume scheme,
+  employing Riemann solvers for evolving the flux of physical quantities and using high-order reconstruction
+  schemes such as PPM (`Colella & Woodward 1984 <http://adsabs.harvard.edu/abs/1984JCoPh..54..174C>`_). Magnetic
+  fields are evolved such that the condition :math:`\nabla \cdot \bf{B} = 0` is met, typically by a constrained
+  transport scheme. Eventually, the catalog will include simulations peformed with smoothed particle hydrodynamics.
 * Each simulation assumes an ideal gas law equation of state with :math:`\gamma = 5/3` and primordial
   abundances of H/He with trace amounts of metals, yielding a mean molecular weight of :math:`\mu = 0.6`.
 * If dark matter is included, it is modeled by an N-body solver for a collection of collisionless
@@ -104,7 +104,9 @@ is not cosmological (such as the binary merger simulations), a standard cosmolog
 Projected quantities typically include X-ray emissivity, total matter density, projected temperature, etc.
 
 Fields related to the (S-Z) effect are also computed for some simulations, using the
-`SZpack library <http://www.cita.utoronto.ca/~jchluba/Science_Jens/SZpack/SZpack.html>`_ to compute the S-Z signal,
+`SZpack library <http://www.cita.utoronto.ca/~jchluba/Science_Jens/SZpack/SZpack.html>`_
+(`Chluba et al. 2012 <http://adsabs.harvard.edu/abs/2012MNRAS.426..510C>`_,
+`Chluba et al. 2013 <http://adsabs.harvard.edu/abs/2013MNRAS.430.3054C>`_) to compute the S-Z signal,
 including thermal and kinetic contributions as well as relativistic corrections. More details on how these projections
 were computed can be found `here <http://yt-project.org/doc/analyzing/analysis_modules/sunyaev_zeldovich.html>`_.
 They are stored in separate FITS files from the other projections. 
@@ -135,3 +137,6 @@ X-ray analysis tools, such as `ds9 <http://ds9.si.edu>`_, `CIAO <http://cxc.cfa.
 |photon_simulator|_ and have been convolved with the ACIS-I on-axis responses, assuming an exposure time of
 50 ks. The pixel size corresponds to the width of the finest simulation cell size, instead of the pixel scale of
 the detector. These files can be used to produce images and spectra. 
+
+
+
