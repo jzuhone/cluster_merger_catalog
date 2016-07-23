@@ -34,16 +34,16 @@ as providing insights into the formation of cosmic structure.
 The astrophysical literature is replete with simulations of galaxy cluster mergers, from binary merger
 simulations (e.g., `Ricker & Sarazin 2001 <http://adsabs.harvard.edu/abs/2001ApJ...561..621R>`_, 
 `Poole et al. 2006 <http://adsabs.harvard.edu/abs/2006MNRAS.373..881P>`_, 
-`Poole et al. 2007 <http://adsabs.harvard.edu/abs/2007MNRAS.380..437P>`_, 
-`Poole et al. 2008 <http://adsabs.harvard.edu/abs/2008MNRAS.391.1163P>`_,
-`ZuHone et al. 2010 <http://adsabs.harvard.edu/abs/2010ApJ...717..908Z>`_,
-`ZuHone 2011 <http://adsabs.harvard.edu/abs/2011ApJ...728...54Z>`_) to studies of mergers in cosmological 
-simulations. These simulations have often attempted to make predictions for what may be observed in a 
-number of wavebands and made direct comparisons to observed merging systems. However, comparing the 
-results of simulations of cluster mergers to these systems is often not straighforward; at what stage 
-are we viewing the merger, and along what line of sight? To make matters more complicated, different 
-combinations of merger epoch and line of sight can produce qualitatively similar projections of cluster 
-emission, making it more difficult to determine these parameters. 
+`ZuHone 2011 <http://adsabs.harvard.edu/abs/2011ApJ...728...54Z>`_,
+`Donnert et al. 2013 <http://adsabs.harvard.edu/abs/2013MNRAS.429.3564D>`_) to studies of mergers in cosmological 
+simulations (e.g. `Vazza et al. 2009 <http://adsabs.harvard.edu/abs/2009A%26A...504...33V>`_,
+`Skillman et al. 2013 <http://adsabs.harvard.edu/abs/2013ApJ...765...21S>`_, 
+`Yu et al. 2016 <http://adsabs.harvard.edu/abs/2015ApJ...807...12Y>`_). These simulations have often attempted
+to make predictions for what may be observed in a number of wavebands and made direct comparisons to observed 
+merging systems. However, comparing the results of simulations of cluster mergers to these systems is often not
+straighforward; at what stage are we viewing the merger, and along what line of sight? To make matters more 
+complicated, different combinations of merger epoch and line of sight can produce qualitatively similar projections
+of cluster emission, making it more difficult to determine these parameters. 
 
 The idea behind this catalog is to provide a way to connect simulations of galaxy cluster mergers
 with multiwavelength observations of real merging clusters. Producing simulation data in terms of 
