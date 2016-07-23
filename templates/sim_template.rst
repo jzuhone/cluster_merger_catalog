@@ -102,6 +102,8 @@
    function change_axis(ax) {
        document.getElementById("button_"+ax).disabled = true;
        axis = ax;
+       var fileno = filenos[epochSlider.getValue()];
+       set_images(fileno);
    }
    
    function set_links(num) {
@@ -109,6 +111,10 @@
        document.getElementById("epoch_header").innerText = epochs[fileno];
        document.getElementById("epoch_header").textContent = epochs[fileno];
        document.getElementById("epoch_link").href = fileno+".html";
+       set_images(fileno);
+   }
+
+   function set_images(fileno) {
        for (var i = 0; i < names.length; i++) {
 	       var img = document.getElementById('img_'+names[i]);
 	       img.src = "../../images/loader.gif";
