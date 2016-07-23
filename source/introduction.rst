@@ -36,7 +36,7 @@ simulations (e.g., `Ricker & Sarazin 2001 <http://adsabs.harvard.edu/abs/2001ApJ
 `Poole et al. 2006 <http://adsabs.harvard.edu/abs/2006MNRAS.373..881P>`_, 
 `ZuHone 2011 <http://adsabs.harvard.edu/abs/2011ApJ...728...54Z>`_,
 `Donnert et al. 2013 <http://adsabs.harvard.edu/abs/2013MNRAS.429.3564D>`_) to studies of mergers in cosmological 
-simulations (e.g. `Vazza et al. 2009 <http://adsabs.harvard.edu/abs/2009A%26A...504...33V>`_,
+simulations (e.g., `Vazza et al. 2009 <http://adsabs.harvard.edu/abs/2009A%26A...504...33V>`_,
 `Skillman et al. 2013 <http://adsabs.harvard.edu/abs/2013ApJ...765...21S>`_, 
 `Yu et al. 2016 <http://adsabs.harvard.edu/abs/2015ApJ...807...12Y>`_). These simulations have often attempted
 to make predictions for what may be observed in a number of wavebands and made direct comparisons to observed 
