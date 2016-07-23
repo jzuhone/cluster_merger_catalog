@@ -27,13 +27,13 @@ def make_set_page(set_info, set_dict, set_physics):
     if not os.path.exists('source/%s' % set_info['name']):
         os.mkdir('source/%s' % set_info['name'])
     for sim, sim_info in set_dict.items():
+        totsize = make_epoch_pages(set_info['name'], set_info['filespec'], sim, sim_info.name,
+                                   sim_info.filenos, sim_info.sname_map, sim_info.lname_map,
+                                   sim_info.unit_map, set_info["cadence"], sim_info.axes,
+                                   set_physics_dict)
         make_sim_page(set_info['name'], set_info["filespec"], sim, sim_info.name,
                       sim_info.filenos, sim_info.sname_map, sim_info.lname_map,
-                      set_info["cadence"], sim_info.axes)
-        make_epoch_pages(set_info['name'], set_info['filespec'], sim, sim_info.name,
-                         sim_info.filenos, sim_info.sname_map, sim_info.lname_map,
-                         sim_info.unit_map, set_info["cadence"], sim_info.axes,
-                         set_physics_dict)
+                      set_info["cadence"], sim_info.axes, totsize)
     context = {'name': set_info["name"],
                'sim_pages': list(set_dict.keys()),
                'set_name': set_info["set_name"],
@@ -51,10 +51,8 @@ def make_set_page(set_info, set_dict, set_physics):
     make_template('source/%s/index.rst' % set_info["name"], template_file, context)
 
 def make_sim_page(set_name, filespec, sim, sim_name, filenos, sname_map,
-                  lname_map, cadence, axes):
+                  lname_map, cadence, axes, totsize):
     sim_dir = 'source/%s/%s' % (set_name, sim)
-    if not os.path.exists(sim_dir):
-        os.mkdir(sim_dir)
     outfile = sim_dir+"/index.rst"
     if not os.path.exists(outfile):
         pbar = get_pbar("Setting up simulation page for "+sim, len(filenos))
@@ -72,10 +70,11 @@ def make_sim_page(set_name, filespec, sim, sim_name, filenos, sname_map,
             imgs[fn] = pngs
             pbar.update()
         pbar.finish()
-        sim_dl = get_folder('/'.join([set_name, sim]))
+        sim_dl = get_folder('/'.join([set_name, sim]))[0]
         num_epochs = len(epochs.keys())
         context = {'sim_name': sim_name,
                    'sim_dl': sim_dl,
+                   'size': "%.2f" % totsize,
                    'axes': axes,
                    'epochs': epochs,
                    'imgs': imgs,
@@ -94,6 +93,10 @@ def make_template(outfile, template_file, context):
 
 def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
                      lname_map, unit_map, cadence, axes, set_physics):
+    totsize = 0.0 
+    sim_dir = 'source/%s/%s' % (set_name, sim)
+    if not os.path.exists(sim_dir):
+        os.mkdir(sim_dir)
     pbar = get_pbar("Setting up epoch pages for simulation "+sim, len(filenos))
     num_epochs = len(filenos)
     for noi, fileno in enumerate(filenos):
@@ -135,10 +138,13 @@ def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
             else:
                 next_link = "%04d.html" % filenos[noi+1]
                 dis_next = ""
-            epoch_dl = get_folder('/'.join([set_name, sim, fileno]))
+            epoch_dl, size = get_folder('/'.join([set_name, sim, "%04d" % fileno]))
+            size /= 1024.*1024.*1024.
+            totsize += size
             context = {"data": data,
                        "sim": sim,
                        "epoch_dl": epoch_dl,
+                       "size": "%.2f" % size, 
                        "fileno": "%04d" % fileno,
                        "sim_name": sim_name,
                        "timestr": timestr,
@@ -157,6 +163,7 @@ def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
             make_template(outfile, template_file, context)
         pbar.update()
     pbar.finish()
+    return totsize
 
 def get_file(filename, itype):
     items = gc.get("resource/search", {"q": '"'+filename+'"', "types": '["item"]'})['item']
@@ -170,7 +177,7 @@ def get_file(filename, itype):
 def get_folder(folder):
     folder_path = os.path.join('/collection', 'cluster_mergers', folder)
     folder = gc.get("resource/lookup", {"path": folder_path})
-    return "https://girder.hub.yt/api/v1/folder/%s/download" % folder["_id"]
+    return "https://girder.hub.yt/api/v1/folder/%s/download" % folder["_id"], folder["size"]
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

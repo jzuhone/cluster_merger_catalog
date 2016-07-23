@@ -21,7 +21,7 @@
    <a class="btn btn-primary" href="{{prev_link}}" role="button" {{dis_prev}}>&#10094; Previous Epoch</a>
    <a class="btn btn-primary" href="{{next_link}}" role="button" {{dis_next}}>&#10095; Next Epoch</a>
    <br><br>
-   <a id="epoch_dl" href="{{epoch_dl}}">Download all of the files from this particular epoch here.</a>
+   <a id="epoch_dl" href="{{epoch_dl}}">Download all of the files from this particular epoch here ({{size}} GB).</a>
    <br><br>
 
 {% if set_physics|length > 0 %}

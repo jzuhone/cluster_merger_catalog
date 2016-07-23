@@ -9,7 +9,8 @@
    <script type="text/javascript" src="../../scripts/bootstrap-slider.js"></script>
    <script>$('head').append('<link type="text/css" rel="stylesheet" href="../../scripts/bootstrap-slider.css">');</script>
 
-   <a id="sim_dl" href="{{sim_dl}}">Download all of the files from this particular simulation here.</a>
+   <br>
+   <a id="sim_dl" href="{{sim_dl}}">Download all of the files from this particular simulation here ({{size}} GB).</a>
    
    <h3>Click on one of the axes below to change the axis of projection.</h3>
 {% for a in axes %}
