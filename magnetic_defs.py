@@ -54,6 +54,8 @@ filenos = [0, 130, 135, 140, 145, 150, 155,
            370, 380, 390, 400, 420, 440, 460,
            480]
 
+filenos_visc = filenos[11:]
+
 mag_dict = OrderedDict()
 mag_dict["nomag"] = Simulation("Unmagnetized", filenos,
                                fields_nomag, pngs_nomag,
@@ -62,6 +64,8 @@ mag_dict["beta1000"] = Simulation(":math:`\\beta` = 1000", filenos,
                                   fields, pngs, ["x", "y", "z"])
 mag_dict["beta500"] = Simulation(":math:`\\beta` = 500", filenos,
                                  fields, pngs, ["x", "y", "z"])
+#mag_dict["beta500"] = Simulation(":math:`\\beta` = 500, Braginskii Viscosity", filenos_visc,
+#                                 fields, pngs, ["x", "y", "z"])
 mag_dict["beta200"] = Simulation(":math:`\\beta` = 200", filenos,
                                  fields, pngs, ["x", "y", "z"])
 mag_dict["beta100"] = Simulation(":math:`\\beta` = 100", filenos,
