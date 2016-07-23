@@ -56,6 +56,11 @@ seemed prudent to not include background events and instead let the end-user dec
 what background to simulate, if any. For example, one could use background events from
 the `ACIS blank-sky background files <http://cxc.harvard.edu/ciao/threads/acisbackground/>`_. 
 
+Why do I sometimes see colored circles circling around instead of the images?
+-----------------------------------------------------------------------------
+
+This happens if the images are taking a while to load.
+
 You didn't include projections in my favorite wavelength range. Why not?
 ------------------------------------------------------------------------
 
