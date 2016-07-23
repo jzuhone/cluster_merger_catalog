@@ -33,7 +33,8 @@ the refinement pattern is set from the beginning of the simulation and is static
 More details on how the mesh refinement in these simulations works can be found in the original 
 papers associated with the simulations or in any of the method papers associated with AMR/SMR codes (e.g., 
 `FLASH <http://www.sciencedirect.com/science/article/pii/S0167819109000945>`_,
-`Enzo <>`_, or `Athena <http://adsabs.harvard.edu/abs/2008ApJS..178..137S>`_).
+`Enzo <http://adsabs.harvard.edu/abs/2014ApJS..211...19B>`_, or 
+`Athena <http://adsabs.harvard.edu/abs/2008ApJS..178..137S>`_).
 
 Why are the *Chandra* events not at the normal resolution? Where are the chips?
 -------------------------------------------------------------------------------
