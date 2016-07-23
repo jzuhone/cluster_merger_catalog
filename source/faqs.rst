@@ -28,9 +28,12 @@ This is because it actually is non-uniform. These simulations are run with
 a technique for solving physics equations on a mesh which allows for different parts of the
 grid to be at higher resolution than others. In these simulations, the mesh is refined on
 sharp jumps in the density and temperature (e.g., shocks and cold fronts), as well as on
-regions of high density (e.g., the cores of clusters). More details on how the AMR in these
-simulations works can be found in the original papers associated with the simulations or
-in the `most recent FLASH code paper <http://www.sciencedirect.com/science/article/pii/S0167819109000945>`_.
+regions of high density (e.g., the cores of clusters). In static mesh refinement (SMR) simulations,
+the refinement pattern is set from the beginning of the simulation and is static in time. 
+More details on how the mesh refinement in these simulations works can be found in the original 
+papers associated with the simulations or in any of the method papers associated with AMR/SMR codes (e.g., 
+`FLASH <http://www.sciencedirect.com/science/article/pii/S0167819109000945>`_,
+`Enzo <>`_, or `Athena <http://adsabs.harvard.edu/abs/2008ApJS..178..137S>`_).
 
 Why are the *Chandra* events not at the normal resolution? Where are the chips?
 -------------------------------------------------------------------------------

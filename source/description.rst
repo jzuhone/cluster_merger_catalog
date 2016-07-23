@@ -13,21 +13,24 @@ The galaxy cluster merger simulation data presented here comes from state-of-the
 codes such as `FLASH <http://flash.uchicago.edu>`_ and `Athena <https://trac.princeton.edu/Athena/>`_. The
 exact physics and algorithms employed by the simulations vary, but in general:
 
-* Each simulation is simulated on an adaptive mesh refinement (AMR) grid, with varying resolution throughout
-  the domain based, with refinement occuring on criteria such as a) sharp jumps in density and temperature, b) matter
-  density, and c) selected regions such as the cluster center. Eventually, the catalog will include particle-based
-  simulations as well.
+* Each simulation is simulated using an adaptive or static mesh refinement (AMR/SMR) grid 
+  (`Berger and Colella 1989 <http://adsabs.harvard.edu/abs/1989JCoPh..82...64B>`_), with varying resolution 
+  throughout the domain, with refinement occuring on criteria such as a) sharp jumps in density and temperature, 
+  b) matter density, and c) selected regions such as the cluster center. Eventually, the catalog will include 
+  particle-based simulations as well.
 * The equations of hydrodynamics or magnetohydrodynamics are modeled using a conservative finite-volume scheme,
   employing Riemann solvers for evolving the flux of physical quantities and using high-order reconstruction
   schemes such as PPM (`Colella & Woodward 1984 <http://adsabs.harvard.edu/abs/1984JCoPh..54..174C>`_). Magnetic
   fields are evolved such that the condition :math:`\nabla \cdot \bf{B} = 0` is met, typically by a constrained
-  transport scheme. Eventually, the catalog will include simulations peformed with smoothed particle hydrodynamics.
+  transport scheme (CT, `Evans & Hawley 1988 <http://adsabs.harvard.edu/abs/1988ApJ...332..659E>`_). Eventually, 
+  the catalog will include simulations peformed with smoothed particle hydrodynamics.
 * Each simulation assumes an ideal gas law equation of state with :math:`\gamma = 5/3` and primordial
   abundances of H/He with trace amounts of metals, yielding a mean molecular weight of :math:`\mu = 0.6`.
 * If dark matter is included, it is modeled by an N-body solver for a collection of collisionless
   massive particles, which interact with the gas component only via gravity.
 * The gravity in the simulations is either modeled as a rigid gravitational potential associated with each cluster
-  or by computing the self-gravity of the gas and dark matter using a Poisson solver.
+  or by computing the self-gravity of the gas and dark matter using a Poisson solver (e.g., 
+  `Ricker 2008 <http://adsabs.harvard.edu/abs/2008ApJS..176..293R>`_).
 * Depending on the goals of the simulation study, other physics, such as viscosity, thermal conduction, radiative
   cooling, etc., may be included.
   
