@@ -4,7 +4,7 @@
     <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script>$('#dLabelGlobalToc').addClass('hidden');</script>
     <script>$('#dLabelLocalToc').addClass('hidden');</script>
-    <script>$('.navbar-nav').first().append('<li><a href="index_z.html">&#10094; Back to Simulation</a></li>');</script>
+    <script>$('.navbar-nav').first().append('<li><a href="index.html">&#10094; Back to Simulation</a></li>');</script>
     <script src="../../lightbox/js/lightbox.js"></script>
     <script>$('head').append('<link rel="stylesheet" href="../../lightbox/css/lightbox.css"/>');</script>
     <script>$('head').append('<link type="text/css" rel="stylesheet" href="../../js9/js9support.css">');</script>

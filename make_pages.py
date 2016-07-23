@@ -27,10 +27,9 @@ def make_set_page(set_info, set_dict, set_physics):
     if not os.path.exists('source/%s' % set_info['name']):
         os.mkdir('source/%s' % set_info['name'])
     for sim, sim_info in set_dict.items():
-        for ax in sim_info.axes:
-            make_sim_page(set_info['name'], set_info["filespec"], sim, sim_info.name,
-                          sim_info.filenos, sim_info.sname_map, sim_info.lname_map, ax,
-                          set_info["cadence"], sim_info.axes)
+        make_sim_page(set_info['name'], set_info["filespec"], sim, sim_info.name,
+                      sim_info.filenos, sim_info.sname_map, sim_info.lname_map,
+                      set_info["cadence"], sim_info.axes)
         make_epoch_pages(set_info['name'], set_info['filespec'], sim, sim_info.name,
                          sim_info.filenos, sim_info.sname_map, sim_info.lname_map,
                          sim_info.unit_map, set_info["cadence"], sim_info.axes,
@@ -52,28 +51,29 @@ def make_set_page(set_info, set_dict, set_physics):
     make_template('source/%s/index.rst' % set_info["name"], template_file, context)
 
 def make_sim_page(set_name, filespec, sim, sim_name, filenos, sname_map,
-                  lname_map, ax, cadence, axes):
+                  lname_map, cadence, axes):
     sim_dir = 'source/%s/%s' % (set_name, sim)
     if not os.path.exists(sim_dir):
         os.mkdir(sim_dir)
-    outfile = sim_dir+"/index_%s.rst" % ax
+    outfile = sim_dir+"/index.rst"
     if not os.path.exists(outfile):
-        pbar = get_pbar("Setting up simulation page for "+sim+", %s" % ax, len(filenos))
+        pbar = get_pbar("Setting up simulation page for "+sim, len(filenos))
         epochs = OrderedDict()
         imgs = OrderedDict()
         for fileno in filenos:
             fn = "%04d" % fileno
             pngs = {}
-            for fd, field in sname_map["proj"].items():
-                filename = filespec % (sim, fileno) + "_proj_%s_%s" % (ax, field)
-                pngs[fd] = get_file(filename, "proj")
+            for ax in axes:
+                pngs[ax] = {}
+                for fd, field in sname_map["proj"].items():
+                    filename = filespec % (sim, fileno) + "_proj_%s_%s" % (ax, field)
+                    pngs[ax][fd] = get_file(filename, "proj")
             epochs[fn] = "t = %4.2f Gyr" % (fileno*cadence)
             imgs[fn] = pngs
             pbar.update()
         pbar.finish()
         num_epochs = len(epochs.keys())
         context = {'sim_name': sim_name,
-                   'ax': ax,
                    'axes': axes,
                    'epochs': epochs,
                    'imgs': imgs,

@@ -11,11 +11,7 @@
    
    <h3>Click on one of the axes below to change the axis of projection.</h3>
 {% for a in axes %}
-{% if ax != a %}
-   <a class="btn btn-primary" href="index_{{a}}.html" role="button">{{a}}</a>
-{% else %}
-   <a class="btn btn-primary" href="index_{{a}}.html" role="button" disabled>{{a}}</a> 
-{% endif %}
+   <button type="button" class="btn btn-primary" id="button_{{a}}" onclick="change_axis({{a}})">{{a}}</button>
 {% endfor %}
 
    <h3>Use the slider to change the epoch of the merger, and click on the images to access the files.</h3>
@@ -42,6 +38,9 @@
    
    <script>
 
+   var axis = "z";
+   document.getElementById("button_z").disabled = true;
+   
    var num_epochs = {{num_epochs}};
    var names = [
    {% for short_name in names %}
@@ -58,8 +57,12 @@
    var girder_data = {
    {% for fileno, pngs in imgs.items %}
        "{{fileno}}": {
-   {% for key, link in pngs.items %}
-           "{{key}}":"{{link}}",
+   {% for key, axes in pngs.items %}
+           "{{key}}": { 
+   {% for ax, link in axes.items %}
+               "{{ax}}":"{{link}}",
+   {% endfor %}
+           },
    {% endfor %}
        },
    {% endfor %}
@@ -96,15 +99,20 @@
        set_links(0);
    });
 
+   function change_axis(ax) {
+       document.getElementById("button_"+ax).disabled = true;
+       axis = ax;
+   }
+   
    function set_links(num) {
        var fileno = filenos[num];
        document.getElementById("epoch_header").innerText = epochs[fileno];
        document.getElementById("epoch_header").textContent = epochs[fileno];
        document.getElementById("epoch_link").href = fileno+".html";
        for (var i = 0; i < names.length; i++) {
-	   var img = document.getElementById('img_'+names[i]);
-	   img.src = "../../images/loader.gif";
-	   img.src = girder_data[fileno][names[i]];
+	       var img = document.getElementById('img_'+names[i]);
+	       img.src = "../../images/loader.gif";
+	       img.src = girder_data[fileno][axis][names[i]];
        }
    }
 
