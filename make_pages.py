@@ -72,8 +72,10 @@ def make_sim_page(set_name, filespec, sim, sim_name, filenos, sname_map,
             imgs[fn] = pngs
             pbar.update()
         pbar.finish()
+        sim_dl = get_folder('/'.join([set_name, sim]))
         num_epochs = len(epochs.keys())
         context = {'sim_name': sim_name,
+                   'sim_dl': sim_dl,
                    'axes': axes,
                    'epochs': epochs,
                    'imgs': imgs,
@@ -133,8 +135,10 @@ def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
             else:
                 next_link = "%04d.html" % filenos[noi+1]
                 dis_next = ""
+            epoch_dl = get_folder('/'.join([set_name, sim, fileno]))
             context = {"data": data,
                        "sim": sim,
+                       "epoch_dl": epoch_dl,
                        "fileno": "%04d" % fileno,
                        "sim_name": sim_name,
                        "timestr": timestr,
@@ -156,14 +160,17 @@ def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
 
 def get_file(filename, itype):
     items = gc.get("resource/search", {"q": '"'+filename+'"', "types": '["item"]'})['item']
-    #if "galaxies" in filename:
-    #    print(filename, items, len(items))
     if len(items) == 0:
         return "https://girder.hub.yt/static/built/plugins/ythub/extra/img/yt_logo.png"
     elif itype == "galaxies" and len(items) == 2:
         return ["https://girder.hub.yt/api/v1/item/%s/download" % item['_id'] for item in items]
     else:
         return "https://girder.hub.yt/api/v1/item/%s/download" % items[0]['_id']
+
+def get_folder(folder):
+    folder_path = os.path.join('/collection', 'cluster_mergers', folder)
+    folder = gc.get("resource/lookup", {"path": folder_path})
+    return "https://girder.hub.yt/api/v1/folder/%s/download" % folder["_id"]
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
