@@ -46,7 +46,7 @@ The idea is not to create an exact simulation, but one that approximates the sta
 properties of what the source would look like while allowing one to use standard X-ray tools
 to analyze the spectral and spatial properties of the data. If you have any issues applying
 standard X-ray analysis to these files,
-`submit a bug report <https://bitbucket.org/jzuhone/cluster_merger_catalog/issues/>`_.
+`submit a bug report <https://github.com/jzuhone/cluster_merger_catalog/issues/>`_.
 
 Why is background not included in the simulated X-ray event files?
 ------------------------------------------------------------------
@@ -83,7 +83,7 @@ The data is made available under `CC BY 4.0. <https://creativecommons.org/licens
 I found a problem! How do I report it?
 --------------------------------------
 
-Please report any problems on our `Bitbucket issues page <https://bitbucket.org/jzuhone/cluster_merger_catalog/issues/>`_.
+Please report any problems on our `Github issues page <https://github.com/jzuhone/cluster_merger_catalog/issues/>`_.
 
 I have a question that isn't answered here. How do I get more information?
 --------------------------------------------------------------------------
