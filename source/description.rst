@@ -128,18 +128,16 @@ galaxies in real clusters. No redshift errors have been applied to the galaxy ve
 A ds9 region file is provided for each epoch and line-of-sight in addition to the FITS file, which allows the galaxy positions
 to be plotted over the projections of the other fields. 
 
-.. |photon_simulator| replace:: ``photon_simulator`` analysis module of yt
-.. _photon_simulator: http://yt-project.org/doc/analyzing/analysis_modules/photon_simulator.html
-
 X-ray Events
 ++++++++++++
 
 The X-ray events files are standard events files which can be manipulated and analyzed with standard
 X-ray analysis tools, such as `ds9 <http://ds9.si.edu>`_, `CIAO <http://cxc.cfa.harvard.edu/ciao/>`_, and the 
 `HEASOFT software suite <http://heasarc.nasa.gov/lheasoft/>`_. The events have been generated using the
-|photon_simulator|_ and have been convolved with the ACIS-I on-axis responses, assuming an exposure time of
-50 ks. The pixel size corresponds to the width of the finest simulation cell size, instead of the pixel scale of
-the detector. These files can be used to produce images and spectra. 
+`pyXSIM package <http://hea-www.cfa.harvard.edu/~jzuhone/pyxsim>`_ and have been convolved with the ACIS-I
+on-axis responses, assuming an exposure time of 50 ks. The pixel size corresponds to the width of the finest
+simulation cell size, instead of the pixel scale of the detector. These files can be used to produce images
+and spectra. Eventually, event files for other instruments and exposure times will be included.
 
 Important Things to Know About the Data
 ---------------------------------------
