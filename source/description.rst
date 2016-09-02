@@ -106,7 +106,7 @@ the redshift and the given cosmology, which is given in the notes for the simula
 is not cosmological (such as the binary merger simulations), a standard cosmology and constant redshift is assumed.
 Projected quantities typically include X-ray emissivity, total matter density, projected temperature, etc.
 
-Fields related to the (S-Z) effect are also computed for some simulations, using the
+Fields related to the Sunyaev-Zeldovich (S-Z) effect are also computed for some simulations, using the
 `SZpack library <http://www.cita.utoronto.ca/~jchluba/Science_Jens/SZpack/SZpack.html>`_
 (`Chluba et al. 2012 <http://adsabs.harvard.edu/abs/2012MNRAS.426..510C>`_,
 `Chluba et al. 2013 <http://adsabs.harvard.edu/abs/2013MNRAS.430.3054C>`_) to compute the S-Z signal,
