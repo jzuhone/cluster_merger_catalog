@@ -24,7 +24,7 @@ the cluster gas. These mergers also accelerate relativistic particles, which the
 halos (`Feretti 2005 <http://adsabs.harvard.edu/abs/2005AdSpR..36..729F>`_, 
 `Brunetti & Lazarian 2007 <http://adsabs.harvard.edu/abs/2007MNRAS.378..245B>`_, 
 `van Weeren et al. 2010 <http://adsabs.harvard.edu/abs/2010Sci...330..347V>`_,
-`Brüggen et al. 2011 <http://adsabs.harvard.edu/abs/2012SSRv..166..187B>`_). Cluster mergers have also
+`Brüggen et al. 2012 <http://adsabs.harvard.edu/abs/2012SSRv..166..187B>`_). Cluster mergers have also
 revealed the different dynamical properties of the CDM, galaxies, and ICM, seen most vividly in the case 
 of the Bullet Cluster (`Clowe et al. 2004 <http://adsabs.harvard.edu/abs/2004ApJ...604..596C>`_,
 `Markevitch et al. 2004 <http://adsabs.harvard.edu/abs/2004ApJ...606..819M>`_). Understanding cluster 
