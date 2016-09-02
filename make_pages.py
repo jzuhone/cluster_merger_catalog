@@ -117,8 +117,11 @@ def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
                         filename = filespec % (sim, fileno) + "_%s_%s" % (itype, ax)
                     data[itype][ax]['fits'] = get_file(filename, itype)
                     if itype == "galaxies":
-                        data[itype][ax]['reg'] = data[itype][ax]['fits'][0]
-                        data[itype][ax]['fits'] = data[itype][ax]['fits'][1]
+                        gal_files = get_file(filename, itype)
+                        data[itype][ax]['reg'] = gal_files['reg']
+                        data[itype][ax]['fits'] = gal_files['fits']
+                    else:
+                        data[itype][ax]['fits'] = get_file(filename, itype)
                     imgs = {}
                     for link, field in sname_map[itype].items():
                         imgfn = filename+"_"+field
@@ -169,8 +172,14 @@ def get_file(filename, itype):
     items = gc.get("resource/search", {"q": '"'+filename+'"', "types": '["item"]'})['item']
     if len(items) == 0:
         return "https://girder.hub.yt/static/built/plugins/ythub/extra/img/yt_logo.png"
-    elif itype == "galaxies" and len(items) == 2:
-        return ["https://girder.hub.yt/api/v1/item/%s/download" % item['_id'] for item in items]
+    elif itype == "galaxies" and len(items) >= 2:
+        gals = {}
+        for item in items:
+            if "fits" in item['name']:
+                gals["fits"] = "https://girder.hub.yt/api/v1/item/%s/download" % item['_id']
+            elif "reg" in item['name']:
+                gals["reg"] = "https://girder.hub.yt/api/v1/item/%s/download" % item['_id']
+        return gals
     else:
         return "https://girder.hub.yt/api/v1/item/%s/download" % items[0]['_id']
 
