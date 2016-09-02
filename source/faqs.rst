@@ -79,6 +79,13 @@ If you have some galaxy cluster-related simulation data that fits within the goa
 please `contact the mailing list <https://groups.google.com/forum/#!forum/gcmc>`_ and we can discuss getting it
 set up. 
 
+I downloaded one of the simulations in its entirety but I'm having some trouble unzipping the file. I'm on a Mac.
+-----------------------------------------------------------------------------------------------------------------
+
+There are known issues with opening large ZIP files on macOS. See
+`this Stack Exchange note <http://superuser.com/questions/114011/extract-large-zip-file-50-gb-on-mac-os-x>`_ for
+possible resolutions.
+
 How do I cite the catalog?
 --------------------------
 
