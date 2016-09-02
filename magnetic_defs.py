@@ -11,7 +11,7 @@ mag_notes = ["There is no metallicity field in these simulations; hence for comp
              "For each simulation, the main cluster is fixed at **r** = [0, 0, 0] kpc. "+
              "A tab-separated ASCII table containing the subcluster position, velocity, "+
              "and acceleration as a function of time may be found "+
-             "`here <https://girder.hub.yt/api/v1/item/578eaf8f7b6f0800011e6e28/download>`_."]
+             "`here <https://girder.hub.yt/api/v1/file/57c95f627f24830001831410/download>`_."]
 
 mag_info = {"name": "sloshing_magnetic",
             "cadence": 0.01,

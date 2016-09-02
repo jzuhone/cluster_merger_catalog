@@ -10,7 +10,7 @@ virgo_notes = ["There is no metallicity field in these simulations; hence for co
                "For each simulation, the main cluster is fixed at **r** = [0, 0, 0] kpc. "+
                "A tab-separated ASCII table containing the subcluster position, velocity, "+
                "and acceleration as a function of time may be found "+
-               "`here <https://girder.hub.yt/api/v1/item/57891d847b6f0800011e2f6a/download>`_."]
+               "`here <https://girder.hub.yt/api/v1/file/57c9d6297f248300018398ed/download>`_."]
 
 virgo_info = {"name": "virgo",
              "cadence": 0.05,
