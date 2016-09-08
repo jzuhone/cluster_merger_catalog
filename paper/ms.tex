@@ -42,13 +42,7 @@ The astrophysical literature is replete with simulations of galaxy cluster merge
 
 These simulations have often attempted to make predictions for what may be observed in a number of wavebands and made direct comparisons to observed merging systems. However, comparing the results of simulations of cluster mergers to these systems is often not straighforward; at what stage are we viewing the merger, and along what line of sight? To make matters more complicated, different combinations of merger epoch and line of sight can produce qualitatively similar projections of cluster emission, making it more difficult to determine these parameters.
 
-We seek to address these issues by releasing the ``Galaxy Cluster Merger Catalog'', an extensive suite of mock observations and related data for simulations of galaxy cluster mergers.
-
-The goal of the catalog is to provide a way to connect simulations of galaxy cluster mergers
-with multiwavelength observations of real merging clusters. Producing simulation data in terms of
-observed quantities at many different epochs and from many different lines of sight provides an
-opportunity for observers to compare clusters in their observations with a particular merging
-scenario. The data here may also be analyzed in its own right, to make predictions for what various investigations of real clusters may reveal.
+We seek to address these issues by releasing the ``Galaxy Cluster Merger Catalog'', an extensive suite of mock observations and related data for simulations of galaxy cluster mergers. We have produced 2D projections and slices of a number of different quantities relevant to observations of galaxy clusters for a large number of merger simulations. The data products span the important stages of evolution of each merger and a number of relevant projection axes. The goal of this catalog is to provide a way to connect simulations of galaxy cluster mergers with multiwavelength observations of real merging clusters, providing an opportunity for observers to compare clusters in their observations with a particular merging scenario. The data may also be analyzed in its own right, to make predictions for what various investigations of real clusters may reveal for future observations and missions.
 
 \section{The Data}
 
@@ -61,18 +55,32 @@ The galaxy cluster merger simulation data in the catalog comes from state-of-the
 
 \begin{itemize}
 \item Each simulation is simulated using an adaptive or static mesh refinement (AMR/SMR) grid \citep{ber89} with varying resolution throughout the domain, with refinement occuring on criteria such as sharp jumps in density and temperature, matter density, and selected regions such as the cluster center. Eventually, the catalog will include particle-based simulations as well.
-\item The equations of hydrodynamics (HD) or magnetohydrodynamics (MHD) are modeled using a conservative finite-volume scheme, employing Riemann solvers for evolving the flux of physical quantities and using high-order reconstruction schemes such as the Piecewise-Parabolic Method \citep[PPM,][]{col84}. Magnetic fields are evolved such that the condition $\nabla \cdot {\bf B} = 0$ is met, typically by a constrained transport scheme \citep[CT][]{eva88}. Eventually, the catalog will include simulations peformed with smoothed particle hydrodynamics.
+\item The equations of hydrodynamics (HD) or magnetohydrodynamics (MHD) are modeled using a conservative finite-volume scheme, employing Riemann solvers for evolving the flux of physical quantities and using high-order reconstruction schemes such as the Piecewise-Parabolic Method \citep[PPM,][]{col84}. Magnetic fields are evolved such that the condition $\nabla \cdot {\bf B} = 0$ is met, typically by a constrained transport scheme \citep[CT,][]{eva88}. Eventually, the catalog will include simulations peformed with smoothed particle hydrodynamics.
 \item Each simulation assumes an ideal gas law equation of state with $\gamma = 5/3$ and primordial abundances of H/He with trace amounts of metals, yielding a mean molecular weight of $\mu = 0.6$.
 \item If dark matter is included, it is modeled by an N-body solver for a collection of collisionless massive particles, which interact with the gas component only via gravity.
 \item The gravity in the simulations is either modeled as a rigid gravitational potential associated with each cluster or by computing the self-gravity of the gas and dark matter using a Poisson solver \citep[e.g.,][]{ric08}.
 \item Depending on the goals of the simulation study, other physics, such as viscosity, thermal conduction, radiative cooling, etc., may be included.
 \end{itemize}
 
-\subsection{The Data Products}
+\subsection{Methods and Technologies}\label{sec:methods}
+
+In this section, we briefly outline the methods and software used to generate the data products from the original simulation data and host them on the catalog website.
+
+\subsubsection{Python Scientific Software}\label{sec:software}
+
+The projected data is generated from the original simulation data using yt \citep{tur11}.
+
+AstroPy \citep{apy13} is used to generate the data outputs in the (FITS) data format \citep{pen10} and generate coordinates for the files using the World Coordinate System \citep[WCS,][]{gre02, cal02} specification.
+
+\subsubsection{JS9}\label{sec:js9}
+
+\subsubsection{The yt Hub}\label{sec:yt_hub}
+
+\subsection{The Data Products}\label{sec:data}
 
 The data products currently provided in the catalog are 2D selections or reductions of the original 3D datasets. The particular products included for a particular simulation depend on its physical and algorithmic details (e.g., slices of the magnetic field strength and Faraday rotation measure projections are only included for MHD simulations).
 
-The data products are all written in the FITS format \citep{pen10}, in image and table form. Each FITS file may contain more than one image or table extension. The header of each extension contains coordinate information stored using the standard World Coordinate System \citep[WCS,][]{gre02, cal02} keywords. Each FITS file contains one or both of the following two coordinate systems:
+The data products are all written in the FITS format, in image and table form. Each FITS file may contain more than one image or table extension. The header of each extension contains coordinate information stored using standard WCS keywords. Each FITS file contains one or both of the following two coordinate systems:
 
 \begin{itemize}
 \item A linear coordinate system which corresponds to the coordinate system of the original dataset. The length units are in kpc. For most of the FITS files, this is the first and primary WCS (e.g., the one that appears by default in ds9).
@@ -256,10 +264,13 @@ The catalog is designed so that it may be easily extended and expanded. Future g
 \item Adding other types of data products, including movies, unconvolved X-ray event lists, and the original 3D datasets
 \end{itemize}
 
+It is our hope that the catalog will provide a useful resource for researchers studying galaxy cluster mergers from both the perspective of current observations as well as making predictions for future missions.
+
 \acknowledgements
-JAZ thanks Eric Mandel for tips on using JS9 and for critical bug fixes and enhancements that were provided to make it work with the data in the catalog. JAZ acknowledges support through Chandra Award Number G04-15088X issued by the Chandra X-ray Center, which is operated by the Smithsonian Astrophysical Observatory for and on behalf of NASA under contract NAS8-03060.
+JAZ thanks Eric Mandel for tips on using JS9 and for critical bug fixes and enhancements that were provided to make it work with the data in the catalog. JAZ acknowledges support through Chandra Award Number G04-15088X issued by the Chandra X-ray Center, which is operated by the Smithsonian Astrophysical Observatory for and on behalf of NASA under contract NAS8-03060. This research made use of AstroPy, a community-developed core Python package for Astronomy \citep{apy13}.
 
 \begin{thebibliography}{}
+\bibitem[Astropy Collaboration et al.(2013)]{apy13} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., et al.\ 2013, \aap, 558, A33
 \bibitem[Berger \& Colella(1989)]{ber89} Berger, M.~J., \& Colella, P.\ 1989, Journal of Computational Physics, 82, 64
 \bibitem[Br{\"u}ggen et al.(2012)]{bru12} Br{\"u}ggen, M., Bykov, A., Ryu, D., R{\"o}ttgering, H.\ 2012, \ssr, 166, 187
 \bibitem[Brunetti \& Lazarian(2007)]{bru07} Brunetti, G., \& Lazarian, A.\ 2007, \mnras, 378, 245
