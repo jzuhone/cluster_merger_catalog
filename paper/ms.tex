@@ -75,6 +75,21 @@ AstroPy \citep{apy13} is used to generate the data outputs in the (FITS) data fo
 \subsubsection{JS9}\label{sec:js9}
 
 \subsubsection{The yt Hub}\label{sec:yt_hub}
+The yt Hub~(\textbf{citeme}) is a conglomerate of various open source services
+creating an environment that allows to collect, remotely analyze, share and
+publish scientific datasets. At its core yt Hub uses Girder~(\textbf{citeme}) --
+a data management platform that allows to transparently store, serve, and proxy
+data from heterogeneous backend storage engines through a single RESTful web
+API, including local filesystems, MongoDB databases, Amazon S3-compliant
+key-value stores, and Hadoop Distributed Filesystems (HDFS). Data served by
+Girder can be easily gathered into dynamical hierarchies such as collections,
+folders and items. This data management system is integrated with
+JupyterHub~(\textbf{citeme}) and allows authenticated users to spawn Jupyter
+notebook servers with the direct access to data that is provided as a
+dynamically composed FUSE filesystem. Any Jupyter notebook created in that
+environment during an interactive session is safely stored back in the Girder
+instance, preserving the user's analysis workflow and increasing research
+reproducibility.
 
 \subsection{The Data Products}\label{sec:data}
 
