@@ -51,7 +51,7 @@ We seek to address these issues by releasing the ``Galaxy Cluster Merger Catalog
 At the time of writing, the catalog contains data products from idealized binary cluster merger
 simulations. In the future, the catalog will include data products from a variety of galaxy cluster merger and related galaxy cluster simulations, including those from cosmological simulations and simulations of interactions between clusters and their member galaxies. The types of data products are likely to expand and diversify with the inclusion of new simulations.
 
-The galaxy cluster merger simulation data in the catalog comes from state-of-the-art N-body and hydrodynamics codes such as FLASH and Athena. The exact physics and algorithms employed by the simulations vary, but in general:
+The galaxy cluster merger simulation data in the catalog comes from state-of-the-art N-body and hydrodynamics codes such as FLASH \citep{dub09} and Athena \citep{sto08}. The exact physics and algorithms employed by the simulations vary, but in general:
 
 \begin{itemize}
 \item Each simulation is simulated using an adaptive or static mesh refinement (AMR/SMR) grid \citep{ber89} with varying resolution throughout the domain, with refinement occuring on criteria such as sharp jumps in density and temperature, matter density, and selected regions such as the cluster center. Eventually, the catalog will include particle-based simulations as well.
@@ -68,11 +68,13 @@ In this section, we briefly outline the methods and software used to generate th
 
 \subsubsection{Python Scientific Software}\label{sec:software}
 
-The projected data is generated from the original simulation data using yt \citep{tur11}.
+The projected data is generated from the original simulation data using yt \citep{tur11}, an open-source Python package for analyzing and visualizing volumetric data. yt has capabilities for slicing and projecting physical fields from multi-resolution datasets such as those from galaxy cluster merger simulations along arbitrary lines of sight. Through analysis modules and affiliated packages, yt also has capabilities to produce synthetic Sunyaev-Zeldovich (S-Z) and X-ray observations. We provide details on how this is done in Sections \ref{sec:sz} and \ref{sec:xray}.
 
-AstroPy \citep{apy13} is used to generate the data outputs in the (FITS) data format \citep{pen10} and generate coordinates for the files using the World Coordinate System \citep[WCS,][]{gre02, cal02} specification.
+AstroPy \citep{apy13} is used to take the projected data generated in yt and produce data outputs in the standard Flexible Image Transport System (FITS) data format \citep{pen10} and generate coordinates for the files using the World Coordinate System \citep[WCS,][]{gre02, cal02} specification.
 
 \subsubsection{JS9}\label{sec:js9}
+
+JS9 (\url{http://js9.si.edu}) is a browser-based implementation of SAOImage DS9 (\url{http://ds9.si.edu/}), an astronomical imaging and data visualization application. JS9 provides interactive exploration of FITS image and table data including zooming, panning, colormaps, scaling, and region files. On each ``epoch page'' (Section \ref{sec:epoch_page}) there is an interface to JS9 and links to open FITS files from that epoch in the JS9 interface.
 
 \subsubsection{The yt Hub}\label{sec:yt_hub}
 
@@ -129,7 +131,7 @@ TIME    =    1.300254073176463
 
 It can be seen here that the default WCS, \code{WCSNAME = 'yt'}, is in linear coordinates, and the second WCS, \code{WCSNAMEA = 'celestial'}, is in celestial coordinates. The relationship between the two depends on the angular diameter distance to the source, which depends on the redshift and the given cosmology. The pixel scale of each FITS file is equivalent to the finest cell size of the simulation.
 
-With the exception of the X-ray event files, no attempt is made in the mock observations to include statistical and systematic errors on the observed quantities, instrumental effects, or background contamination. It is not possible to anticipate what assumptions the end-user may want to make about these issues, so these effects have been left out so they may be added on a case-by-case basis for different situations.
+With the exception of the X-ray event files (Section \ref{sec:xray}), no attempt is made in the mock observations to include statistical and systematic errors on the observed quantities, instrumental effects, or background contamination. It is not possible to anticipate what assumptions the end-user may want to make about these issues, so these effects have been left out so they may be added on a case-by-case basis for different situations.
 
 The next several subsections describe in detail the types of data products.
 
@@ -156,7 +158,7 @@ Projections are taken along several lines of sight. Currently, these include the
 \item \code{"xray\_emissivity"}: X-ray photon surface brightness in the 0.5-7.0~keV (observer) band, computed using an APEC model, in units of ${\rm photons~s^{-1}~{cm}^{-2}~{arcsec}^{-2}}$. For simulations without metallicity, a spatially constant metallicity of ${\rm Z = 0.3~Z_\odot}$ is assumed.
 \item \code{"kT"}: Emission-weighted projected temperature, using the emissivity described above, in units of keV.
 \item \code{"total\_density"}: Total mass density (gas and dark matter) in units of $\rm{M_\odot~{kpc}^{-3}}$.
-\item \code{"szy"}: The integrated ``y-parameter'' for the thermal Sunyaev-Zeldovich (S-Z) effect, given by
+\item \code{"szy"}: The integrated ``y-parameter'' for the thermal S-Z effect, given by
 \begin{equation}
 y_{\rm tSZ} = \int{\frac{k_BT}{m_e{c^2}}\sigma_T{n_e}{\rm d\ell}}.
 \end{equation}
@@ -171,22 +173,6 @@ y_{\rm kSZ} = \int{\frac{v_\ell}{c}\sigma_T{n_e}{\rm d\ell}}.
 \end{itemize}
 
 \subsubsection{Sunyaev-Zeldovich Effect Projections}\label{sec:sz}
-
-Other fields related to the S-Z effect are also computed for some simulations, using the \code{SZpack}\footnote{\url{http://www.cita.utoronto.ca/~jchluba/Science_Jens/SZpack/SZpack.html}} library \citep{chl12, chl13} to compute the S-Z signal, including thermal and kinetic contributions as well as relativistic corrections. More details on how these projections were computed can be found at \url{http://yt-project.org/doc/analyzing/analysis_modules/sunyaev_zeldovich.html}. They are stored in separate FITS files from the other projections. Currently, these files contain a subset of these fields with the follwing extension names:
-
-\begin{itemize}
-\item \code{"Tau"}: Compton optical depth of the cluster gas
-\item \code{"TeSZ"}: Mass-weighted projected temperature in units of keV
-\item \code{"90\_GHz"}: S-Z signal at 90~GHz in units of MJy~sr$^{-1}$
-\item \code{"180\_GHz"}: S-Z signal at 180~GHz in units of MJy~sr$^{-1}$
-\item \code{"240\_GHz"}: S-Z signal at 240~GHz in units of MJy~sr$^{-1}$
-\end{itemize}
-
-The computed S-Z signal at other frequencies may be added in later revisions of the catalog.
-
-\subsubsection{X-ray Events}\label{sec:xray}
-
-The X-ray emissivity projection listed above represents a single broad energy band from 0.5-7.0 keV. To do analysis of the thermal and compositional properties of the ICM, high-resolution energy spectra are required. Instead of providing maps at the same spatial resolution for hundreds or even thousands of energy bins for every epoch and projection direction, which would be prohibitive in terms of disk space, the catalog provides event files.
 
 \begin{figure*}
 \begin{center}
@@ -215,6 +201,22 @@ The X-ray emissivity projection listed above represents a single broad energy ba
 \caption{The bottom of an ``epoch page'', showing the simulated X-ray event file and the JS9 interface with a projection file loaded, and a circular region selected. This particular page is linked at \url{http://gcmc.hub.yt/virgo/novisc/0046/index.html}.}
 \end{center}
 \end{figure*}
+
+Other fields related to the S-Z effect are also computed for some simulations, using the \code{SZpack}\footnote{\url{http://www.cita.utoronto.ca/~jchluba/Science_Jens/SZpack/SZpack.html}} library \citep{chl12, chl13} to compute the S-Z signal, including thermal and kinetic contributions as well as relativistic corrections. More details on how these projections were computed can be found at \url{http://yt-project.org/doc/analyzing/analysis_modules/sunyaev_zeldovich.html}. They are stored in separate FITS files from the other projections. Currently, these files contain a subset of these fields with the follwing extension names:
+
+\begin{itemize}
+\item \code{"Tau"}: Compton optical depth of the cluster gas
+\item \code{"TeSZ"}: Mass-weighted projected temperature in units of keV
+\item \code{"90\_GHz"}: S-Z signal at 90~GHz in units of MJy~sr$^{-1}$
+\item \code{"180\_GHz"}: S-Z signal at 180~GHz in units of MJy~sr$^{-1}$
+\item \code{"240\_GHz"}: S-Z signal at 240~GHz in units of MJy~sr$^{-1}$
+\end{itemize}
+
+The computed S-Z signal at other frequencies may be added in later revisions of the catalog.
+
+\subsubsection{X-ray Events}\label{sec:xray}
+
+The X-ray emissivity projection listed above represents a single broad energy band from 0.5-7.0 keV. To do analysis of the thermal and compositional properties of the ICM, high-resolution energy spectra are required. Instead of providing maps at the same spatial resolution for hundreds or even thousands of energy bins for every epoch and projection direction, which would be prohibitive in terms of disk space, the catalog provides event files.
 
 The X-ray event files are standard products which can be manipulated and analyzed with common X-ray analysis tools, such as ds9, \code{CIAO}, and the \code{HEASOFT} software suite. The events themselves have been generated from the 3-D datasets using the \code{pyXSIM}\footnote{\url{http://hea-www.cfa.harvard.edu/~jzuhone/pyxsim}} package \citep{zuh14}. At the time of writing, event files for the {\it Chandra} ACIS-I detector are provided, but eventually event files for other instruments will be included, as well as raw, unconvolved events which may be used with any instrument simulator.
 
@@ -281,6 +283,11 @@ JAZ thanks Eric Mandel for tips on using JS9 and for critical bug fixes and enha
 \bibitem[Chluba et al.(2012)]{chl12} Chluba, J., Nagai, D., Sazonov, S., \& Nelson, K.\ 2012, \mnras, 426, 510
 \bibitem[Chluba et al.(2013)]{chl13} Chluba, J., Switzer, E., Nelson, K., \& Nagai, D.\ 2013, \mnras, 430, 3054
 \bibitem[Donnert et al.(2013)]{don13} Donnert, J., Dolag, K., Brunetti, G., \& Cassano, R.\ 2013, \mnras, 429, 3564
+\bibitem[{Dubey} et~al.(2009)]{dub09} {Dubey}, A., {Antypas}, K.,
+  {Ganapathy}, M.~K., {Reid}, L.~B., {Riley}, K.~M., {Sheeler}, D.,
+  {Siegel}, A., {Weide}, K. Extensible component based architecture
+  for FLASH, a massively parallel, multiphysics simulation
+  code. Parallel Computing 35~(10-11), 512--522.
 \bibitem[Evans \& Hawley(1988)]{eva88} Evans, C.~R., \& Hawley, J.~F.\ 1988, \apj, 332, 659
 \bibitem[Feretti(2005)]{fer05} Feretti, L.\ 2005, Advances in Space Research, 36, 729
 \bibitem[Ford et al.(2014)]{for14} Ford, J., Hildebrandt, H., Van Waerbeke, L., et al.\ 2014, \mnras, 439, 3755
@@ -291,6 +298,7 @@ JAZ thanks Eric Mandel for tips on using JS9 and for critical bug fixes and enha
 \bibitem[Ricker \& Sarazin(2001)]{ric01} Ricker, P.~M., \& Sarazin, C.~L.\ 2001, \apj, 561, 621
 \bibitem[Ricker(2008)]{ric08} Ricker, P.~M.\ 2008, \apjs, 176, 293-300
 \bibitem[Skillman et al.(2013)]{ski13} Skillman, S.~W., Xu, H., Hallman, E.~J., et al.\ 2013, \apj, 765, 21
+\bibitem[Stone et al.(2008)]{sto08} Stone, J.~M., Gardiner, T.~A., Teuben, P., Hawley, J.~F., \& Simon, J.~B.\ 2008, \apjs, 178, 137
 \bibitem[Sunyaev \& Zeldovich(1972)]{sun72} Sunyaev, R.~A., \& Zeldovich, Y.~B.\ 1972, Comments on Astrophysics and Space Physics, 4, 173
 \bibitem[Turk et al.(2011)]{tur11} Turk, M.~J., Smith, B.~D., Oishi, J.~S., Skory, S., Skillman, S.~W., Abel, T., \& Norman, M.~L.\ 2011, \apjs, 192, 9
 \bibitem[van Weeren et al.(2010)]{vwe10} van Weeren, R.~J., R{\"o}ttgering, H.~J.~A., Br{\"u}ggen, M., \& Hoeft, M.\ 2010, Science, 330, 347
