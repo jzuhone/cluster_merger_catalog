@@ -7,3 +7,8 @@ source/fiducial/*
 source/virgo/*
 source/sloshing_magnetic/*
 *.pyc
+paper/ms.aux
+paper/ms.pdf
+paper/ms.out
+paper/ms.log
+paper/msNotes.bib
