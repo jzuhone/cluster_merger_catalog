@@ -40,7 +40,10 @@ obtain data. From this page you can:
 3. Choose a projection direction: For the projected fields, changing the projection axis on the 
    drop-down menu will update the images for the projected fields as well as the links to the 
    FITS files. 
-4. Open FITS files in JS9: `JS9 <http://js9.si.edu>`_ is a great tool for displaying astronomical
+4. Go to the yt Hub and start Jupyter notebooks: A link is provided near the bottom of the page
+   which displays a link and instructions for starting Jupyter notebooks on the 
+   `yt Hub <http://hub.yt>`_, provided that one has signed up for an account on the yt Hub.
+5. Open FITS files in JS9: `JS9 <http://js9.si.edu>`_ is a great tool for displaying astronomical
    images in web browsers. On each epoch page, various links are provided for opening a FITS file
    in the JS9 window at the bottom of the page. The drop-down menu above the JS9 window allows one
    to navigate between the different HDUs in the file. 
