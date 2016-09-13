@@ -28,7 +28,7 @@
 \altaffiltext{2}{National Center for Supercomputing Applications, University of Illinois at Urbana-Champaign, 1205 W. Clark St., MC-257, Urbana, IL 61801, USA}
 
 \begin{abstract}
-We present the first release of the ``Galaxy Cluster Merger Catalog''. This catalog provides an extensive suite of mock observations and related data for N-body and hydrodynamical simulations of galaxy cluster mergers. These mock observations consist of projections of a number of important observable quantities in several different wavebands, for the entire evolution of each simulation as well as along different lines of sight through the three-dimensional simulation domain. The web interface to the catalog consists of easily browseable images over epoch and projection direction, as well as download links for the raw data and a JS9 interface for interactive data exploration. All of the data products are provided in the standard FITS file format, in image and table form. Future versions of the catalog will include simulations from a number of research groups and a variety of research topics related to the study of interactions of galaxy clusters with each other and with their member galaxies. The catalog is located at \url{http://gcmc.hub.yt}.
+We present the first release of the ``Galaxy Cluster Merger Catalog''. This catalog provides an extensive suite of mock observations and related data for N-body and hydrodynamical simulations of galaxy cluster mergers. These mock observations consist of projections of a number of important observable quantities in several different wavebands, for the entire evolution of each simulation as well as along different lines of sight through the three-dimensional simulation domain. The web interface to the catalog consists of easily browseable images over epoch and projection direction, as well as download links for the raw data and a JS9 interface for interactive data exploration. All of the data products are provided in the standard FITS file format, in image and table form. Data is being stored on the yt Hub~(\url{https://hub.yt}), which allows for remote access and analysis using Jupyter notebook server. Future versions of the catalog will include simulations from a number of research groups and a variety of research topics related to the study of interactions of galaxy clusters with each other and with their member galaxies. The catalog is located at \url{http://gcmc.hub.yt}.
 \end{abstract}
 
 \section{Introduction}\label{sec:intro}
@@ -77,7 +77,17 @@ AstroPy \citep{apy13} is used to take the projected data generated in yt and pro
 JS9 (\url{http://js9.si.edu}) is a browser-based implementation of SAOImage DS9 (\url{http://ds9.si.edu/}), an astronomical imaging and data visualization application. JS9 provides interactive exploration of FITS image and table data including zooming, panning, colormaps, scaling, and region files. On each ``epoch page'' (Section \ref{sec:epoch_page}) there is an interface to JS9 and links to open FITS files from that epoch in the JS9 interface.
 
 \subsubsection{The yt Hub}\label{sec:yt_hub}
-The catalog data is stored on the yt Hub~(\textbf{citeme}), a conglomerate of various open source services creating an environment that allows one to collect, remotely analyze, share and publish scientific datasets. At its core, the yt Hub uses Girder~(\textbf{citeme}), a data management platform that allows to transparently store, serve, and proxy data from heterogeneous backend storage engines through a single web API. Data served by Girder can easily be gathered into dynamical hierarchies such as collections, folders and items. This data management system is integrated with JupyterHub~(\textbf{citeme}) and allows authenticated users to spawn Jupyter notebook servers with direct access to the data that is provided as a dynamically composed FUSE filesystem. Any Jupyter notebook created in that environment during an interactive session is safely stored back in the Girder instance, preserving the user's analysis workflow and increasing research reproducibility. In the future, we plan to have this notebook capability integrated directly with the catalog website.
+The catalog data is stored on the \code{yt Hub}\footnote{\url{https://hub.yt/}}, a conglomerate of various open source
+services creating an environment that allows one to collect, remotely analyze, share and publish scientific datasets. At
+its core, the \code{yt Hub} uses \code{Girder}\footnote{\url{https://girder.readthedocs.io}}, a data management platform
+that allows to transparently store, serve, and proxy data from heterogeneous backend storage engines through a single
+web API. Data served by \code{Girder} can easily be gathered into dynamical hierarchies such as collections, folders and
+items.  This data management system is integrated with
+\code{JupyterHub}\footnote{\url{https://jupyterhub.readthedocs.io/}} and allows authenticated users to spawn Jupyter
+notebook servers with direct access to the data that is provided as a dynamically composed FUSE filesystem. Any Jupyter
+notebook created in that environment during an interactive session is safely stored back in the \code{Girder} instance,
+preserving the user's analysis workflow and increasing research reproducibility. In the future, we plan to have this
+notebook capability integrated directly with the catalog website.
 
 \subsection{The Data Products}\label{sec:data}
 
@@ -272,6 +282,7 @@ It is our hope that the catalog will provide a useful resource for researchers s
 
 \acknowledgements
 JAZ thanks Eric Mandel for tips on using JS9 and for critical bug fixes and enhancements that were provided to make it work with the data in the catalog. JAZ acknowledges support through Chandra Award Number G04-15088X issued by the Chandra X-ray Center, which is operated by the Smithsonian Astrophysical Observatory for and on behalf of NASA under contract NAS8-03060.
+KK was funded in part by the Gordon and Betty Moore Foundation's Data-Driven Discovery Initiative through Grant GBMF4561.
 
 \begin{thebibliography}{}
 \bibitem[Astropy Collaboration et al.(2013)]{apy13} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., et al.\ 2013, \aap, 558, A33
