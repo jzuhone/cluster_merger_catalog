@@ -70,7 +70,8 @@ def make_sim_page(set_name, filespec, sim, sim_name, filenos, sname_map,
             imgs[fn] = pngs
             pbar.update()
         pbar.finish()
-        sim_dl = get_folder('/'.join([set_name, sim]))[0]
+        simfd = get_folder('/'.join([set_name, sim]))
+        sim_dl = "https://girder.hub.yt/api/v1/folder/%s/download" % simfd["_id"]
         num_epochs = len(epochs.keys())
         context = {'sim_name': sim_name,
                    'sim_dl': sim_dl,
@@ -141,9 +142,11 @@ def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
             else:
                 next_link = "%04d.html" % filenos[noi+1]
                 dis_next = ""
-            epoch_dl, size = get_folder('/'.join([set_name, sim, "%04d" % fileno]))
-            size /= 1024.*1024.*1024.
+            epochfd = get_folder('/'.join([set_name, sim, "%04d" % fileno]))
+            epoch_dl = "https://girder.hub.yt/api/v1/folder/%s/download" % epochfd["_id"]
+            size = epochfd["size"]/(1024.*1024.*1024.)
             totsize += size
+            hub_folder = "https://girder.hub.yt/#collection/57c866a07f2483000181aefa/folder/"+epochfd["_id"]
             context = {"data": data,
                        "sim": sim,
                        "epoch_dl": epoch_dl,
@@ -162,6 +165,7 @@ def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
                        "next_link": next_link,
                        "dis_prev": dis_prev,
                        "dis_next": dis_next,
+                       "hub_folder": hub_folder, 
                        "set_physics": setp if sim in setp else {}}
             make_template(outfile, template_file, context)
         pbar.update()
@@ -186,7 +190,7 @@ def get_file(filename, itype):
 def get_folder(folder):
     folder_path = os.path.join('/collection', 'cluster_mergers', folder)
     folder = gc.get("resource/lookup", {"path": folder_path})
-    return "https://girder.hub.yt/api/v1/folder/%s/download" % folder["_id"], folder["size"]
+    return folder
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
