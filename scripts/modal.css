@@ -36,3 +36,7 @@
     text-decoration: none;
     cursor: pointer;
 }
+
+body.modal-open div.modal-backdrop {
+    z-index: 0;
+}

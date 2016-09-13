@@ -162,20 +162,8 @@ The S-Z FITS file contains the following fields:
     </figure>
     <br><br>
 
-    <h2>Jupyter Notebook</h2>
-    <a id="hubLink" >Get direct access to these files on the yt Hub and run Jupyter notebooks.</a>
-
-    <div id="hubModal" class="modal">
-    <div class="modal-content">
-    <span id="closeModal" class="close">x</span>
-    <p>
-    <a id="hubFolder" href="#">Click this link</a> to get direct access to the files from within the yt Hub.
-    You can optionally also register for an account on the Hub, and use the button in
-    the top-right corner to start a Jupyter notebook on the server, with access to the files
-    and a full Python stack including NumPy, SciPy, AstroPy, yt, and more.
-    </p>
-    </div>
-
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#hubModal">Get access to these files on the yt Hub and run Jupyter notebooks.</button>
+							    
     <a name="js9"></a>
     <h2>JS9 Interface</h2>
     
@@ -227,21 +215,21 @@ The S-Z FITS file contains the following fields:
 	
         $(document).ready(function () {
 
-            var myModal = document.getElementByID('hubModal');  
-            var myLink = document.getElementById("hubLink");
-            var mySpan = document.getElementById("closeModal");
-            myLink.onclick = function() {
-                myModal.style.display = "block";
-            }
-            mySpan.onclick = function() {
-                myModal.style.display = "none";
-            }
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
-            }
-            document.getElementById('hubFolder').href = "{{hub_folder}}";
+            //var myModal = document.getElementById('hubModal');  
+            //var myLink = document.getElementById("hubLink");
+            //var mySpan = document.getElementById("closeModal");
+            //myLink.onclick = function() {
+            //    myModal.style.display = "block";
+            // }
+            //mySpan.onclick = function() {
+            //    myModal.style.display = "none";
+            //}
+            //window.onclick = function(event) {
+            //    if (event.target == modal) {
+            //        modal.style.display = "none";
+            //    }
+            //}
+            //document.getElementById('hubFolder').href = "{{hub_folder}}";
 
             show_files('slice', 'z');
             fits_link('slice', 'z');
@@ -265,6 +253,10 @@ The S-Z FITS file contains the following fields:
             $('#proj_axis').val("z");
 
         });
+
+	function get_hub_link() {
+	    window.open("{{hub_folder}}", "_blank");
+	}
 
         function fits_link(itype, axis) {
             var fits_link = girder_data[itype][axis]["fits"];
@@ -351,3 +343,18 @@ The S-Z FITS file contains the following fields:
         fitsList.addEventListener('change', changeFits, false);
 
     </script>
+
+    <div id="hubModal" class="modal fade" role="dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    <div class="modal-body">
+    <p>
+    <a href="" onclick="get_hub_link()"><h3>Get direct access to these files from within the yt Hub.</h3></a>
+    <img src="../../images/start_notebook.png" hspace="10" align="right" />
+    If you have an account on the <a href="http://girder.hub.yt" target="_blank">yt Hub</a>, click the link above and use the button in the top-right corner to start a Jupyter notebook on the server, with access to the files and a full Python stack including NumPy, SciPy, AstroPy, yt, and more. The files are located in the "data" folder from within the notebook. 
+    </p>
+    </div>
+    </div>
+    </div>
