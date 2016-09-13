@@ -351,9 +351,9 @@ The S-Z FITS file contains the following fields:
     </div>
     <div class="modal-body">
     <p>
+    <img src="../../images/start_notebook.png" hspace="10" align="right" width="300"/>
     <a href="" onclick="get_hub_link()"><h3>Get direct access to these files from within the yt Hub.</h3></a>
-    <img src="../../images/start_notebook.png" hspace="10" align="right" />
-    If you have an account on the <a href="http://girder.hub.yt" target="_blank">yt Hub</a>, click the link above and use the button in the top-right corner to start a Jupyter notebook on the server, with access to the files and a full Python stack including NumPy, SciPy, AstroPy, yt, and more. The files are located in the "data" folder from within the notebook. 
+    If you have an account on the <a href="http://girder.hub.yt" target="_blank">yt Hub</a>, click the link above and use the blue arrow button in the top-right corner (see image at right) to start a Jupyter notebook on the server, with access to the files and a full Python stack including NumPy, SciPy, AstroPy, yt, and more. The files are located in the "data" folder from within the notebook. 
     </p>
     </div>
     </div>
