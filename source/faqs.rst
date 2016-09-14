@@ -89,7 +89,9 @@ possible resolutions.
 How do I cite the catalog?
 --------------------------
 
-Watch this space for a future journal reference. For now, just make sure you provide the link to http://gcmc.hub.yt.
+Watch this space for a future journal reference. For now, include this text in the acknowledgments:
+
+"This work made use of data from the Galaxy Cluster Merger Catalog (http://gcmc.hub.yt)."
 
 Is the data licensed?
 ---------------------
