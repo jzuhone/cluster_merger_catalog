@@ -4,6 +4,10 @@ from sim_defs import Simulation
 fid_notes = ["There is no metallicity field in these simulations; hence for computing X-ray "+
              "emissivities a constant metallicity of :math:`Z = 0.3~Z_\odot` is assumed."]
 
+fid_acks = "The original set of simulations was performed using the computational resources of Argonne National "+ \
+           "Laboratory and Lawrence Livermore National Laboratory, with this updated and improved set performed "+ \
+           "using the Pleiades supercomputer at NASA's Ames Research Center."
+
 fid_info = {"name": "fiducial", 
             "cadence": 0.02,
             "filespec": "fiducial_%s_hdf5_plt_cnt_%04d",
@@ -17,7 +21,8 @@ fid_info = {"name": "fiducial",
             "primary_mass": "M_{200} = 6~{\\times}~10^{14}~M_{\odot}",
             "sim_notes": "For the following simulations, :math:`R` is the mass ratio between " + \
                          "the two clusters and :math:`b` is the initial impact parameter in kpc.",
-            "notes": fid_notes, "cosmo_warning": True, 'redshift': 0.05}
+            "notes": fid_notes, "cosmo_warning": True, 'redshift': 0.05,
+            "acknowledgments": "The original set of simulations was performed using the computational resources of Argonne National"}
 
 fields = {}
 fields["slice"] = ["dens","temp","pden","velx","vely","clr1","clr2"]

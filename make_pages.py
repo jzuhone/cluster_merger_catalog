@@ -4,10 +4,10 @@ import django.conf
 import re
 import girder_client
 from yt.funcs import get_pbar
-from fiducial_defs import fid_dict, fid_info, fid_physics
-from sloshing_defs import slosh_dict, slosh_info, slosh_physics
-from virgo_defs import virgo_dict, virgo_info, virgo_physics
-from magnetic_defs import mag_dict, mag_info, mag_physics
+from fiducial_defs import fid_dict, fid_info, fid_physics, fid_acks
+from sloshing_defs import slosh_dict, slosh_info, slosh_physics, slosh_acks
+from virgo_defs import virgo_dict, virgo_info, virgo_physics, virgo_acks
+from magnetic_defs import mag_dict, mag_info, mag_physics, mag_acks
 import argparse
 from collections import OrderedDict
 
@@ -21,7 +21,7 @@ GIRDER_API_URL = "https://girder.hub.yt/api/v1"
 
 gc = girder_client.GirderClient(apiUrl=GIRDER_API_URL)
 
-def make_set_page(set_info, set_dict, set_physics):
+def make_set_page(set_info, set_dict, set_physics, set_acks):
     set_physics_dict = OrderedDict([(k, (set_dict[k].name, set_dict[k].filenos)) 
                                     for k in set_physics])
     if not os.path.exists('source/%s' % set_info['name']):
@@ -46,7 +46,8 @@ def make_set_page(set_info, set_dict, set_physics):
                'sim_notes': set_info['sim_notes'],
                'notes': set_info['notes'],
                'cosmo_warning': set_info['cosmo_warning'],
-               'redshift': set_info['redshift']}
+               'redshift': set_info['redshift'],
+               'acks': set_acks}
     template_file = 'templates/set_template.rst'
     make_template('source/%s/index.rst' % set_info["name"], template_file, context)
 
@@ -196,7 +197,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--test", action='store_true')
     args = parser.parse_args()
-    make_set_page(fid_info, fid_dict, fid_physics)
-    make_set_page(slosh_info, slosh_dict, slosh_physics)
-    make_set_page(virgo_info, virgo_dict, virgo_physics)
-    make_set_page(mag_info, mag_dict, mag_physics)
+    make_set_page(fid_info, fid_dict, fid_physics, fid_acks)
+    make_set_page(slosh_info, slosh_dict, slosh_physics, slosh_acks)
+    make_set_page(virgo_info, virgo_dict, virgo_physics, virgo_acks)
+    make_set_page(mag_info, mag_dict, mag_physics, mag_acks)

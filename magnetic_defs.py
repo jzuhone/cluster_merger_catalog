@@ -13,6 +13,8 @@ mag_notes = ["There is no metallicity field in these simulations; hence for comp
              "and acceleration as a function of time may be found "+
              "`here <https://girder.hub.yt/api/v1/file/57c95f627f24830001831410/download>`_."]
 
+mag_acks = "This set of simulations was performed using the Pleiades supercomputer at NASA's Ames Research Center."
+
 mag_info = {"name": "sloshing_magnetic",
             "cadence": 0.01,
             "filespec": "AM06_%s_hdf5_plt_cnt_%04d",

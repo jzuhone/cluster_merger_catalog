@@ -98,6 +98,13 @@ Is the data licensed?
 
 The data is made available under `CC BY 4.0. <https://creativecommons.org/licenses/by/4.0/>`_
 
+Where was the data generated?
+-----------------------------
+
+On each simulation set page there is an "Acknowledgments" section which details the computational resources used to
+perform the simulations. At this time, most of the simulations and the mock observations were produced using `NASA's
+Pleiades Supercomputer <http://www.nas.nasa.gov/hecc/resources/pleiades.html>`_.
+
 I found a problem! How do I report it?
 --------------------------------------
 

@@ -4,6 +4,10 @@ from sim_defs import Simulation
 slosh_notes = ["There is no metallicity field in these simulations; hence for computing X-ray " +
                "emissivities a constant metallicity of :math:`Z = 0.3~Z_\odot` is assumed."]
 
+slosh_acks = "The original set of simulations was performed using the computational resources of Argonne National "+ \
+             "Laboratory and Lawrence Livermore National Laboratory, with this updated and improved set performed "+ \
+             "using the Pleiades supercomputer at NASA's Ames Research Center."
+
 slosh_info = {"name": "sloshing",
               "cadence": 0.01,
               "filespec": "sloshing_%s_hdf5_plt_cnt_%04d",

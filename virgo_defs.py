@@ -12,6 +12,8 @@ virgo_notes = ["There is no metallicity field in these simulations; hence for co
                "and acceleration as a function of time may be found "+
                "`here <https://girder.hub.yt/api/v1/file/57c9d6297f248300018398ed/download>`_."]
 
+virgo_acks = "This set of simulations was performed using the Pleiades supercomputer at NASA's Ames Research Center."
+
 virgo_info = {"name": "virgo",
              "cadence": 0.05,
              "filespec": "virgo_%s.%04d",

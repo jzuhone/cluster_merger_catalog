@@ -64,3 +64,8 @@ Simulations
    {{sim_page|safe}}/index
 
 {% endfor %}
+
+Acknowledgements
+----------------
+
+{{acks|safe}}
