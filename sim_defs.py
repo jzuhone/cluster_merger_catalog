@@ -47,7 +47,7 @@ name_map["galaxies"] = {"ppv":("ppv","Galaxy Positions and Velocities")}
 
 class Simulation(object):
 
-    def __init__(self, sim_name, filenos, fields, pngs, proj_axes, slice_axes, halo_ids=None):
+    def __init__(self, sim_name, filenos, fields, pngs, proj_axes, slice_axes, halo_ids=[]):
         self.name = sim_name
         self.filenos = filenos
         self.lname_map = {}

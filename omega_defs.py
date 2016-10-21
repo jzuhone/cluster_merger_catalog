@@ -36,7 +36,7 @@ f = open("halolist_a1.0005.txt", "r")
 lines = f.readlines()
 f.close()
 
-halo_id = []
+halo_ids = []
 halo_mvir = []
 halo_m200c = []
 halo_m500c = []
@@ -46,7 +46,7 @@ halo_r500c = []
 
 for line in lines[1:]:
     words = line.strip().split()
-    halo_id.append(int(words[0]))
+    halo_ids.append(int(words[0]))
     halo_mvir.append(float(words[1]))
     halo_m200c.append(float(words[2]))
     halo_m500c.append(float(words[3]))
@@ -54,5 +54,8 @@ for line in lines[1:]:
     halo_r200c.append(float(words[5]))
     halo_r500c.append(float(words[6]))
 
+filenos = [1.0005]
+
 omega_dict = OrderedDict()
-omega_dict["non_radiative"] = Simulation("Non-Radiative", halo_id, fields, pngs, ["x", "y", "z"], ["x","y","z"])
+omega_dict["non_radiative"] = Simulation("Non-Radiative", filenos, fields, pngs, ["x", "y", "z"],
+                                         ["x","y","z"], halo_ids=halo_ids)
