@@ -8,6 +8,7 @@ from fiducial_defs import fid_dict, fid_info, fid_physics, fid_acks
 from sloshing_defs import slosh_dict, slosh_info, slosh_physics, slosh_acks
 from virgo_defs import virgo_dict, virgo_info, virgo_physics, virgo_acks
 from magnetic_defs import mag_dict, mag_info, mag_physics, mag_acks
+from omega_defs import omega_dict, omega_info, omega_physics, omega_acks
 import argparse
 from collections import OrderedDict
 
@@ -29,11 +30,11 @@ def make_set_page(set_info, set_dict, set_physics, set_acks):
     for sim, sim_info in set_dict.items():
         totsize = make_epoch_pages(set_info['name'], set_info['filespec'], sim, sim_info.name,
                                    sim_info.filenos, sim_info.sname_map, sim_info.lname_map,
-                                   sim_info.unit_map, set_info["cadence"], sim_info.axes,
+                                   sim_info.unit_map, set_info["cadence"], sim_info.proj_axes,
                                    set_physics_dict)
         make_sim_page(set_info['name'], set_info["filespec"], sim, sim_info.name,
                       sim_info.filenos, sim_info.sname_map, sim_info.lname_map,
-                      set_info["cadence"], sim_info.axes, totsize)
+                      set_info["cadence"], sim_info.proj_axes, totsize)
     context = {'name': set_info["name"],
                'sim_pages': list(set_dict.keys()),
                'set_name': set_info["set_name"],
@@ -52,7 +53,7 @@ def make_set_page(set_info, set_dict, set_physics, set_acks):
     make_template('source/%s/index.rst' % set_info["name"], template_file, context)
 
 def make_sim_page(set_name, filespec, sim, sim_name, filenos, sname_map,
-                  lname_map, cadence, axes, totsize):
+                  lname_map, cadence, proj_axes, totsize):
     sim_dir = 'source/%s/%s' % (set_name, sim)
     outfile = sim_dir+"/index.rst"
     if not os.path.exists(outfile):
@@ -62,7 +63,7 @@ def make_sim_page(set_name, filespec, sim, sim_name, filenos, sname_map,
         for fileno in filenos:
             fn = "%04d" % fileno
             pngs = {}
-            for ax in axes:
+            for ax in proj_axes:
                 pngs[ax] = {}
                 for fd, field in sname_map["proj"].items():
                     filename = filespec % (sim, fileno) + "_proj_%s_%s" % (ax, field)
@@ -77,7 +78,7 @@ def make_sim_page(set_name, filespec, sim, sim_name, filenos, sname_map,
         context = {'sim_name': sim_name,
                    'sim_dl': sim_dl,
                    'size': "%.2f" % totsize,
-                   'axes': axes,
+                   'proj_axes': proj_axes,
                    'epochs': epochs,
                    'imgs': imgs,
                    'num_epochs': num_epochs-1,
@@ -94,7 +95,7 @@ def make_template(outfile, template_file, context):
     open(outfile, 'w').write(template.render(django_context))
 
 def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
-                     lname_map, unit_map, cadence, axes, set_physics):
+                     lname_map, unit_map, cadence, proj_axes, set_physics):
     totsize = 0.0 
     sim_dir = 'source/%s/%s' % (set_name, sim)
     if not os.path.exists(sim_dir):
@@ -109,7 +110,7 @@ def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
             data = {}
             for itype in sname_map.keys():
                 data[itype] = OrderedDict()
-                for ax in axes:
+                for ax in proj_axes:
                     if itype == "slice" and ax != "z":
                         continue
                     data[itype][ax] = {}
