@@ -125,8 +125,8 @@
    function set_images(fileno) {
        for (var i = 0; i < names.length; i++) {
            var img = document.getElementById('img_'+names[i]);
-	   img.src = "../../images/loader.gif";
-	   img.src = girder_data[fileno][axis][names[i]];
+	       img.src = "../../images/loader.gif";
+	       img.src = girder_data[fileno][axis][names[i]];
        }
    }
 

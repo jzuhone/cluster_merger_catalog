@@ -268,14 +268,14 @@ The S-Z FITS file contains the following fields:
                 descr = "region";
                 var reg_link = girder_data["galaxies"][axis]["reg"];
                 //document.getElementById(itype+'_js9').href = "javascript:JS9.LoadRegions('"+reg_link+"');";
-		document.getElementById(itype+'_reg').href = reg_link;
-		document.getElementById(itype+'_reg').innerText = "Region File Download ("+axis+"-axis)";
-		document.getElementById(itype+'_reg').textContent = "Region File Download ("+axis+"-axis)";				  
+		        document.getElementById(itype+'_reg').href = reg_link;
+		        document.getElementById(itype+'_reg').innerText = "Region File Download ("+axis+"-axis)";
+		        document.getElementById(itype+'_reg').textContent = "Region File Download ("+axis+"-axis)";
             } else {
                 descr = "FITS";
-	        document.getElementById(itype+'_js9').onclick = function(){js9Load(fits_link, itype)};
-		document.getElementById(itype+'_js9').innerText = "Open "+descr+" file in JS9 below ("+axis+"-axis)";
-		document.getElementById(itype+'_js9').textContent = "Open "+descr+" file in JS9 below ("+axis+"-axis)";			
+	            document.getElementById(itype+'_js9').onclick = function(){js9Load(fits_link, itype)};
+		        document.getElementById(itype+'_js9').innerText = "Open "+descr+" file in JS9 below ("+axis+"-axis)";
+		        document.getElementById(itype+'_js9').textContent = "Open "+descr+" file in JS9 below ("+axis+"-axis)";
             }
             //document.getElementById(itype+'_js9').innerText = "Open "+descr+" file in JS9 below ("+axis+"-axis)";
             //document.getElementById(itype+'_js9').textContent = "Open "+descr+" file in JS9 below ("+axis+"-axis)";
