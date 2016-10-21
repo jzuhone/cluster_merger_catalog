@@ -84,7 +84,7 @@ The slice FITS file contains the following fields:
     <br>
 
     <h3>Projections</h3>
-	
+
 The projection FITS file contains the following fields:
 
 {% for field, descr in proj_fields.items %}
@@ -106,7 +106,7 @@ The projection FITS file contains the following fields:
     
     {% if galaxies %}
     <h3>Galaxies</h3>
-	
+
     The galaxies FITS file contains positions, velocities, IDs, and original halo information
     for a set of galaxy particles.<br><br> 
     <a id="galaxies_fits">FITS File Download</a><br>
@@ -143,7 +143,7 @@ The S-Z FITS file contains the following fields:
     <a id="big_SZ_{{key}}" data-lightbox="lb_SZ_{{key}}" ><img id="SZ_{{key}}" width="450" /></a>
     </figure>
     {% endfor %}
-			
+
     <br><br>
     
 {% endif %}
@@ -163,7 +163,7 @@ The S-Z FITS file contains the following fields:
     <br><br>
 
     <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#hubModal">Get access to these files on the yt Hub and run Jupyter notebooks.</button>
-							    
+
     <a name="js9"></a>
     <h2>JS9 Interface</h2>
     
@@ -201,18 +201,18 @@ The S-Z FITS file contains the following fields:
         {% for key, link in ftypes.pngs.items %}
                                "{{key}}": "{{link}}",
         {% endfor %}
-	                   },},
+                       },},
         {% endfor %}
             },
         {% endfor %}
-	    };
-	
-	    var axes = [
+        };
+
+        var axes = [
         {% for ax in data.proj %}
             "{{ax}}",
         {% endfor %}
         ];
-	
+
         $(document).ready(function () {
 
             //var myModal = document.getElementById('hubModal');  
@@ -238,7 +238,7 @@ The S-Z FITS file contains the following fields:
             {% if sz_fields|length > 0 %}
             show_files('SZ', 'z');
             fits_link('SZ', 'z');
-	        {% endif %}
+            {% endif %}
             show_files('cxo_evt', 'z');
             fits_link('cxo_evt', 'z');
             {% if galaxies %}
@@ -254,9 +254,9 @@ The S-Z FITS file contains the following fields:
 
         });
 
-	function get_hub_link() {
-	    window.open("{{hub_folder}}", "_blank");
-	}
+        function get_hub_link() {
+            window.open("{{hub_folder}}", "_blank");
+        }
 
         function fits_link(itype, axis) {
             var fits_link = girder_data[itype][axis]["fits"];
@@ -268,14 +268,14 @@ The S-Z FITS file contains the following fields:
                 descr = "region";
                 var reg_link = girder_data["galaxies"][axis]["reg"];
                 //document.getElementById(itype+'_js9').href = "javascript:JS9.LoadRegions('"+reg_link+"');";
-		        document.getElementById(itype+'_reg').href = reg_link;
-		        document.getElementById(itype+'_reg').innerText = "Region File Download ("+axis+"-axis)";
-		        document.getElementById(itype+'_reg').textContent = "Region File Download ("+axis+"-axis)";
+                document.getElementById(itype+'_reg').href = reg_link;
+                document.getElementById(itype+'_reg').innerText = "Region File Download ("+axis+"-axis)";
+                document.getElementById(itype+'_reg').textContent = "Region File Download ("+axis+"-axis)";
             } else {
                 descr = "FITS";
-	            document.getElementById(itype+'_js9').onclick = function(){js9Load(fits_link, itype)};
-		        document.getElementById(itype+'_js9').innerText = "Open "+descr+" file in JS9 below ("+axis+"-axis)";
-		        document.getElementById(itype+'_js9').textContent = "Open "+descr+" file in JS9 below ("+axis+"-axis)";
+                document.getElementById(itype+'_js9').onclick = function(){js9Load(fits_link, itype)};
+                document.getElementById(itype+'_js9').innerText = "Open "+descr+" file in JS9 below ("+axis+"-axis)";
+                document.getElementById(itype+'_js9').textContent = "Open "+descr+" file in JS9 below ("+axis+"-axis)";
             }
             //document.getElementById(itype+'_js9').innerText = "Open "+descr+" file in JS9 below ("+axis+"-axis)";
             //document.getElementById(itype+'_js9').textContent = "Open "+descr+" file in JS9 below ("+axis+"-axis)";
@@ -284,9 +284,9 @@ The S-Z FITS file contains the following fields:
         function show_files(itype, axis) {
             var pngs = girder_data[itype][axis]["pngs"];
             $.each(pngs, function(key, value) {
-	            var img = document.getElementById(itype+'_'+key);
-		        img.src = "../../images/loader.gif";
-		        img.src = value;
+                var img = document.getElementById(itype+'_'+key);
+                img.src = "../../images/loader.gif";
+                img.src = value;
                 document.getElementById('big_'+itype+'_'+key).href = value;
             });
         }
@@ -298,7 +298,7 @@ The S-Z FITS file contains the following fields:
             {% if sz_fields|length > 0 %}
             show_files('SZ', axis);
             fits_link('SZ', axis);
-	        {% endif %}
+            {% endif %}
             show_files('cxo_evt', axis);
             fits_link('cxo_evt', axis);
             {% if galaxies %}
