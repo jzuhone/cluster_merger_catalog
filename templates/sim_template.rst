@@ -17,7 +17,7 @@
    <button type="button" class="btn btn-primary" id="button_{{a}}" onclick="change_axis('{{a}}')">{{a}}</button>
 {% endfor %}
 
-   <h3>Use the slider to change the epoch of the merger, and click on the images to access the files.</h3>
+   <h3>Use the slider to change the epoch, and click on the images to access the files.</h3>
    <br>
 
    <span style="margin-right: 20px;">
