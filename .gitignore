@@ -6,6 +6,7 @@ source/sloshing/*
 source/fiducial/*
 source/virgo/*
 source/sloshing_magnetic/*
+source/omega500/*
 *.pyc
 paper/ms.aux
 paper/ms.pdf
