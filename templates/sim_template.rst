@@ -31,7 +31,7 @@
 
    <a id="epoch_link">
    <h2 id="epoch_header"></h2>
-   {% for key, name in names.items %}
+   {% for key, name in names.items() %}
    <figure style="display: inline-block;">
    <figcaption><h4>{{name}}</h4></figcaption>
    <img id="img_{{key}}" width="450" />
@@ -58,11 +58,11 @@
    ];
 
    var girder_data = {
-   {% for fileno, pngs in imgs.items %}
+   {% for fileno, pngs in imgs.items() %}
        "{{fileno}}": {
-   {% for key, axes in pngs.items %}
+   {% for key, axes in pngs.items() %}
            "{{key}}": { 
-   {% for ax, link in axes.items %}
+   {% for ax, link in axes.items() %}
                "{{ax}}":"{{link}}",
    {% endfor %}
            },
@@ -72,7 +72,7 @@
    };
    
    var epochs = {
-   {% for fileno, epoch in epochs.items %}
+   {% for fileno, epoch in epochs.items() %}
        "{{fileno}}": "{{epoch}}",
    {% endfor %}
    };

@@ -1,6 +1,4 @@
 import os
-import django.template
-import django.conf
 import re
 import girder_client
 from yt.funcs import get_pbar
@@ -11,12 +9,7 @@ from magnetic_defs import mag_dict, mag_info, mag_physics, mag_acks
 from omega_defs import omega_dict, omega_info, omega_physics, omega_acks
 import argparse
 from collections import OrderedDict
-
-try:
-    django.conf.settings.configure()
-    django.setup()
-except RuntimeError as msg:
-    print(msg)
+import jinja2
 
 GIRDER_API_URL = "https://girder.hub.yt/api/v1"
 
@@ -61,15 +54,14 @@ def make_sim_page(set_name, filespec, sim, sim_name, filenos, sname_map,
         epochs = OrderedDict()
         imgs = OrderedDict()
         for fileno in filenos:
-            fn = "%04d" % fileno
             pngs = {}
             for ax in proj_axes:
                 pngs[ax] = {}
                 for fd, field in sname_map["proj"].items():
                     filename = filespec % (sim, fileno) + "_proj_%s_%s" % (ax, field)
                     pngs[ax][fd] = get_file(filename, "proj")
-            epochs[fn] = "t = %4.2f Gyr" % (fileno*cadence)
-            imgs[fn] = pngs
+            epochs[fileno] = "t = %4.2f Gyr" % (float(fileno)*cadence)
+            imgs[fileno] = pngs
             pbar.update()
         pbar.finish()
         simfd = get_folder('/'.join([set_name, sim]))
@@ -82,17 +74,16 @@ def make_sim_page(set_name, filespec, sim, sim_name, filenos, sname_map,
                    'epochs': epochs,
                    'imgs': imgs,
                    'num_epochs': num_epochs-1,
-                   'filenos': ["%04d" % i for i in filenos],
+                   'filenos': filenos,
                    'names': lname_map["proj"]}
         template_file = 'templates/sim_template.rst'
         make_template(outfile, template_file, context)
 
 def make_template(outfile, template_file, context):
-    django_context = django.template.Context(context)
     template = open(template_file).read()
     template = re.sub(r' %}\n', ' %}', template)
-    template = django.template.Template(template)
-    open(outfile, 'w').write(template.render(django_context))
+    template = jinja2.Template(template)
+    open(outfile, 'w').write(template.render(**context))
 
 def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
                      lname_map, unit_map, cadence, proj_axes, set_physics):
@@ -103,7 +94,7 @@ def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
     pbar = get_pbar("Setting up epoch pages for simulation "+sim, len(filenos))
     num_epochs = len(filenos)
     for noi, fileno in enumerate(filenos):
-        outfile = "source/%s/%s/%04d.rst" % (set_name, sim, fileno)
+        outfile = "source/%s/%s/%s.rst" % (set_name, sim, fileno)
         setp = OrderedDict([(sim, val[0]) for sim, val in set_physics.items() 
                            if fileno in val[-1]])
         if not os.path.exists(outfile):
@@ -115,7 +106,7 @@ def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
                         continue
                     data[itype][ax] = {}
                     if itype == "galaxies":
-                        filename = "_".join([set_name, sim, "%04d" % fileno]) + "_%s_%s" % (itype, ax)
+                        filename = "_".join([set_name, sim, fileno]) + "_%s_%s" % (itype, ax)
                     else:
                         filename = filespec % (sim, fileno) + "_%s_%s" % (itype, ax)
                     data[itype][ax]['fits'] = get_file(filename, itype)
@@ -131,20 +122,20 @@ def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
                         imgs[link] = get_file(imgfn, itype)
                     data[itype][ax]['pngs'] = imgs
             template_file = 'templates/epoch_template.rst'
-            timestr = "t = %4.2f Gyr" % (fileno*cadence)
+            timestr = "t = %4.2f Gyr" % (float(fileno)*cadence)
             if noi == 0:
                 prev_link = ""
                 dis_prev = "disabled"
             else:
-                prev_link = "%04d.html" % filenos[noi-1]
+                prev_link = "%s.html" % filenos[noi-1]
                 dis_prev = ""
             if noi == num_epochs-1:
                 next_link = ""
                 dis_next =  "disabled"
             else:
-                next_link = "%04d.html" % filenos[noi+1]
+                next_link = "%s.html" % filenos[noi+1]
                 dis_next = ""
-            epochfd = get_folder('/'.join([set_name, sim, "%04d" % fileno]))
+            epochfd = get_folder('/'.join([set_name, sim, fileno]))
             epoch_dl = "https://girder.hub.yt/api/v1/folder/%s/download" % epochfd["_id"]
             size = epochfd["size"]/(1024.*1024.*1024.)
             totsize += size
@@ -153,7 +144,7 @@ def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
                        "sim": sim,
                        "epoch_dl": epoch_dl,
                        "size": "%.2f" % size, 
-                       "fileno": "%04d" % fileno,
+                       "fileno": fileno,
                        "sim_name": sim_name,
                        "timestr": timestr,
                        "slice_names": lname_map["slice"],

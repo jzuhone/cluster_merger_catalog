@@ -28,7 +28,7 @@
 {% if set_physics|length > 0 %}
 Explore similar simulations with different input physics at the same epoch using these links:
 
-{% for key, value in set_physics.items %}
+{% for key, value in set_physics.items() %}
 {% if key != sim %}
 .. |{{key}}_epoch_link| replace:: {{value|safe}}: {{timestr}}
 .. _{{key}}_epoch_link: ../{{key}}/{{fileno}}.html
@@ -59,7 +59,7 @@ To make the best use out of this page:
 
 The slice FITS file contains the following fields:
 
-{% for field, descr in slice_fields.items %}
+{% for field, descr in slice_fields.items() %}
 * ``"{{field}}"``: {{descr}}
 {% endfor %}
   
@@ -68,7 +68,7 @@ The slice FITS file contains the following fields:
     <a id="slice_fits">FITS File Download</a><br>
     <a id="slice_js9" href="#js9">Open FITS file in JS9 below</a>
     <br><br>	       
-    {% for key, name in slice_names.items %}
+    {% for key, name in slice_names.items() %}
     <figure style="display: inline-block;">
     <figcaption><h4>{{name}}</h4></figcaption>
     <a id="big_slice_{{key}}" data-lightbox="lb_slice_{{key}}" ><img id="slice_{{key}}" width="450" /></a>
@@ -87,7 +87,7 @@ The slice FITS file contains the following fields:
 
 The projection FITS file contains the following fields:
 
-{% for field, descr in proj_fields.items %}
+{% for field, descr in proj_fields.items() %}
 * ``"{{field}}"``: {{descr}}
 {% endfor %}
 
@@ -96,7 +96,7 @@ The projection FITS file contains the following fields:
     <a id="proj_fits">FITS File Download</a><br>
     <a id="proj_js9" href="#js9">Open FITS file in JS9 below</a>
     <br><br>
-    {% for key, name in proj_names.items %}
+    {% for key, name in proj_names.items() %}
     <figure style="display: inline-block;">
     <figcaption><h4>{{name}}</h4></figcaption>
     <a id="big_proj_{{key}}" data-lightbox="lb_proj_{{key}}" ><img id="proj_{{key}}" width="450" /></a>
@@ -128,7 +128,7 @@ The projection FITS file contains the following fields:
     
 The S-Z FITS file contains the following fields:
 
-{% for field, descr in sz_fields.items %}
+{% for field, descr in sz_fields.items() %}
 * ``"{{field}}"``: {{descr}}
 {% endfor %}
 
@@ -137,7 +137,7 @@ The S-Z FITS file contains the following fields:
     <a id="SZ_fits">FITS File Download</a><br>
     <a id="SZ_js9" href="#js9">Open FITS file in JS9 below</a>
     <br><br>    
-    {% for key, name in sz_names.items %}
+    {% for key, name in sz_names.items() %}
     <figure style="display: inline-block;">
     <figcaption><h4>{{name}}</h4></figcaption>
     <a id="big_SZ_{{key}}" data-lightbox="lb_SZ_{{key}}" ><img id="SZ_{{key}}" width="450" /></a>
@@ -190,15 +190,15 @@ The S-Z FITS file contains the following fields:
                            "cxo_evt":"EVENTS"};
 
         var girder_data = {
-        {% for itype, axes in data.items %}
+        {% for itype, axes in data.items() %}
             "{{itype}}": {
-        {% for ax, ftypes in axes.items %}
+        {% for ax, ftypes in axes.items() %}
                 "{{ax}}": {"fits": "{{ftypes.fits}}",		
-        {% if itype|stringformat:"s" == "galaxies" %}
+        {% if itype == "galaxies" %}
                            "reg": "{{ftypes.reg}}",
         {% endif %}                   
                            "pngs": {
-        {% for key, link in ftypes.pngs.items %}
+        {% for key, link in ftypes.pngs.items() %}
                                "{{key}}": "{{link}}",
         {% endfor %}
                        },},
