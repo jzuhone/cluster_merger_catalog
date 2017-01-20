@@ -1,5 +1,6 @@
 from collections import OrderedDict
 from sim_defs import Simulation
+from utils import process_filenos
 
 omega_notes = ["For the non-radiative simulation, there is no metallicity field; hence for computing X-ray " +
                "emissivities a constant metallicity of :math:`Z = 0.3~Z_\odot` is assumed."]
@@ -8,7 +9,7 @@ omega_acks = ""
 
 omega_info = {"name": "omega500",
               "cadence": 0.0,
-              "filespec": "sloshing_%s_hdf5_plt_cnt_%04d",
+              "filespec": "a%s_cl%s",
               "set_name": "Omega 500 Simulations",
               "set_journals": [("Nelson, K., Lau, E. T., Nagai, D., Rudd, D. H., & Yu, L. 2014, ApJ, 782, 107",
                                 "http://adsabs.harvard.edu/abs/2014ApJ...782..107N")],
@@ -23,14 +24,14 @@ omega_info = {"name": "omega500",
 fields = {}
 fields["slice"] = ["dens","temp","velx","vely"]
 fields["proj"] = ["xray","temp","dens","szy","szk"]
-#fields["SZ"] = ["tau","temp","inty90","inty180","inty240"]
+fields["SZ"] = ["tau","temp","inty90","inty180","inty240"]
 pngs = {}
 pngs["slice"] = ["dens","temp"]
 pngs["proj"] = ["xray","temp","dens","szy"]
-#pngs["SZ"] = ["tau","inty240"]
+pngs["SZ"] = ["tau","inty240"]
 #pngs["cxo_evt"] = ["counts"]
 
-omega_physics = ["non_radiative"]
+omega_physics = ["non_radiative/1.0005"]
 
 f = open("halolist_a1.0005.txt", "r")
 lines = f.readlines()
@@ -54,8 +55,6 @@ for line in lines[1:]:
     halo_r200c.append(float(words[5]))
     halo_r500c.append(float(words[6]))
 
-filenos = [1.0005]
-
 omega_dict = OrderedDict()
-omega_dict["non_radiative"] = Simulation("Non-Radiative", filenos, fields, pngs, ["x", "y", "z"],
-                                         ["x","y","z"], halo_ids=halo_ids)
+omega_dict["non_radiative/1.0005"] = Simulation("Non-Radiative, z = 0", process_filenos(halo_ids, fmt="%05d"),
+                                                fields, pngs, ["x", "y", "z"], ["x", "y", "z"])
