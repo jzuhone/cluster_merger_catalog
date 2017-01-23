@@ -78,6 +78,11 @@ deploy:
 	sudo rm -rf /var/www/html/*
 	sudo cp -rf build/html/* /var/www/html/
 
+.PHONY: deploy_test
+deploy_test:
+	sudo rm -rf /Library/WebServer/Documents/*
+	sudo cp -rf build/html/* /Library/WebServer/Documents
+
 .PHONY: dirhtml
 dirhtml:
 	$(SPHINXBUILD) -b dirhtml $(ALLSPHINXOPTS) $(BUILDDIR)/dirhtml
