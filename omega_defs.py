@@ -31,7 +31,7 @@ pngs["proj"] = ["xray","temp","dens","szy"]
 pngs["SZ"] = ["tau","inty240"]
 #pngs["cxo_evt"] = ["counts"]
 
-omega_physics = ["non_radiative/1.0005"]
+omega_physics = [("non_radiative", "1.0005")]
 
 f = open("halolist_a1.0005.txt", "r")
 lines = f.readlines()
@@ -56,5 +56,5 @@ for line in lines[1:]:
     halo_r500c.append(float(words[6]))
 
 omega_dict = OrderedDict()
-omega_dict["non_radiative/1.0005"] = Simulation("Non-Radiative, z = 0", process_filenos(halo_ids, fmt="%05d"),
-                                                fields, pngs, ["x", "y", "z"], ["x", "y", "z"])
+omega_dict[("non_radiative", "1.0005")] = Simulation("Non-Radiative, z = 0", process_filenos(halo_ids, fmt="%05d"),
+                                                     fields, pngs, ["x", "y", "z"], ["x", "y", "z"])

@@ -10,6 +10,7 @@ from omega_defs import omega_dict, omega_info, omega_physics, omega_acks
 import argparse
 from collections import OrderedDict
 import jinja2
+from six import string_types
 
 GIRDER_API_URL = "https://girder.hub.yt/api/v1"
 
@@ -18,8 +19,9 @@ gc = girder_client.GirderClient(apiUrl=GIRDER_API_URL)
 def make_set_page(set_info, set_dict, set_physics, set_acks):
     set_physics_dict = OrderedDict([(k, (set_dict[k].name, set_dict[k].filenos)) 
                                     for k in set_physics])
-    if not os.path.exists('source/%s' % set_info['name']):
-        os.mkdir('source/%s' % set_info['name'])
+    set_path = os.path.join('source', set_info['name'])
+    if not os.path.exists(set_path):
+        os.mkdir(set_path)
     for sim, sim_info in set_dict.items():
         totsize = make_epoch_pages(set_info['name'], set_info['filespec'], sim, sim_info.name,
                                    sim_info.filenos, sim_info.sname_map, sim_info.lname_map,
@@ -28,8 +30,14 @@ def make_set_page(set_info, set_dict, set_physics, set_acks):
         make_sim_page(set_info['name'], set_info["filespec"], sim, sim_info.name,
                       sim_info.filenos, sim_info.sname_map, sim_info.lname_map,
                       set_info["cadence"], sim_info.proj_axes, totsize)
+    sim_pages = []
+    for key in set_dict:
+        if isinstance(key, tuple):
+            sim_pages.append(os.path.join(*key))
+        else:
+            sim_pages.append(key)
     context = {'name': set_info["name"],
-               'sim_pages': list(set_dict.keys()),
+               'sim_pages': sim_pages,
                'set_name': set_info["set_name"],
                'set_journals': set_info["set_journals"],
                'box_size': set_info["box_size"],
@@ -47,10 +55,15 @@ def make_set_page(set_info, set_dict, set_physics, set_acks):
 
 def make_sim_page(set_name, filespec, sim, sim_name, filenos, sname_map,
                   lname_map, cadence, proj_axes, totsize):
-    sim_dir = 'source/%s/%s' % (set_name, sim)
+    if len(sim) > 1:
+        sim_path = list(sim)
+        sim = sim[-1]
+    else:
+        sim_path = [sim]
+    sim_dir = os.path.join('source', set_name, *sim_path)
     outfile = sim_dir+"/index.rst"
     if not os.path.exists(outfile):
-        pbar = get_pbar("Setting up simulation page for "+sim, len(filenos))
+        pbar = get_pbar("Setting up simulation page for %s" % (sim_path,), len(filenos))
         epochs = OrderedDict()
         imgs = OrderedDict()
         for fileno in filenos:
@@ -64,7 +77,7 @@ def make_sim_page(set_name, filespec, sim, sim_name, filenos, sname_map,
             imgs[fileno] = pngs
             pbar.update()
         pbar.finish()
-        simfd = get_folder('/'.join([set_name, sim]))
+        simfd = get_folder('/'.join([set_name, *sim_path]))
         sim_dl = "https://girder.hub.yt/api/v1/folder/%s/download" % simfd["_id"]
         num_epochs = len(epochs.keys())
         context = {'sim_name': sim_name,
@@ -87,14 +100,19 @@ def make_template(outfile, template_file, context):
 
 def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
                      lname_map, unit_map, cadence, proj_axes, set_physics):
-    totsize = 0.0 
-    sim_dir = 'source/%s/%s' % (set_name, sim)
+    totsize = 0.0
+    pbar = get_pbar("Setting up epoch pages for simulation %s " % (sim,), len(filenos))
+    if len(sim) > 1:
+        sim_path = list(sim)
+        sim = sim[-1]
+    else:
+        sim_path = [sim]
+    sim_dir = os.path.join('source', set_name, *sim_path)
     if not os.path.exists(sim_dir):
         os.mkdir(sim_dir)
-    pbar = get_pbar("Setting up epoch pages for simulation "+sim, len(filenos))
     num_epochs = len(filenos)
     for noi, fileno in enumerate(filenos):
-        outfile = "source/%s/%s/%s.rst" % (set_name, sim, fileno)
+        outfile = os.path.join('source', set_name, *sim_path, "%s.rst" % fileno)
         setp = OrderedDict([(sim, val[0]) for sim, val in set_physics.items() 
                            if fileno in val[-1]])
         if not os.path.exists(outfile):
@@ -135,7 +153,7 @@ def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
             else:
                 next_link = "%s.html" % filenos[noi+1]
                 dis_next = ""
-            epochfd = get_folder('/'.join([set_name, sim, fileno]))
+            epochfd = get_folder('/'.join([set_name, *sim_path, fileno]))
             epoch_dl = "https://girder.hub.yt/api/v1/folder/%s/download" % epochfd["_id"]
             size = epochfd["size"]/(1024.*1024.*1024.)
             totsize += size
@@ -189,7 +207,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--test", action='store_true')
     args = parser.parse_args()
-    make_set_page(fid_info, fid_dict, fid_physics, fid_acks)
-    make_set_page(slosh_info, slosh_dict, slosh_physics, slosh_acks)
-    make_set_page(virgo_info, virgo_dict, virgo_physics, virgo_acks)
-    make_set_page(mag_info, mag_dict, mag_physics, mag_acks)
+    #make_set_page(fid_info, fid_dict, fid_physics, fid_acks)
+    #make_set_page(slosh_info, slosh_dict, slosh_physics, slosh_acks)
+    #make_set_page(virgo_info, virgo_dict, virgo_physics, virgo_acks)
+    #make_set_page(mag_info, mag_dict, mag_physics, mag_acks)
+    make_set_page(omega_info, omega_dict, omega_physics, omega_acks)
