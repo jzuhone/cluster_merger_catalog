@@ -13,7 +13,7 @@
    <a id="sim_dl" href="{{sim_dl}}">Download all of the files from this particular simulation here ({{size}} GB).</a>
    
    <h3>Click on one of the axes below to change the axis of projection.</h3>
-{% for a in axes %}
+{% for a in proj_axes %}
    <button type="button" class="btn btn-primary" id="button_{{a}}" onclick="change_axis('{{a}}')">{{a}}</button>
 {% endfor %}
 
