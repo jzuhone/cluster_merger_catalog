@@ -33,7 +33,7 @@ def make_set_page(set_info, set_dict, set_physics, set_acks):
     sim_pages = []
     for key in set_dict:
         if isinstance(key, tuple):
-            sim_pages.append(os.path.join(*key))
+            sim_pages.append('_'.join(key))
         else:
             sim_pages.append(key)
     context = {'name': set_info["name"],
@@ -60,7 +60,7 @@ def make_sim_page(set_name, filespec, sim, sim_name, filenos, sname_map,
         sim = sim[-1]
     else:
         sim_path = [sim]
-    sim_dir = os.path.join('source', set_name, *sim_path)
+    sim_dir = os.path.join('source', set_name, '_'.join(sim_path))
     outfile = sim_dir+"/index.rst"
     if not os.path.exists(outfile):
         pbar = get_pbar("Setting up simulation page for %s" % (sim_path,), len(filenos))
@@ -107,12 +107,12 @@ def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
         sim = sim[-1]
     else:
         sim_path = [sim]
-    sim_dir = os.path.join('source', set_name, *sim_path)
+    sim_dir = os.path.join('source', set_name, '_'.join(sim_path))
     if not os.path.exists(sim_dir):
         os.mkdir(sim_dir)
     num_epochs = len(filenos)
     for noi, fileno in enumerate(filenos):
-        outfile = os.path.join('source', set_name, *sim_path, "%s.rst" % fileno)
+        outfile = os.path.join('source', set_name, '_'.join(sim_path), "%s.rst" % fileno)
         setp = OrderedDict([(sim, val[0]) for sim, val in set_physics.items() 
                            if fileno in val[-1]])
         if not os.path.exists(outfile):
