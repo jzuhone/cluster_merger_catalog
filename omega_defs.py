@@ -57,4 +57,4 @@ for line in lines[1:]:
 
 omega_dict = OrderedDict()
 omega_dict[("non_radiative", "1.0005")] = Simulation("Non-Radiative, z = 0", process_filenos(halo_ids, fmt="%05d"),
-                                                     fields, pngs, ["x", "y", "z"], ["x", "y", "z"])
+                                                     fields, pngs, ["x", "y", "z"], ["x", "y", "z"], cat_type='halo')

@@ -14,15 +14,15 @@
     <script type="text/javascript" src="../../js9/js9.min.js"></script>
     <script type="text/javascript" src="../../js9/js9plugins.js"></script>
    
-{{sim_name|safe}}: {{timestr}}
+{{sim_name|safe}}: {{filestr}}
 =========================
 
 .. raw:: html
 
-   <a class="btn btn-primary" href="{{prev_link}}" role="button" {{dis_prev}}>&#10094; Previous Epoch</a>
-   <a class="btn btn-primary" href="{{next_link}}" role="button" {{dis_next}}>&#10095; Next Epoch</a>
+   <a class="btn btn-primary" href="{{prev_link}}" role="button" {{dis_prev}}>&#10094; Previous {{cat_type|capitalize}}</a>
+   <a class="btn btn-primary" href="{{next_link}}" role="button" {{dis_next}}>&#10095; Next {{cat_type|capitalize}}</a>
    <br><br>
-   <a id="epoch_dl" href="{{epoch_dl}}">Download all of the files from this particular epoch here ({{size}} GB).</a>
+   <a id="epoch_dl" href="{{epoch_dl}}">Download all of the files from this particular {{cat_type}} here ({{size}} GB).</a>
    <br><br>
 
 {% if set_physics|length > 0 %}
@@ -30,7 +30,7 @@ Explore similar simulations with different input physics at the same epoch using
 
 {% for key, value in set_physics.items() %}
 {% if key != sim %}
-.. |{{key}}_epoch_link| replace:: {{value|safe}}: {{timestr}}
+.. |{{key}}_epoch_link| replace:: {{value|safe}}: {{filestr}}
 .. _{{key}}_epoch_link: ../{{key}}/{{fileno}}.html
 {% endif %}
 {% endfor %}

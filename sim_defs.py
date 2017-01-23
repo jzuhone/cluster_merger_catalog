@@ -47,7 +47,7 @@ name_map["galaxies"] = {"ppv":("ppv","Galaxy Positions and Velocities")}
 
 class Simulation(object):
 
-    def __init__(self, sim_name, filenos, fields, pngs, proj_axes, slice_axes):
+    def __init__(self, sim_name, filenos, fields, pngs, proj_axes, slice_axes, cat_type='epoch'):
         self.name = sim_name
         self.filenos = filenos
         self.lname_map = {}
@@ -55,6 +55,7 @@ class Simulation(object):
         self.unit_map = {}
         self.slice_axes = slice_axes
         self.proj_axes = proj_axes
+        self.cat_type = cat_type
         for itype in pngs:
             self.lname_map[itype] = OrderedDict()
             self.sname_map[itype] = OrderedDict()

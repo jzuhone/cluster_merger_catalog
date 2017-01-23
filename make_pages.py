@@ -26,10 +26,10 @@ def make_set_page(set_info, set_dict, set_physics, set_acks):
         totsize = make_epoch_pages(set_info['name'], set_info['filespec'], sim, sim_info.name,
                                    sim_info.filenos, sim_info.sname_map, sim_info.lname_map,
                                    sim_info.unit_map, set_info["cadence"], sim_info.proj_axes,
-                                   set_physics_dict)
+                                   sim_info.slice_axes, set_physics_dict, sim_info.cat_type)
         make_sim_page(set_info['name'], set_info["filespec"], sim, sim_info.name,
                       sim_info.filenos, sim_info.sname_map, sim_info.lname_map,
-                      set_info["cadence"], sim_info.proj_axes, totsize)
+                      set_info["cadence"], sim_info.proj_axes, sim_info.cat_type, totsize)
     sim_pages = []
     for key in set_dict:
         if isinstance(key, tuple):
@@ -54,7 +54,7 @@ def make_set_page(set_info, set_dict, set_physics, set_acks):
     make_template('source/%s/index.rst' % set_info["name"], template_file, context)
 
 def make_sim_page(set_name, filespec, sim, sim_name, filenos, sname_map,
-                  lname_map, cadence, proj_axes, totsize):
+                  lname_map, cadence, proj_axes, cat_type, totsize):
     if len(sim) > 1:
         sim_path = list(sim)
         sim = sim[-1]
@@ -64,7 +64,7 @@ def make_sim_page(set_name, filespec, sim, sim_name, filenos, sname_map,
     outfile = sim_dir+"/index.rst"
     if not os.path.exists(outfile):
         pbar = get_pbar("Setting up simulation page for %s" % (sim_path,), len(filenos))
-        epochs = OrderedDict()
+        files = OrderedDict()
         imgs = OrderedDict()
         for fileno in filenos:
             pngs = {}
@@ -73,20 +73,24 @@ def make_sim_page(set_name, filespec, sim, sim_name, filenos, sname_map,
                 for fd, field in sname_map["proj"].items():
                     filename = filespec % (sim, fileno) + "_proj_%s_%s" % (ax, field)
                     pngs[ax][fd] = get_file(filename, "proj")
-            epochs[fileno] = "t = %4.2f Gyr" % (float(fileno)*cadence)
+            if cat_type == "epoch":
+                files[fileno] = "t = %4.2f Gyr" % (float(fileno)*cadence)
+            elif cat_type == "halo":
+                files[fileno] = "Halo ID %d" % (int(fileno))
             imgs[fileno] = pngs
             pbar.update()
         pbar.finish()
         simfd = get_folder('/'.join([set_name, *sim_path]))
         sim_dl = "https://girder.hub.yt/api/v1/folder/%s/download" % simfd["_id"]
-        num_epochs = len(epochs.keys())
+        num_fids = len(files.keys())
         context = {'sim_name': sim_name,
                    'sim_dl': sim_dl,
                    'size': "%.2f" % totsize,
                    'proj_axes': proj_axes,
-                   'epochs': epochs,
+                   'cat_type': "epoch" if cat_type == "epoch" else "halo ID",
+                   'files': files,
                    'imgs': imgs,
-                   'num_epochs': num_epochs-1,
+                   'num_fids': num_fids-1,
                    'filenos': filenos,
                    'names': lname_map["proj"]}
         template_file = 'templates/sim_template.rst'
@@ -99,7 +103,8 @@ def make_template(outfile, template_file, context):
     open(outfile, 'w').write(template.render(**context))
 
 def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
-                     lname_map, unit_map, cadence, proj_axes, set_physics):
+                     lname_map, unit_map, cadence, proj_axes, slice_axes,
+                     set_physics, cat_type):
     totsize = 0.0
     pbar = get_pbar("Setting up epoch pages for simulation %s " % (sim,), len(filenos))
     if len(sim) > 1:
@@ -140,7 +145,10 @@ def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
                         imgs[link] = get_file(imgfn, itype)
                     data[itype][ax]['pngs'] = imgs
             template_file = 'templates/epoch_template.rst'
-            timestr = "t = %4.2f Gyr" % (float(fileno)*cadence)
+            if cat_type == "epoch":
+                filestr = "t = %4.2f Gyr" % (float(fileno)*cadence)
+            elif cat_type == "halo":
+                filestr = "Halo ID %d" % (int(fileno))
             if noi == 0:
                 prev_link = ""
                 dis_prev = "disabled"
@@ -164,7 +172,7 @@ def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
                        "size": "%.2f" % size, 
                        "fileno": fileno,
                        "sim_name": sim_name,
-                       "timestr": timestr,
+                       "filestr": filestr,
                        "slice_names": lname_map["slice"],
                        "proj_names": lname_map["proj"],
                        "sz_names": lname_map["SZ"],
@@ -176,7 +184,8 @@ def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
                        "next_link": next_link,
                        "dis_prev": dis_prev,
                        "dis_next": dis_next,
-                       "hub_folder": hub_folder, 
+                       "hub_folder": hub_folder,
+                       "cat_type": "epoch" if cat_type == "epoch" else "halo ID",
                        "set_physics": setp if sim in setp else {}}
             make_template(outfile, template_file, context)
         pbar.update()

@@ -17,20 +17,20 @@
    <button type="button" class="btn btn-primary" id="button_{{a}}" onclick="change_axis('{{a}}')">{{a}}</button>
 {% endfor %}
 
-   <h3>Use the slider to change the epoch, and click on the images to access the files.</h3>
+   <h3>Use the slider to change the {{cat_type}}, and click on the images to access the files.</h3>
    <br>
 
    <span style="margin-right: 20px;">
    <button type="button" id="left_button" class="btn btn-primary btn-sm">&#10094;</button></span>
-   <input id="epoch" data-slider-id='epochSlider' type="text" data-slider-min="0"
-    data-slider-max="{{num_epochs}}" data-slider-step="1" data-slider-value="0"
+   <input id="fid" data-slider-id='fidSlider' type="text" data-slider-min="0"
+    data-slider-max="{{num_fids}}" data-slider-step="1" data-slider-value="0"
     data-slider-tooltip="hide"/>
    <span style="margin-left: 20px;">
    <button type="button" id="right_button" class="btn btn-primary btn-sm">&#10095;</button></span>  
    <br><br>
 
-   <a id="epoch_link">
-   <h2 id="epoch_header"></h2>
+   <a id="fid_link">
+   <h2 id="fid_header"></h2>
    {% for key, name in names.items() %}
    <figure style="display: inline-block;">
    <figcaption><h4>{{name}}</h4></figcaption>
@@ -44,7 +44,7 @@
    var axis = "z";
    document.getElementById("button_z").disabled = true;
    
-   var num_epochs = {{num_epochs}};
+   var num_fids = {{num_fids}};
    var names = [
    {% for short_name in names %}
        "{{short_name}}",
@@ -71,30 +71,30 @@
    {% endfor %}
    };
    
-   var epochs = {
-   {% for fileno, epoch in epochs.items() %}
-       "{{fileno}}": "{{epoch}}",
+   var fids = {
+   {% for fileno, fid in files.items() %}
+       "{{fileno}}": "{{fid}}",
    {% endfor %}
    };
    
-   var epochSlider = $("#epoch").slider();
-   $("#epoch").on("slide", function(slideEvt) {
+   var fidSlider = $("#fid").slider();
+   $("#fid").on("slide", function(slideEvt) {
        set_links(slideEvt.value);
    });
 
    $("#left_button").click(function() {
-       var value = epochSlider.slider("getValue");
+       var value = fidSlider.slider("getValue");
        if (value > 0) {
            set_links(value-1);
-           epochSlider.slider("setValue", value-1);
+           fidSlider.slider("setValue", value-1);
        }
    });
 
    $("#right_button").click(function() {
-       var value = epochSlider.slider("getValue");
-       if (value < num_epochs) {
+       var value = fidSlider.slider("getValue");
+       if (value < num_fids) {
            set_links(value+1);
-           epochSlider.slider("setValue", value+1);
+           fidSlider.slider("setValue", value+1);
        }	   
    });
 	     
@@ -106,19 +106,19 @@
        document.getElementById("button_"+axis).disabled = false;
        document.getElementById("button_"+ax).disabled = true;
        axis = ax;
-       var fileno = filenos[epochSlider.slider("getValue")];
-       var epoch_text = epochs[fileno]+", "+axis+" Projection";
-       document.getElementById("epoch_header").innerText = epoch_text;
-       document.getElementById("epoch_header").textContent = epoch_text;		 
+       var fileno = filenos[fidSlider.slider("getValue")];
+       var fid_text = fids[fileno]+", "+axis+" Projection";
+       document.getElementById("fid_header").innerText = fid_text;
+       document.getElementById("fid_header").textContent = fid_text;
        set_images(fileno);
    }
    
    function set_links(num) {
        var fileno = filenos[num];
-       var epoch_text = epochs[fileno]+", "+axis+" Projection";
-       document.getElementById("epoch_header").innerText = epoch_text;
-       document.getElementById("epoch_header").textContent = epoch_text;
-       document.getElementById("epoch_link").href = fileno+".html";
+       var fid_text = fids[fileno]+", "+axis+" Projection";
+       document.getElementById("fid_header").innerText = fid_text;
+       document.getElementById("fid_header").textContent = fid_text;
+       document.getElementById("fid_link").href = fileno+".html";
        set_images(fileno);
    }
 
