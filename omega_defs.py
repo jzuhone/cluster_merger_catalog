@@ -29,7 +29,7 @@ pngs = {}
 pngs["slice"] = ["dens","temp"]
 pngs["proj"] = ["xray","temp","dens","szy"]
 pngs["SZ"] = ["tau","inty240"]
-#pngs["cxo_evt"] = ["counts"]
+pngs["cxo_evt"] = ["counts"]
 
 omega_physics = [("non_radiative", "1.0005")]
 
