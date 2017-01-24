@@ -1,6 +1,7 @@
 from collections import OrderedDict
 from sim_defs import Simulation
 from utils import process_filenos
+import numpy as np
 
 omega_notes = ["For the non-radiative simulation, there is no metallicity field; hence for computing X-ray " +
                "emissivities a constant metallicity of :math:`Z = 0.3~Z_\odot` is assumed."]
@@ -38,23 +39,22 @@ lines = f.readlines()
 f.close()
 
 halo_ids = []
-halo_mvir = []
-halo_m200c = []
-halo_m500c = []
-halo_rvir = []
-halo_r200c = []
-halo_r500c = []
+halo_info = []
 
 for line in lines[1:]:
+    halo_dict = OrderedDict()
     words = line.strip().split()
     halo_ids.append(int(words[0]))
-    halo_mvir.append(float(words[1]))
-    halo_m200c.append(float(words[2]))
-    halo_m500c.append(float(words[3]))
-    halo_rvir.append(float(words[4]))
-    halo_r200c.append(float(words[5]))
-    halo_r500c.append(float(words[6]))
-
+    masses = np.modf(np.log10(np.array(words[1:4]).astype("float")))
+    halo_dict[":math:`M_{vir}`"] = ":math:`\\rm{%5.3f \\times 10^{%d}~M_\odot}`" % (10**masses[0][0], masses[1][0])
+    halo_dict[":math:`M_{200c}`"] = ":math:`\\rm{%5.3f \\times 10^{%d}~M_\odot}`" % (10**masses[0][1], masses[1][1])
+    halo_dict[":math:`M_{500c}`"] = ":math:`\\rm{%5.3f \\times 10^{%d}~M_\odot}`" % (10**masses[0][2], masses[1][2])
+    halo_dict[":math:`r_{vir}`"] = ":math:`\\rm{%s kpc}`" % words[4]
+    halo_dict[":math:`r_{200c}`"] = ":math:`\\rm{%s kpc}`" % words[5]
+    halo_dict[":math:`r_{500c}`"] = ":math:`\\rm{%s kpc}`" % words[6]
+    halo_info.append(halo_dict)
+    
 omega_dict = OrderedDict()
 omega_dict[("non_radiative", "1.0005")] = Simulation("Non-Radiative, z = 0", process_filenos(halo_ids, fmt="%05d"),
-                                                     fields, pngs, ["x", "y", "z"], ["x", "y", "z"], cat_type='halo')
+                                                     fields, pngs, ["x", "y", "z"], ["x", "y", "z"], cat_type='halo',
+                                                     halo_info=halo_info)

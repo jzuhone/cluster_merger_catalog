@@ -53,8 +53,27 @@ To make the best use out of this page:
    Typically, images shown here are zoomed-in; the width of the images in the FITS files are usually
    larger, spanning the original simulation domain or a large portion of it.
 
+{% if hinfo is not none %}
+   
 .. raw:: html
- 
+
+   <h3>Halo Information:</h3>
+   
+{% for key, val in hinfo.items() %}
+* {{key}}: {{val|safe}}
+{% endfor %}
+
+{% endif %}
+		     
+.. raw:: html
+   
+   {% if slice_axes %}
+   <h3>Change the axis for the slices and projections:</h3>
+   <select id="proj_axis">
+   </select>
+   <br>
+   {% endif %}
+	    
    <h2>Slices</h2>
 
 The slice FITS file contains the following fields:
@@ -78,11 +97,13 @@ The slice FITS file contains the following fields:
 
     <h2>Projected Quantities</h2>
 
-    Change the projection direction:
+    {% if not slice_axes %}
+    <h3>Change the projection direction:</h3>
     <select id="proj_axis">
     </select>
     <br>
-
+    {% endif %}
+    
     <h3>Projections</h3>
 
 The projection FITS file contains the following fields:
@@ -249,7 +270,7 @@ The S-Z FITS file contains the following fields:
                 var new_ax = document.createElement("option");
                 new_ax.text = axes[i];
                 axisList.options.add(new_ax, i);
-            }
+	    }
             $('#proj_axis').val("z");
 
         });
@@ -293,7 +314,11 @@ The S-Z FITS file contains the following fields:
          
         var changeAxis = function () { 
             var axis = this.options[this.selectedIndex].value;
-            show_files('proj', axis);
+	    {% if slice_axes %}
+	    show_files('slice', axis);
+	    fits_link('slice', axis);
+	    {% endif %}
+	    show_files('proj', axis);
             fits_link('proj', axis);
             {% if sz_fields|length > 0 %}
             show_files('SZ', axis);

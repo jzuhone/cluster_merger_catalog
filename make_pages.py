@@ -26,7 +26,8 @@ def make_set_page(set_info, set_dict, set_physics, set_acks):
         totsize = make_epoch_pages(set_info['name'], set_info['filespec'], sim, sim_info.name,
                                    sim_info.filenos, sim_info.sname_map, sim_info.lname_map,
                                    sim_info.unit_map, set_info["cadence"], sim_info.proj_axes,
-                                   sim_info.slice_axes, set_physics_dict, sim_info.cat_type)
+                                   sim_info.slice_axes, set_physics_dict, sim_info.cat_type,
+                                   sim_info.halo_info)
         make_sim_page(set_info['name'], set_info["filespec"], sim, sim_info.name,
                       sim_info.filenos, sim_info.sname_map, sim_info.lname_map,
                       set_info["cadence"], sim_info.proj_axes, sim_info.cat_type, totsize)
@@ -55,7 +56,7 @@ def make_set_page(set_info, set_dict, set_physics, set_acks):
 
 def make_sim_page(set_name, filespec, sim, sim_name, filenos, sname_map,
                   lname_map, cadence, proj_axes, cat_type, totsize):
-    if len(sim) > 1:
+    if isinstance(sim, tuple):
         sim_path = list(sim)
         sim = sim[-1]
     else:
@@ -87,7 +88,7 @@ def make_sim_page(set_name, filespec, sim, sim_name, filenos, sname_map,
                    'sim_dl': sim_dl,
                    'size': "%.2f" % totsize,
                    'proj_axes': proj_axes,
-                   'cat_type': "epoch" if cat_type == "epoch" else "halo ID",
+                   'cat_type': "epoch" if cat_type == "epoch" else "halo",
                    'files': files,
                    'imgs': imgs,
                    'num_fids': num_fids-1,
@@ -104,10 +105,10 @@ def make_template(outfile, template_file, context):
 
 def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
                      lname_map, unit_map, cadence, proj_axes, slice_axes,
-                     set_physics, cat_type):
+                     set_physics, cat_type, halo_info):
     totsize = 0.0
     pbar = get_pbar("Setting up epoch pages for simulation %s " % (sim,), len(filenos))
-    if len(sim) > 1:
+    if isinstance(sim, tuple):
         sim_path = list(sim)
         sim = sim[-1]
     else:
@@ -125,7 +126,7 @@ def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
             for itype in sname_map.keys():
                 data[itype] = OrderedDict()
                 for ax in proj_axes:
-                    if itype == "slice" and ax != "z":
+                    if itype == "slice" and ax not in slice_axes:
                         continue
                     data[itype][ax] = {}
                     if itype == "galaxies":
@@ -166,6 +167,10 @@ def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
             size = epochfd["size"]/(1024.*1024.*1024.)
             totsize += size
             hub_folder = "https://girder.hub.yt/#collection/57c866a07f2483000181aefa/folder/"+epochfd["_id"]
+            if halo_info is not None:
+                hinfo = halo_info[noi]
+            else:
+                hinfo = None
             context = {"data": data,
                        "sim": sim,
                        "epoch_dl": epoch_dl,
@@ -173,6 +178,7 @@ def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
                        "fileno": fileno,
                        "sim_name": sim_name,
                        "filestr": filestr,
+                       "slice_axes": len(slice_axes) > 1,
                        "slice_names": lname_map["slice"],
                        "proj_names": lname_map["proj"],
                        "sz_names": lname_map["SZ"],
@@ -185,7 +191,8 @@ def make_epoch_pages(set_name, filespec, sim, sim_name, filenos, sname_map,
                        "dis_prev": dis_prev,
                        "dis_next": dis_next,
                        "hub_folder": hub_folder,
-                       "cat_type": "epoch" if cat_type == "epoch" else "halo ID",
+                       "hinfo": hinfo, 
+                       "cat_type": "epoch" if cat_type == "epoch" else "halo",
                        "set_physics": setp if sim in setp else {}}
             make_template(outfile, template_file, context)
         pbar.update()
@@ -216,8 +223,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--test", action='store_true')
     args = parser.parse_args()
-    #make_set_page(fid_info, fid_dict, fid_physics, fid_acks)
-    #make_set_page(slosh_info, slosh_dict, slosh_physics, slosh_acks)
-    #make_set_page(virgo_info, virgo_dict, virgo_physics, virgo_acks)
-    #make_set_page(mag_info, mag_dict, mag_physics, mag_acks)
+    make_set_page(fid_info, fid_dict, fid_physics, fid_acks)
+    make_set_page(slosh_info, slosh_dict, slosh_physics, slosh_acks)
+    make_set_page(virgo_info, virgo_dict, virgo_physics, virgo_acks)
+    make_set_page(mag_info, mag_dict, mag_physics, mag_acks)
     make_set_page(omega_info, omega_dict, omega_physics, omega_acks)
