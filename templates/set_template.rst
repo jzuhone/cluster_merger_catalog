@@ -22,7 +22,9 @@ Set Characteristics
 * Simulation type: {{sim_type}}
 * Box size: *L* = {{box_size}}
 * Finest cell size: :math:`\Delta{x}_{\rm min}` = {{cell_size}}
+{% if primary_mass|length > 0 %}
 * Primary cluster mass: :math:`{{primary_mass}}`
+{% endif %}
 
 Notes
 -----
@@ -44,9 +46,15 @@ Cosmology
 {% endif %}
 
 * :math:`\Lambda{\rm CDM}` cosmology
-* :math:`H_0 = 71~{\rm km~s^{-1}~Mpc^{-1}}`
-* :math:`\Omega_m = 0.27`
-* :math:`\Omega_\Lambda = 0.73`	  
+* :math:`H_0 = {{cosmo.hubble}}~{\rm km~s^{-1}~Mpc^{-1}}`
+* :math:`\Omega_m = {{cosmo.omega_m}}`
+* :math:`\Omega_\Lambda = {{cosmo.omega_l}}`
+{% if "omega_b" in cosmo %}
+* :math:`\Omega_b = {{cosmo.omega_b}}`
+{% endif %}
+{% if "sigma8" in cosmo %}
+* :math:`\sigma_8 = {{cosmo.sigma8}}`
+{% endif %}  
 {% if cosmo_warning %}
 * :math:`z = {{redshift}}` for all epochs
 {% endif %}

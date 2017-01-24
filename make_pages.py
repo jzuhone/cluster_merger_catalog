@@ -49,6 +49,7 @@ def make_set_page(set_info, set_dict, set_physics, set_acks):
                'sim_notes': set_info['sim_notes'],
                'notes': set_info['notes'],
                'cosmo_warning': set_info['cosmo_warning'],
+               'cosmo': sim_info.cosmo,
                'redshift': set_info['redshift'],
                'acks': set_acks}
     template_file = 'templates/set_template.rst'

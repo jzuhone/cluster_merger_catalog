@@ -4,7 +4,8 @@ from utils import process_filenos
 import numpy as np
 
 omega_notes = ["For the non-radiative simulation, there is no metallicity field; hence for computing X-ray " +
-               "emissivities a constant metallicity of :math:`Z = 0.3~Z_\odot` is assumed."]
+               "emissivities a constant metallicity of :math:`Z = 0.3~Z_\odot` is assumed.",
+               "All images are centered on the cluster potential minimum."]
 
 omega_acks = ""
 
@@ -57,4 +58,4 @@ for line in lines[1:]:
 omega_dict = OrderedDict()
 omega_dict[("non_radiative", "1.0005")] = Simulation("Non-Radiative, z = 0", process_filenos(halo_ids, fmt="%05d"),
                                                      fields, pngs, ["x", "y", "z"], ["x", "y", "z"], cat_type='halo',
-                                                     halo_info=halo_info)
+                                                     halo_info=halo_info, hubble=70, omega_b=0.0469, sigma8=0.82)
