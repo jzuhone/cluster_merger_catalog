@@ -11,7 +11,7 @@ fid_acks = "The original set of simulations was performed using the computationa
 
 fid_info = {"name": "fiducial", 
             "cadence": 0.02,
-            "filespec": "fiducial_%s_hdf5_plt_cnt_%04d",
+            "filespec": "fiducial_%s_hdf5_plt_cnt_%s",
             "set_name": "A Parameter Space Exploration of Galaxy Cluster Mergers",
             "set_journals": [("ZuHone, J. A. 2011, ApJ, 728, 54",
                               "http://adsabs.harvard.edu/abs/2011ApJ...728...54Z")],

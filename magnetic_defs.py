@@ -18,7 +18,7 @@ mag_acks = "This set of simulations was performed using the Pleiades supercomput
 
 mag_info = {"name": "sloshing_magnetic",
             "cadence": 0.01,
-            "filespec": "AM06_%s_hdf5_plt_cnt_%04d",
+            "filespec": "AM06_%s_hdf5_plt_cnt_%s",
             "set_name": "Sloshing of the Magnetized Cool Gas in the Cores of Galaxy Clusters",
             "set_journals": [("ZuHone, J. A., Markevitch, M., & Lee, D. 2011, ApJ, 743, 16",
                               "http://adsabs.harvard.edu/abs/2011ApJ...743...16Z")],
