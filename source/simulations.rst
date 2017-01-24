@@ -27,4 +27,7 @@ Hydrodynamic Binary Mergers with Rigid Gravitational Potentials
 Cluster Mergers in Cosmological Simulations
 -------------------------------------------
 
-Coming soon! Watch this space.
+.. toctree::
+   :maxdepth: 1
+
+   omega500/index
