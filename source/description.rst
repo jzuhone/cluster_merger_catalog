@@ -9,7 +9,7 @@ catalog.
 General Simulation Physics and Algorithms
 -----------------------------------------
 
-The galaxy cluster merger simulation data presented here comes from state-of-the-art N-body and hydrodynamics
+The galaxy cluster simulation data presented here comes from state-of-the-art N-body and hydrodynamics
 codes such as `FLASH <http://flash.uchicago.edu>`_ and `Athena <https://trac.princeton.edu/Athena/>`_. The
 exact physics and algorithms employed by the simulations vary, but in general:
 
@@ -75,8 +75,8 @@ potentials representing the dark matter halos which are evolved on a mutual orbi
 a) computational speed is desired and b) the relevant characteristics of the simulations do not depend on accurately
 modeling the effects of dynamical friction, mass loss, and tidal forces on the dark matter.
 
-Cluster Mergers in Cosmological Simulations
-+++++++++++++++++++++++++++++++++++++++++++
+Clusters in Cosmological Simulations
+++++++++++++++++++++++++++++++++++++
 
 Coming soon! Watch this space.
 

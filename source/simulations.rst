@@ -24,8 +24,8 @@ Hydrodynamic Binary Mergers with Rigid Gravitational Potentials
    virgo/index
    sloshing_magnetic/index
 
-Cluster Mergers in Cosmological Simulations
--------------------------------------------
+Clusters in Cosmological Simulations
+------------------------------------
 
 .. toctree::
    :maxdepth: 1
