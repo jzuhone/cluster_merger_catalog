@@ -22,10 +22,11 @@
 
 \title{The Galaxy Cluster Merger Catalog: An Online Repository of Mock Observations from Simulated Galaxy Cluster Mergers}
 
-\author{J. A. ZuHone\altaffilmark{1}, K. Kowalik\altaffilmark{2}}
+\author{J. A. ZuHone\altaffilmark{1}, K. Kowalik\altaffilmark{2}, E. \"{O}hman\altaffilmark{3}, E. Lau\altaffilmark{3}}
 
 \altaffiltext{1}{Harvard-Smithsonian Center for Astrophysics, 60 Garden St., Cambridge, MA 02138, USA}
 \altaffiltext{2}{National Center for Supercomputing Applications, University of Illinois at Urbana-Champaign, 1205 W. Clark St., MC-257, Urbana, IL 61801, USA}
+\altaffiltext{3}{Department of Physics, Yale University, New Haven, CT 06520, USA}
 
 \begin{abstract}
 We present the first release of the ``Galaxy Cluster Merger Catalog''. This catalog provides an extensive suite of mock observations and related data for N-body and hydrodynamical simulations of galaxy cluster mergers. These mock observations consist of projections of a number of important observable quantities in several different wavebands, for the entire evolution of each simulation as well as along different lines of sight through the three-dimensional simulation domain. The web interface to the catalog consists of easily browseable images over epoch and projection direction, as well as download links for the raw data and a JS9 interface for interactive data exploration. All of the data products are provided in the standard FITS file format, in image and table form. Data is being stored on the yt Hub~(\url{http://hub.yt}), which allows for remote access and analysis using a Jupyter notebook server. Future versions of the catalog will include simulations from a number of research groups and a variety of research topics related to the study of interactions of galaxy clusters with each other and with their member galaxies. The catalog is located at \url{http://gcmc.hub.yt}.
@@ -49,7 +50,9 @@ We seek to address these issues by releasing the ``Galaxy Cluster Merger Catalog
 \subsection{The Simulations}
 
 At the time of writing, the catalog contains data products from idealized binary cluster merger
-simulations. In the future, the catalog will include data products from a variety of galaxy cluster merger and related galaxy cluster simulations, including those from cosmological simulations and simulations of interactions between clusters and their member galaxies. The types of data products are likely to expand and diversify with the inclusion of new simulations.
+simulations. {\bf The original works from which these simulations are drawn, in addition to some details of the simulations, are listed in Table \ref{tab:sim_table}.} The types of data products listed here are appropriate for such simulations. In the future, the catalog will include data products from a variety of cluster merger and related simulations, including those from cosmological simulations and simulations of interactions between clusters and their member galaxies. The types of data products are likely to expand and diversify with the inclusion of new simulations. \textbf{For more discussion of future directions for the catalog and long-term issues, see Section \ref{sec:future}}.
+
+\input{tab1.tex}
 
 The galaxy cluster merger simulation data in the catalog comes from state-of-the-art N-body and hydrodynamics codes such as FLASH \citep{dub09} and Athena \citep{sto08}. The exact physics and algorithms employed by the simulations vary, but in general:
 
@@ -80,13 +83,9 @@ JS9 (\url{http://js9.si.edu}) is a browser-based implementation of SAOImage DS9 
 
 \subsubsection{The yt Hub}\label{sec:yt_hub}
 The catalog data is stored on the \code{yt Hub}\footnote{\url{https://hub.yt/}}, a conglomerate of various open source
-services creating an environment that allows one to collect, remotely analyze, share and publish scientific datasets. At
-its core, the \code{yt Hub} uses \code{Girder}\footnote{\url{https://girder.readthedocs.io}}, a data management platform
-that allows to transparently store, serve, and proxy data from heterogeneous backend storage engines through a single
+services \textbf{hosted at the National Center for Supercomputing Applications (NCSA)}, creating an environment that allows one to collect, remotely analyze, share and publish scientific datasets. At its core, the \code{yt Hub} uses \code{Girder}\footnote{\url{https://girder.readthedocs.io}}, a data management platform that allows to transparently store, serve, and proxy data from heterogeneous backend storage engines through a single
 web API. Data served by \code{Girder} can easily be gathered into dynamical hierarchies such as collections, folders and
-items.  This data management system is integrated with
-\code{JupyterHub}\footnote{\url{https://jupyterhub.readthedocs.io/}} and allows authenticated users to spawn Jupyter
-notebook servers with direct access to the data that is provided as a dynamically composed FUSE filesystem. Any Jupyter
+items. This data management system is integrated with \code{JupyterHub}\footnote{\url{https://jupyterhub.readthedocs.io/}} and allows authenticated users to spawn Jupyter notebook servers with direct access to the data that is provided as a dynamically composed FUSE filesystem. Any Jupyter
 notebook created in that environment during an interactive session is safely stored back in the \code{Girder} instance,
 preserving the user's analysis workflow and increasing research reproducibility. In the future, we plan to have this
 notebook capability integrated directly with the catalog website.
@@ -165,34 +164,6 @@ For a number of the simulations, fields representing the mass fraction of gas fr
 
 \subsubsection{Projections}\label{sec:projections}
 
-\begin{figure*}
-\begin{center}
-\includegraphics[width=0.9\textwidth]{set_page.eps}
-\caption{An example ``set page''. Links are provided to original journal articles, various simulation parameters and other information are tabulated, and links to the data for the individual simulations appear here. This particular page is linked at \url{http://gcmc.hub.yt/virgo/index.html}.}
-\end{center}
-\end{figure*}
-
-\begin{figure*}
-\begin{center}
-\includegraphics[width=0.9\textwidth]{sim_page.eps}
-\caption{An example ``simulation page''. Slider bars allow exploration of different epochs, and buttons near the top choose different projection axes. The figures link to the page for the files for the corresponding epoch of the simulation. This particular page is linked at \url{http://gcmc.hub.yt/virgo/novisc/index.html}.}
-\end{center}
-\end{figure*}
-
-\begin{figure*}
-\begin{center}
-\includegraphics[width=0.9\textwidth]{epoch_page.eps}
-\caption{An example ``epoch page''. Links are provided to similar simulations with different physics at the same epoch at the top of the page. For each data type, figures of some of the fields are shown and links to download the data or display in JS9 are provided. This particular page is linked at \url{http://gcmc.hub.yt/virgo/novisc/0046.html}.}
-\end{center}
-\end{figure*}
-
-\begin{figure*}
-\begin{center}
-\includegraphics[width=0.9\textwidth]{epoch_page2.eps}
-\caption{The bottom of an ``epoch page'', showing the simulated X-ray event file, the link to the Jupyter notebook directions, and the JS9 interface with a projection file loaded, and a circular region selected. This particular page is linked at \url{http://gcmc.hub.yt/virgo/novisc/0046.html}.}
-\end{center}
-\end{figure*}
-
 Projections are taken along several lines of sight. Currently, these include the three major axes of the simulation domain: $x$, $y$, and $z$. In the future, projections along off-axis directions will be added. For distance and redshift-dependent quantities, each simulation employs either the cosmology and redshift from the simulation, or for simulations without such information, a redshift and a $\Lambda{\rm CDM}$ cosmology is assumed with the following parameters: $H_0 = 71~{\rm km~s^{-1}~Mpc^{-1}},$ $\Omega_m = 0.27$, and $\Omega_\Lambda = 0.73$. The projection files each have a subset of the following fields contained within different HDUs with the following extension names:
 
 \begin{itemize}
@@ -237,6 +208,34 @@ The event files are designed to provide approximate representations of real obse
 
 \subsubsection{Mock Galaxy Catalogs}\label{sec:galaxies}
 
+\begin{figure*}
+\begin{center}
+\includegraphics[width=0.9\textwidth]{set_page.eps}
+\caption{An example ``set page''. Links are provided to original journal articles, various simulation parameters and other information are tabulated, and links to the data for the individual simulations appear here. This particular page is linked at \url{http://gcmc.hub.yt/virgo/index.html}.}
+\end{center}
+\end{figure*}
+
+\begin{figure*}
+\begin{center}
+\includegraphics[width=0.9\textwidth]{sim_page.eps}
+\caption{An example ``simulation page''. Slider bars allow exploration of different epochs, and buttons near the top choose different projection axes. The figures link to the page for the files for the corresponding epoch of the simulation. This particular page is linked at \url{http://gcmc.hub.yt/virgo/novisc/index.html}.}
+\end{center}
+\end{figure*}
+
+\begin{figure*}
+\begin{center}
+\includegraphics[width=0.9\textwidth]{epoch_page.eps}
+\caption{An example ``epoch page''. Links are provided to similar simulations with different physics at the same epoch at the top of the page. For each data type, figures of some of the fields are shown and links to download the data or display in JS9 are provided. This particular page is linked at \url{http://gcmc.hub.yt/virgo/novisc/0046.html}.}
+\end{center}
+\end{figure*}
+
+\begin{figure*}
+\begin{center}
+\includegraphics[width=0.9\textwidth]{epoch_page2.eps}
+\caption{The bottom of an ``epoch page'', showing the simulated X-ray event file, the link to the Jupyter notebook directions, and the JS9 interface with a projection file loaded, and a circular region selected. This particular page is linked at \url{http://gcmc.hub.yt/virgo/novisc/0046.html}.}
+\end{center}
+\end{figure*}
+
 A number of the simulations have been run using an N-body code to represent the collisionless dark matter component of the cluster via massive particles. A number of these dark matter particles can be sampled from the simulation to represent mock ``galaxies'', which can also be treated as a collisionless component. For some of these simulations, we have created mock galaxy catalogs.
 
 A number of particles are drawn from each halo within a radius of $r_{200}$, determined by the mass-richness relation of \citet{for14}, from the intitial simulation epoch, which are the ``galaxies''. The same galaxy particles are tracked for the rest of the epochs in the simulation. The FITS binary tables for the galaxies include sky positions, line-of-sight velocities, an identifier for which halo each galaxy originally belonged to, and unique IDs for every galaxy. These particles provide a way of measuring the kinematics of the merger from the perspective of the collisionless material with a statistical significance that is comparable to that obtained from measured redshifts of member galaxies in real clusters. No redshift errors have been applied to the galaxy velocities, which is an exercise left to the end-user.
@@ -245,7 +244,7 @@ A ds9 region file containing point regions corresponding to the galaxy positions
 
 \subsection{The Interface}\label{sec:interface}
 
-The web interface to the catalog is designed to provide straightforward interactive browsing of a given simulation's data across its many epochs and between several projection axes. This facilitates comparisons between the mock observations and actual observations of clusters so that a potential analog of a particular system may be found easily.
+The web interface to the catalog is designed to provide straightforward interactive browsing of a given simulation's data across its many epochs and between several projection axes. This facilitates comparisons between the mock observations and actual observations of clusters so that a potential analog of a particular system may be found easily. \textbf{Like the data itself, the web interface is also hosted at NCSA.}
 
 The portion of the website containing the simulation data is structured using the following hierarchy of pages, described in the next few subsections.
 
@@ -265,6 +264,28 @@ Any given link on the simulation page leads to an ``epoch page'' where images fr
 
 A link is provided on each epoch page to the location of the files on the \code{yt Hub}, so that one may start Jupyter notebooks with access to the data. Each epoch page also contains a JS9 application for opening the various FITS files associated with that particular epoch. A drop-down menu is provided for navigating between the various fields in each FITS file.
 
+\section{Future Directions}\label{sec:future}
+
+{\bf There are a number of extensions to the catalog and its capabilities that we envision for the future, which we briefly discuss in this section.}
+
+\subsection{Adding New Simulations}\label{sec:new_sims}
+
+{\bf The catalog is designed to be easily expanded to include new simulation data products related to galaxy cluster mergers or the more general arena of galaxy clusters, groups, or galaxies in the cosmological context. Indeed, work is already underway to incorporate simulated clusters from a cosmological simulation into the catalog, from the simulations of \citet{nel14}. The presentation of these clusters will necessarily be somewhat different from the binary merger simulations, since there are a much larger number of clusters in the cosmological volume, and each of these have evolved over time. For this reason, the pages associated with this simulation data will be divided up by cluster ID as well as epoch.
+
+One way to encourage the inclusion of new simulations in the catalog is to provide Python scripts which may be used to generate the data products, including FITS image and table files and PNG images. A future version of the catalog will include a suite of such scripts which will be publicly available for this purpose, and directions for how to upload the resultant products to the \code{yt Hub}.} 
+
+\subsection{Adding New Data Products}\label{sec:new_data}
+
+{\bf The current data products include slices and projections of various physical quantities, but they have a distinct tilt towards X-ray observations of clusters due to the focus of the simulations included so far on the physics of the ICM. Many other simulations of clusters available in the literature have additional physics included in the simulation, such as star formation, active galactic nuclei, and relativistic particle acceleration. These physical processes produce observations in other wavebands, such as the optical, ultraviolet, or radio, which could be included as simulated observations in the form of new FITS image or table types in the catalog.}
+
+\subsection{Sustainability}\label{sec:sustainability}
+
+{\bf Maintaining such a large catalog of data, whether from simulations or otherwise, is a substantial undertaking. It first and foremost requires that the computational resources necessary to store the data and serve it to users will be maintained and funded for the forseeable future. The website \url{http://gcmc.hub.yt} itself (including the widgets, documentation, and user interface) is completely separated from the data itself, which is hosted on the yt Hub. Therefore it is completely portable, and may be hosted virtually anywhere, provided proper configuration of Cross-Origin Resource Sharing (CORS) between it and the \code{yt Hub}.
+
+As for the \code{yt Hub} itself, its infrastructure and software is an integral part of other NCSA projects related to data publication and data provenance\footnote{One such example being WholeTale, \url{https://www.nsf.gov/awardsearch/showAward?AWD_ID=1541450}}, which we hope makes it sustainable for the foreseeable future.
+
+The second important resource is of course that of the human beings who are maintaining and updating the catalog. The authors themselves are committed to the long-term development and maintenance of the various components required to sustain this project, and our hope is that by getting more researches involved by including their data we can make the catalog a project which is sustained by a wider community. As a first step toward this goal, the code for the website is open-source and hosted at \url{http://github.com/jzuhone/cluster_merger_catalog}. Next steps include streamlining the code for the website itself and providing templates to simplify the generation of pages for new simulations, including directions for how to create a new set of pages for a simulation and how to submit them as a pull request to the repository.} 
+
 \section{Summary}\label{sec:summary}
 
 We have made the first release of the ``Galaxy Cluster Merger Catalog'', a website designed to provide a simple yet powerful interface to accessing mock observations of galaxy cluster mergers. This release includes a suite of mock observations from a number of binary cluster merger simulations, with different initial conditions and input physics. In particular, the catalog provides a number of X-ray and S-Z synthetic observations as well as mock galaxy catalogs. Projections of the observables have been taken along a number of lines of sight through the simulation box, and at a large number of epochs for each simulation so that the merger history is well-sampled in time. This large parameter space of cluster mergers will be useful when comparing with observed cluster mergers in a number of wavebands.
@@ -279,6 +300,8 @@ The catalog is designed so that it may be easily extended and expanded. Future g
 \item Adding other types of data products, including movies, unconvolved X-ray event lists, and the original 3D datasets
 \item Providing example scripts to show other researchers how to generate similar data products from their simulations
 \end{itemize}
+
+\textbf{This initial release includes data products from binary merger simulations carried out by the first author, but the catalog is released and designed with the intent that it may be expanded to include simulation data products related to galaxy cluster mergers or the broader subject of cosmological structure formation from other works and authors. We have already received a positive response from the community in this regard and have plans underway to incorporate new simulations into the catalog in the near future.}
 
 It is our hope that the catalog will provide a useful resource for researchers studying galaxy cluster mergers from both the perspective of current observations as well as making predictions for future missions.
 
@@ -307,6 +330,7 @@ The authors thank Eric Mandel (CfA) for tips on using JS9 and for critical bug f
 \bibitem[Ford et al.(2014)]{for14} Ford, J., Hildebrandt, H., Van Waerbeke, L., et al.\ 2014, \mnras, 439, 3755
 \bibitem[Forman et al.(1972)]{for72} Forman, W., Kellogg, E., Gursky, H., Tananbaum, H., \& Giacconi, R.\ 1972, \apj, 178, 309
 \bibitem[Markevitch et al.(2004)]{mar04} Markevitch, M., Gonzalez, A.~H., Clowe, D., et al.\ 2004, \apj, 606, 819
+\bibitem[Nelson et al.(2014)]{nel14} Nelson, K., Lau, E.~T., Nagai, D., Rudd, D.~H., \& Yu, L.\ 2014, \apj, 782, 107 
 \bibitem[Pence et al.(2010)]{pen10} Pence, W.~D., Chiappetti, L., Page, C.~G., Shaw, R.~A., \& Stobie, E.\ 2010, \aap, 524, A42
 \bibitem[Poole et al.(2006)]{poo06} Poole, G.~B., Fardal, M.~A., Babul, A., McCarthy, I.~G., Quinn, T., \& Wadsley, J.\ 2006, \mnras, 373, 881
 \bibitem[Ricker \& Sarazin(2001)]{ric01} Ricker, P.~M., \& Sarazin, C.~L.\ 2001, \apj, 561, 621
@@ -318,9 +342,11 @@ The authors thank Eric Mandel (CfA) for tips on using JS9 and for critical bug f
 \bibitem[van Weeren et al.(2010)]{vwe10} van Weeren, R.~J., R{\"o}ttgering, H.~J.~A., Br{\"u}ggen, M., \& Hoeft, M.\ 2010, Science, 330, 347
 \bibitem[Vazza et al.(2009)]{vaz09} Vazza, F., Brunetti, G., Kritsuk, A., et al.\ 2009, \aap, 504, 33
 \bibitem[Yu et al.(2015)]{yu15} Yu, L., Nelson, K., \& Nagai, D.\ 2015, \apj, 807, 12
-\bibitem[ZuHone et al.(2010)]{zuh10} ZuHone, J.~A., Markevitch, M., \& Johnson, R.~E.\ 2010, \apj, 717, 908 (ZMJ10)
-\bibitem[ZuHone(2011)]{zuh11} ZuHone, J.~A.\ 2011, \apj, 728, 54 (Z11)
+\bibitem[ZuHone et al.(2010)]{zuh10} ZuHone, J.~A., Markevitch, M., \& Johnson, R.~E.\ 2010, \apj, 717, 908
+\bibitem[ZuHone(2011)]{zuh11a} ZuHone, J.~A.\ 2011, \apj, 728, 54
+\bibitem[ZuHone et al.(2011)]{zuh11b} ZuHone, J.~A., Markevitch, M., \& Lee, D.\ 2011, \apj, 743, 16
 \bibitem[ZuHone et al.(2014)]{zuh14} ZuHone, J.~A., Biffi, V., Hallman, E.~J., et al.\ 2014, arXiv:1407.1783
+\bibitem[ZuHone et al.(2015)]{zuh15} ZuHone, J.~A., Kunz, M.~W., Markevitch, M., Stone, J.~M., \& Biffi, V.\ 2015, \apj, 798, 90
 \bibitem[Zwicky(1937)]{zwi37} Zwicky, F.\ 1937, \apj, 86, 217
 \end{thebibliography}{}
 
