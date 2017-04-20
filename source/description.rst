@@ -10,8 +10,9 @@ General Simulation Physics and Algorithms
 -----------------------------------------
 
 The galaxy cluster simulation data presented here comes from state-of-the-art N-body and hydrodynamics
-codes such as `FLASH <http://flash.uchicago.edu>`_ and `Athena <https://trac.princeton.edu/Athena/>`_. The
-exact physics and algorithms employed by the simulations vary, but in general:
+codes such as `FLASH <http://flash.uchicago.edu>`_, `Athena <https://trac.princeton.edu/Athena/>`_,
+and `ART <http://adsabs.harvard.edu/abs/1999PhDT........25K>`_. The exact physics and algorithms employed
+by the simulations vary, but in general:
 
 * Each simulation is simulated using an adaptive or static mesh refinement (AMR/SMR) grid 
   (`Berger and Colella 1989 <http://adsabs.harvard.edu/abs/1989JCoPh..82...64B>`_), with varying resolution 
@@ -78,7 +79,19 @@ modeling the effects of dynamical friction, mass loss, and tidal forces on the d
 Clusters in Cosmological Simulations
 ++++++++++++++++++++++++++++++++++++
 
-Coming soon! Watch this space.
+Cosmological simulations evolve the dynamics of gas, dark matter, and stars in an expanding cosmological background,
+beginning from a high-redshift initial condition of matter fluctuations derived from a physically motivated power spectrum.
+Clusters of galaxies form in these simulations at the intersection between filaments of gas and dark matter. Depending
+on the physics included, stars form from cool, dense gas and explode as supernovae, providing an energy source to the
+surrounding medium and enriching it with metals. Some simulations include the formation of black holes and the resulting
+feedback from active galactic nuclei.
+
+These simulations are typically hundreds of Mpc up to Gpc across, but in the catalog we include sliced and projected
+quantities of the regions surrounding the clusters only. These simulations are organized both by the ID of the cluster
+and by cosmological epoch.
+
+The specific details of the simulations, including the size of the cosmological volume, included physics, and other
+information can be found in the accompanying papers, the links to which are given on each simulation set’s page.
 
 FITS Files
 ----------
