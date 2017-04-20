@@ -61,7 +61,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Galaxy Cluster Merger Catalog'
-copyright = '2016, John ZuHone'
+copyright = '2017, John ZuHone'
 author = 'John ZuHone'
 
 # The version info for the project you're documenting, acts as replacement for
