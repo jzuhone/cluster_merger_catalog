@@ -51,6 +51,7 @@ clean:
 	rm -rf $(BUILDDIR)/*
 	rm -rf source/fiducial source/sloshing source/virgo
 	rm -rf source/sloshing_magnetic
+	rm -rf source/omega500
 
 .PHONY: all
 all: pages html deploy
