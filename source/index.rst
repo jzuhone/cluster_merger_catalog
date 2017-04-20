@@ -21,11 +21,11 @@ Galaxy Cluster Merger Catalog
 
 Welcome to the Galaxy Cluster Merger Catalog!
 
-This catalog provides data from a number of simulations of galaxy cluster mergers. Specifically,
-for each simulation you will find projections of simulated observable quantities related to galaxy
-clusters at a various stages of a cluster merger. These synthetic observations span a number of
-wavebands, from millimeter to X-ray. The goal is to provide both observers and theorists in the
-area of galaxy clusters a resource for studying mergers and comparing simulated data to real
+This catalog provides data from a number of simulations of galaxy clusters and galaxy cluster
+mergers. Specifically, for each simulation you will find projections of simulated observable
+quantities of simulated galaxy clusters and cluster mergers. These synthetic observations span
+a number of wavebands, from millimeter to X-ray. The goal is to provide both observers and
+theorists in the area of galaxy clusters a resource for comparing simulated data to real
 observations. The simulation data has been post-processed using `yt <http://yt-project.org>`_.
 
 The catalog and its data are hosted on the `yt Hub <http://hub.yt>`_, provided by the

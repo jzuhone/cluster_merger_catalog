@@ -1,6 +1,7 @@
 from collections import OrderedDict
 from sim_defs import Simulation
 from copy import deepcopy
+from utils import process_filenos
 
 mag_notes = ["There is no metallicity field in these simulations; hence for computing X-ray "+
              "emissivities a constant metallicity of :math:`Z = 0.3~Z_\odot` is assumed.",
@@ -17,7 +18,7 @@ mag_acks = "This set of simulations was performed using the Pleiades supercomput
 
 mag_info = {"name": "sloshing_magnetic",
             "cadence": 0.01,
-            "filespec": "AM06_%s_hdf5_plt_cnt_%04d",
+            "filespec": "AM06_%s_hdf5_plt_cnt_%s",
             "set_name": "Sloshing of the Magnetized Cool Gas in the Cores of Galaxy Clusters",
             "set_journals": [("ZuHone, J. A., Markevitch, M., & Lee, D. 2011, ApJ, 743, 16",
                               "http://adsabs.harvard.edu/abs/2011ApJ...743...16Z")],
@@ -47,34 +48,35 @@ pngs_nomag = deepcopy(pngs)
 pngs_nomag["slice"].remove("bmag")
 pngs_nomag["proj"].remove("rm")
 
-filenos = [0, 130, 135, 140, 145, 150, 155,
-           160, 165, 170, 175, 180, 185, 190,
-           195, 200, 205, 210, 215, 220, 225,
-           230, 235, 240, 245, 250, 255, 260,
-           265, 270, 275, 280, 285, 290, 295,
-           300, 310, 320, 330, 340, 350, 360,
-           370, 380, 390, 400, 420, 440, 460,
-           480]
+filenos = process_filenos([0, 130, 135, 140, 145, 150, 155,
+                           160, 165, 170, 175, 180, 185, 190,
+                           195, 200, 205, 210, 215, 220, 225,
+                           230, 235, 240, 245, 250, 255, 260,
+                           265, 270, 275, 280, 285, 290, 295,
+                           300, 310, 320, 330, 340, 350, 360,
+                           370, 380, 390, 400, 420, 440, 460,
+                           480])
 
-filenos_visc = [170, 175, 180, 185, 190,
-                195, 200, 205, 210, 215, 220, 225,
-                230, 235, 240, 245, 250, 255, 260,
-                265, 270, 275, 280, 285, 290, 295,
-                300, 310, 320, 330, 340, 350, 360]
+filenos_visc = process_filenos([170, 175, 180, 185, 190, 195,
+                                200, 205, 210, 215, 220, 225,
+                                230, 235, 240, 245, 250, 255,
+                                260, 265, 270, 275, 280, 285,
+                                290, 295, 300, 310, 320, 330,
+                                340, 350, 360])
 
 mag_dict = OrderedDict()
 mag_dict["nomag"] = Simulation("Unmagnetized", filenos,
                                fields_nomag, pngs_nomag,
-                               ["x", "y", "z"])
+                               ["x", "y", "z"], ["z"])
 mag_dict["beta1000"] = Simulation(":math:`\\beta` = 1000", filenos,
-                                  fields, pngs, ["x", "y", "z"])
+                                  fields, pngs, ["x", "y", "z"], ["z"])
 mag_dict["beta500"] = Simulation(":math:`\\beta` = 500", filenos,
-                                 fields, pngs, ["x", "y", "z"])
+                                 fields, pngs, ["x", "y", "z"], ["z"])
 mag_dict["beta500_visc"] = Simulation(":math:`\\beta` = 500, Braginskii Viscosity", filenos_visc,
-                                      fields, pngs, ["x", "y", "z"])
+                                      fields, pngs, ["x", "y", "z"], ["z"])
 mag_dict["beta200"] = Simulation(":math:`\\beta` = 200", filenos,
-                                 fields, pngs, ["x", "y", "z"])
+                                 fields, pngs, ["x", "y", "z"], ["z"])
 mag_dict["beta100"] = Simulation(":math:`\\beta` = 100", filenos,
-                                 fields, pngs, ["x", "y", "z"])
+                                 fields, pngs, ["x", "y", "z"], ["z"])
 
 mag_physics = list(mag_dict.keys())

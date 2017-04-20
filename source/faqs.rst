@@ -18,7 +18,7 @@ that work with astronomical data in the FITS format, such as:
 * `Glue <http://www.glueviz.org/>`_
 * etc. 
 
-`yt also has support for analyzing and visualizing FITS image and X-ray event data. <http://yt-project.org/doc/examining/loading_data.html#fits-data>`_
+`yt also has some support for analyzing and visualizing FITS image and X-ray event data. <http://yt-project.org/doc/examining/loading_data.html#fits-data>`_
 
 Why does the resolution appear to be non-uniform in many of the images?
 -----------------------------------------------------------------------

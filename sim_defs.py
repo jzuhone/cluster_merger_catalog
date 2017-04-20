@@ -47,13 +47,17 @@ name_map["galaxies"] = {"ppv":("ppv","Galaxy Positions and Velocities")}
 
 class Simulation(object):
 
-    def __init__(self, sim_name, filenos, fields, pngs, axes):
+    def __init__(self, sim_name, filenos, fields, pngs, proj_axes,
+                 slice_axes, cat_type='epoch', halo_info=None,
+                 hubble=71, omega_m=0.27, omega_l=0.73, **kwargs):
         self.name = sim_name
         self.filenos = filenos
         self.lname_map = {}
         self.sname_map = {}
         self.unit_map = {}
-        self.axes = axes
+        self.slice_axes = slice_axes
+        self.proj_axes = proj_axes
+        self.cat_type = cat_type
         for itype in pngs:
             self.lname_map[itype] = OrderedDict()
             self.sname_map[itype] = OrderedDict()
@@ -65,4 +69,9 @@ class Simulation(object):
             for name in fields[itype]:
                 n = name_map[itype][name][0]
                 self.unit_map[itype][n] = unit_map[itype][name]
-                
+        self.halo_info = halo_info
+        self.cosmo = {"hubble": hubble, "omega_m": omega_m, "omega_l": omega_l}
+        if "sigma8" in kwargs:
+            self.cosmo["sigma8"] = kwargs["sigma8"]
+        if "omega_b" in kwargs:
+            self.cosmo["omega_b"] = kwargs["omega_b"]

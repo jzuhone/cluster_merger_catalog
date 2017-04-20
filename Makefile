@@ -51,6 +51,7 @@ clean:
 	rm -rf $(BUILDDIR)/*
 	rm -rf source/fiducial source/sloshing source/virgo
 	rm -rf source/sloshing_magnetic
+	rm -rf source/omega500
 
 .PHONY: all
 all: pages html deploy
@@ -77,6 +78,11 @@ html:
 deploy:
 	sudo rm -rf /var/www/html/*
 	sudo cp -rf build/html/* /var/www/html/
+
+.PHONY: deploy_test
+deploy_test:
+	sudo rm -rf /var/www/html/test/*
+	sudo cp -rf build/html/* /var/www/html/test/
 
 .PHONY: dirhtml
 dirhtml:

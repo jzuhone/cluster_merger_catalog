@@ -1,6 +1,7 @@
 from collections import OrderedDict
 from sim_defs import Simulation
 from copy import deepcopy
+from utils import process_filenos
 
 virgo_notes = ["There is no metallicity field in these simulations; hence for computing X-ray "+
                "emissivities a constant metallicity of :math:`Z = 0.3~Z_\odot` is assumed.",
@@ -16,7 +17,7 @@ virgo_acks = "This set of simulations was performed using the Pleiades supercomp
 
 virgo_info = {"name": "virgo",
              "cadence": 0.05,
-             "filespec": "virgo_%s.%04d",
+             "filespec": "virgo_%s.%s",
              "set_name": "Simulations of the Virgo Cold Fronts with Magnetic Fields and Viscosity",
              "set_journals": [("ZuHone, J. A., Kunz, M. W., Markevitch, M., Stone, J. M., & Biffi, V. 2015, ApJ, 798, 90",
                                "http://adsabs.harvard.edu/abs/2015ApJ...798...90Z"),
@@ -50,42 +51,40 @@ pngs_nomag["proj"].remove("rm")
 
 virgo_dict = OrderedDict()
 virgo_dict["nomag"] = Simulation("Unmagnetized, Inviscid",
-                                 [0, 18, 20, 22, 24, 26, 28, 30, 32,
-                                  34, 36, 38, 40, 42, 44, 46, 48, 50,
-                                  52, 54], fields_nomag, pngs_nomag,
-                                 ["x", "y", "z"])
+                                 process_filenos([0, 18, 20, 22, 24, 26,
+                                 28, 30, 32, 34, 36, 38, 40, 42, 44, 46,
+                                 48, 50, 52, 54]), fields_nomag, pngs_nomag,
+                                 ["x", "y", "z"], ["z"])
 virgo_dict["nomag_visc"] = Simulation("Unmagnetized, 10\% Isotropic Spitzer Viscosity",
-                                      [22, 24, 26, 28, 30, 32,
-                                       34, 36, 38, 40, 42, 44, 46, 48, 50,
-                                       52, 54], fields_nomag, pngs_nomag,
-                                      ["x", "y", "z"])
+                                      process_filenos([22, 24, 26, 28, 30, 32, 34, 36,
+                                      38, 40, 42, 44, 46, 48, 50, 52, 54]), fields_nomag,
+                                      pngs_nomag, ["x", "y", "z"], ["z"])
 virgo_dict["novisc"] = Simulation(":math:`\\beta` = 1000, Inviscid",
-                                 [0, 18, 20, 22, 24, 26, 28, 30, 32, 
-                                  34, 36, 38, 40, 42, 44, 46, 48, 50, 
-                                  52, 54], fields, pngs, ["x", "y", "z"])
+                                  process_filenos([0, 18, 20, 22, 24,
+                                  26, 28, 30, 32, 34, 36, 38, 40, 42,
+                                  44, 46, 48, 50, 52, 54]), fields, pngs,
+                                  ["x", "y", "z"], ["z"])
 virgo_dict["beta_100"] = Simulation(":math:`\\beta` = 100, Inviscid",
-                                    [0, 18, 20, 22, 24, 26, 28, 30, 32,
-                                     34, 36, 40, 42, 44, 46, 48, 50,
-                                     52, 54], fields, pngs, ["x", "y", "z"])
+                                    process_filenos([0, 18, 20, 22, 24,
+                                    26, 28, 30, 32, 34, 36, 40, 42, 44,
+                                    46, 48, 50, 52, 54]), fields, pngs,
+                                    ["x", "y", "z"], ["z"])
 virgo_dict["avisc1"] = Simulation(":math:`\\beta` = 1000, Braginskii Viscosity",
-                                 [22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42,
-                                  44, 46, 48, 50, 52, 54], fields, pngs,
-                                 ["x", "y", "z"])
+                                  process_filenos([22, 24, 26, 28, 30, 32, 34,
+                                  36, 38, 40, 42, 44, 46, 48, 50, 52, 54]), fields,
+                                  pngs, ["x", "y", "z"], ["z"])
 virgo_dict["ivisc1"] = Simulation(":math:`\\beta` = 1000, Isotropic Spitzer Viscosity",
-                                 [22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42,
-                                  44, 46, 48, 50, 52, 54], fields, pngs,
-                                 ["x", "y", "z"])
+                                  process_filenos([22, 24, 26, 28, 30, 32, 34, 36, 38,
+                                  40, 42, 44, 46, 48, 50, 52, 54]), fields, pngs,
+                                  ["x", "y", "z"], ["z"])
 virgo_dict["ivisc0.1"] = Simulation(":math:`\\beta` = 1000, 10\% Isotropic Spitzer Viscosity",
-                                    [22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42,
-                                     44, 46, 48, 50, 52, 54], fields, pngs,
-                                    ["x", "y", "z"])
+                                    process_filenos([22, 24, 26, 28, 30, 32, 34, 36, 38, 40,
+                                    42, 44, 46, 48, 50, 52, 54]), fields, pngs, ["x", "y", "z"], ["z"])
 virgo_dict["cond"] = Simulation(":math:`\\beta` = 1000, Anisotropic Thermal Conduction",
-                                [22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42,
-                                 44, 46, 48, 50, 52, 54], fields, pngs,
-                                ["x", "y", "z"])
+                                process_filenos([22, 24, 26, 28, 30, 32, 34, 36, 38, 40,
+                                42, 44, 46, 48, 50, 52, 54]), fields, pngs, ["x", "y", "z"], ["z"])
 virgo_dict["cond_visc"] = Simulation(":math:`\\beta` = 1000, Braginskii Viscosity, Anisotropic Thermal Conduction",
-                                     [22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42,
-                                      44, 46, 48, 50, 52, 54], fields, pngs,
-                                     ["x", "y", "z"])
+                                     process_filenos([22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50,
+                                     52, 54]), fields, pngs, ["x", "y", "z"], ["z"])
 
 virgo_physics = list(virgo_dict.keys())
