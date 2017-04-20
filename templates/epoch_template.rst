@@ -169,6 +169,8 @@ The S-Z FITS file contains the following fields:
     
 {% endif %}
 
+{% if xray_events %}
+
     <h3>X-ray Events</h3>
     
     The events FITS file contains an X-ray event list.
@@ -182,6 +184,7 @@ The S-Z FITS file contains the following fields:
     <a id="big_cxo_evt_counts" data-lightbox="lb_cxo_evt_counts" ><img id="cxo_evt_counts" width="450" /></a>
     </figure>
     <br><br>
+{% endif %}
 
     <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#hubModal">Get access to these files on the yt Hub and run Jupyter notebooks.</button>
 
@@ -260,8 +263,10 @@ The S-Z FITS file contains the following fields:
             show_files('SZ', 'z');
             fits_link('SZ', 'z');
             {% endif %}
+	    {% if xray_events %}
             show_files('cxo_evt', 'z');
             fits_link('cxo_evt', 'z');
+	    {% endif %}
             {% if galaxies %}
             show_files('galaxies', 'z');
             fits_link('galaxies', 'z');
@@ -324,8 +329,10 @@ The S-Z FITS file contains the following fields:
             show_files('SZ', axis);
             fits_link('SZ', axis);
             {% endif %}
-            show_files('cxo_evt', axis);
+	    {% if xray_events %}
+	    show_files('cxo_evt', axis);
             fits_link('cxo_evt', axis);
+	    {% endif %}
             {% if galaxies %}
             show_files('galaxies', axis);
             fits_link('galaxies', axis);
