@@ -26,12 +26,12 @@ omega_info = {"name": "omega500",
 fields = {}
 fields["slice"] = ["dens","temp","velx","vely"]
 fields["proj"] = ["xray","temp","dens","szy","szk"]
-fields["SZ"] = ["tau","temp","inty90","inty180","inty240"]
+#fields["SZ"] = ["tau","temp","inty90","inty180","inty240"]
 pngs = {}
 pngs["slice"] = ["dens","temp"]
 pngs["proj"] = ["xray","temp","dens","szy"]
-pngs["SZ"] = ["tau","inty240"]
-pngs["cxo_evt"] = ["counts"]
+#pngs["SZ"] = ["tau","inty240"]
+#pngs["cxo_evt"] = ["counts"]
 
 omega_physics = [("non_radiative", "1.0005")]
 
@@ -50,9 +50,9 @@ for line in lines[1:]:
     halo_dict[":math:`M_{vir}`"] = ":math:`\\rm{%5.3f \\times 10^{%d}~M_\odot}`" % (10**masses[0][0], masses[1][0])
     halo_dict[":math:`M_{200c}`"] = ":math:`\\rm{%5.3f \\times 10^{%d}~M_\odot}`" % (10**masses[0][1], masses[1][1])
     halo_dict[":math:`M_{500c}`"] = ":math:`\\rm{%5.3f \\times 10^{%d}~M_\odot}`" % (10**masses[0][2], masses[1][2])
-    halo_dict[":math:`r_{vir}`"] = ":math:`\\rm{%s kpc}`" % words[4]
-    halo_dict[":math:`r_{200c}`"] = ":math:`\\rm{%s kpc}`" % words[5]
-    halo_dict[":math:`r_{500c}`"] = ":math:`\\rm{%s kpc}`" % words[6]
+    halo_dict[":math:`r_{vir}`"] = ":math:`\\rm{%s~Mpc}`" % words[4]
+    halo_dict[":math:`r_{200c}`"] = ":math:`\\rm{%s~Mpc}`" % words[5]
+    halo_dict[":math:`r_{500c}`"] = ":math:`\\rm{%s~Mpc}`" % words[6]
     halo_info.append(halo_dict)
     
 omega_dict = OrderedDict()
