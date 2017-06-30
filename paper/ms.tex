@@ -29,7 +29,7 @@
 \altaffiltext{3}{Department of Physics, Yale University, New Haven, CT 06520, USA}
 
 \begin{abstract}
-We present the first release of the ``Galaxy Cluster Merger Catalog''. This catalog provides an extensive suite of mock observations and related data for N-body and hydrodynamical simulations of galaxy cluster mergers. These mock observations consist of projections of a number of important observable quantities in several different wavebands, for the entire evolution of each simulation as well as along different lines of sight through the three-dimensional simulation domain. The web interface to the catalog consists of easily browseable images over epoch and projection direction, as well as download links for the raw data and a JS9 interface for interactive data exploration. All of the data products are provided in the standard FITS file format, in image and table form. Data is being stored on the yt Hub~(\url{http://hub.yt}), which allows for remote access and analysis using a Jupyter notebook server. Future versions of the catalog will include simulations from a number of research groups and a variety of research topics related to the study of interactions of galaxy clusters with each other and with their member galaxies. The catalog is located at \url{http://gcmc.hub.yt}.
+We present the first release of the ``Galaxy Cluster Merger Catalog''. This catalog provides an extensive suite of mock observations and related data for N-body and hydrodynamical simulations of galaxy cluster mergers {\bf and clusters from cosmological simulations}. These mock observations consist of projections of a number of important observable quantities in several different wavebands as well as along different lines of sight through the three-dimensional simulation domain. The web interface to the catalog consists of easily browseable images over epoch and projection direction, as well as download links for the raw data and a JS9 interface for interactive data exploration. All of the data products are provided in the standard FITS file format, in image and table form. Data is being stored on the yt Hub~(\url{http://hub.yt}), which allows for remote access and analysis using a Jupyter notebook server. Future versions of the catalog will include simulations from a number of research groups and a variety of research topics related to the study of interactions of galaxy clusters with each other and with their member galaxies. The catalog is located at \url{http://gcmc.hub.yt}.
 \end{abstract}
 
 \keywords{galaxies: clusters: general --- catalogs --- methods: hydrodynamic simulations}
@@ -38,19 +38,19 @@ We present the first release of the ``Galaxy Cluster Merger Catalog''. This cata
 
 Galaxy clusters are the largest gravitationally bound structures in the current universe. Originally identified as concentrations of galaxies in the optical, observations in the X-ray and millimeter wavelengths have revealed the bulk of baryonic material of clusters is comprised of a hot, magnetized plasma known as the intracluster medium \citep[ICM,][]{for72,sun72}. The kinetic energy of the galaxies and the temperature of the hot gas indicate that in order for the cluster to be gravitationally bound the majority of the mass must be in the form of cold dark matter \citep[CDM, first noted by][]{zwi37}.
 
-Mergers between galaxy clusters represent the latest stage of cosmological structure formation. The most energetic events in the universe, mergers drive shocks and turbulence into the ICM, heating and stirring the cluster gas. These mergers also accelerate relativistic particles, which then produce radio relics and halos \citep{fer05,bru07,vwe10,bru12}. Cluster mergers have also revealed the different dynamical properties of the CDM, galaxies, and ICM, seen most vividly in the case of the Bullet Cluster \citep[][]{clo04,mar04}. Understanding cluster mergers is therefore vital to answering questions about the detailed physics of galaxy clusters as well
-as providing insights into the formation of cosmic structure.
+Mergers between galaxy clusters represent the latest stage of cosmological structure formation. The most energetic events in the universe, mergers drive shocks and turbulence into the ICM, heating and stirring the cluster gas. These mergers also accelerate relativistic particles, which then produce radio relics and halos \citep{fer05,bru07,vwe10,bru12}. Cluster mergers have also revealed the different dynamical properties of the CDM, galaxies, and ICM, seen most vividly in the case of the Bullet Cluster \citep[][]{clo04,mar04}. Understanding cluster mergers is therefore vital to answering questions about the detailed physics of galaxy clusters as well as providing insights into the formation of cosmic structure.
 
 The astrophysical literature is replete with simulations of galaxy cluster mergers, from binary merger simulations \citep[e.g.][]{ric01,poo06,zuh11,don13} to studies of mergers in cosmological simulations \citep[e.g.][]{vaz09,ski13,yu15}. These simulations have often attempted to make predictions for what may be observed in a number of wavebands and made direct comparisons to observed merging systems. However, comparing the results of simulations of cluster mergers to these systems is often not straighforward; at what stage are we viewing the merger, and along what line of sight? To make matters more complicated, different combinations of merger epoch and line of sight can produce qualitatively similar projections of cluster emission, making it more difficult to use observations to determine these parameters and distinguish between different theoretical models.
 
-We seek to address these issues by releasing the ``Galaxy Cluster Merger Catalog'', an extensive suite of mock observations and related data for simulations of galaxy cluster mergers. We have produced 2D projections and slices of a number of different quantities relevant to observations of galaxy clusters for a large number of merger simulations. The data products span the important stages of evolution of each merger and a number of relevant projection axes. The goal of this catalog is to provide a way to connect simulations of galaxy cluster mergers with multiwavelength observations of real merging clusters, providing an opportunity for observers to compare clusters in their observations with a particular merging scenario. The data may also be analyzed to make predictions for what various investigations of real clusters may reveal for future observations and missions.
+We seek to address these issues by releasing the ``Galaxy Cluster Merger Catalog'', an extensive suite of mock observations and related data for simulations of galaxy cluster mergers. We have produced 2D projections and slices of a number of different quantities relevant to observations of galaxy clusters {\bf from simulations of binary cluster mergers and cosmological simulations. The inclusion of data from both of these simulation types emphasizes the strengths of each: idealized merger simulations, due to their typically higher resolution and controlled set up, can provide insights into what kind of physics and merger configurations lead to certain observable features in cluster mergers. On the other hand, cosmological simulations capture more realistic mergers between clusters with substructure as well as cosmological accretion, providing a more direct comparison with observations.}
+
+{\bf These data products include clusters in various stages of merging and interaction with other systems viewed along a number of relevant projection axes.} The goal of this catalog is to provide a way to connect {\bf a variety of} simulations of galaxy cluster mergers {\bf within a common interface} with multiwavelength observations of real merging clusters, providing an opportunity for observers to compare clusters in their observations with a particular merging scenario. The data may also be analyzed to make predictions for what various investigations of real clusters may reveal for future observations and missions, {\bf such as {\it Athena} and {\it Lynx}}.
 
 \section{The Data}
 
 \subsection{The Simulations}
 
-At the time of writing, the catalog contains data products from idealized binary cluster merger
-simulations. {\bf The original works from which these simulations are drawn, in addition to some details of the simulations, are listed in Table \ref{tab:sim_table}.} The types of data products listed here are appropriate for such simulations. In the future, the catalog will include data products from a variety of cluster merger and related simulations, including those from cosmological simulations and simulations of interactions between clusters and their member galaxies. The types of data products are likely to expand and diversify with the inclusion of new simulations. \textbf{For more discussion of future directions for the catalog and long-term issues, see Section \ref{sec:future}}.
+At the time of writing, the catalog contains data products from idealized binary cluster merger simulations {\bf and one cosmological simulation}. {\bf The original works from which these simulations are drawn, in addition to some details of the simulations, are listed in Table \ref{tab:sim_table}.} The types of data products listed here are appropriate for such simulations. In the future, the catalog will include data products {\bf from additional simulations of idealized binary mergers, cosmological simulations, and simulations of interactions between clusters and their member galaxies.} The types of data products are likely to expand and diversify with the inclusion of new simulations. \textbf{For more discussion of future directions for the catalog and long-term issues, see Section \ref{sec:future}}.
 
 \input{tab1.tex}
 
@@ -84,7 +84,7 @@ JS9 (\url{http://js9.si.edu}) is a browser-based implementation of SAOImage DS9 
 \subsubsection{The yt Hub}\label{sec:yt_hub}
 The catalog data is stored on the \code{yt Hub}\footnote{\url{https://hub.yt/}}, a conglomerate of various open source
 services \textbf{hosted at the National Center for Supercomputing Applications (NCSA)}, creating an environment that allows one to collect, remotely analyze, share and publish scientific datasets. At its core, the \code{yt Hub} uses \code{Girder}\footnote{\url{https://girder.readthedocs.io}}, a data management platform that allows to transparently store, serve, and proxy data from heterogeneous backend storage engines through a single
-web API. Data served by \code{Girder} can easily be gathered into dynamical hierarchies such as collections, folders and
+web API. Data served by \code{Girder} can easily be gathered into dynamical hierarchies such as collections, folders, and
 items. This data management system is integrated with \code{JupyterHub}\footnote{\url{https://jupyterhub.readthedocs.io/}} and allows authenticated users to spawn Jupyter notebook servers with direct access to the data that is provided as a dynamically composed FUSE filesystem. Any Jupyter
 notebook created in that environment during an interactive session is safely stored back in the \code{Girder} instance,
 preserving the user's analysis workflow and increasing research reproducibility. In the future, we plan to have this
@@ -189,11 +189,11 @@ y_{\rm kSZ} = \int{\frac{v_\ell}{c}\sigma_T{n_e}{\rm d\ell}}.
 Projections of the full S-Z signal are also computed for some simulations, using the \code{SZpack}\footnote{\url{http://www.cita.utoronto.ca/~jchluba/Science_Jens/SZpack/SZpack.html}} library \citep{chl12, chl13} to compute the S-Z signal, including thermal and kinetic contributions as well as relativistic corrections. More details on how these projections were computed can be found at \url{http://yt-project.org/doc/analyzing/analysis_modules/sunyaev_zeldovich.html}. They are stored in separate FITS files from the other projections. Currently, these files contain a subset of these fields with the follwing extension names:
 
 \begin{itemize}
-\item \code{"Tau"}: Compton optical depth of the cluster gas
-\item \code{"TeSZ"}: Mass-weighted projected temperature in units of keV
-\item \code{"90\_GHz"}: S-Z signal at 90~GHz in units of MJy~sr$^{-1}$
-\item \code{"180\_GHz"}: S-Z signal at 180~GHz in units of MJy~sr$^{-1}$
-\item \code{"240\_GHz"}: S-Z signal at 240~GHz in units of MJy~sr$^{-1}$
+\item \code{"Tau"}: Compton optical depth of the cluster gas.
+\item \code{"TeSZ"}: Mass-weighted projected temperature in units of keV.
+\item \code{"90\_GHz"}: S-Z signal at 90~GHz in units of MJy~sr$^{-1}$.
+\item \code{"180\_GHz"}: S-Z signal at 180~GHz in units of MJy~sr$^{-1}$.
+\item \code{"240\_GHz"}: S-Z signal at 240~GHz in units of MJy~sr$^{-1}$.
 \end{itemize}
 
 The computed S-Z signal at other frequencies may be added in later revisions of the catalog.
@@ -256,13 +256,13 @@ All of the set pages are linked from the main simulation page, which can be foun
 
 \subsubsection{The Simulation Page}\label{sec:sim_page}
 
-Every simulation of a set has a ``simulation page'' which shows various quantities projected perpendicular to the merger plane for every epoch of the simulation that is available. The different epochs can be navigated using a slider bar, and buttons above the slider bar can be used to look at the same images from a different line of sight. The links attached to the images lead to the epoch pages.
+Every simulation of a set has a ``simulation page'' which shows various quantities projected perpendicular to the merger plane for every epoch {\bf or halo} of the simulation that is available. The different epochs {\bf or halos} can be navigated using a slider bar, and buttons above the slider bar can be used to look at the same images from a different line of sight. The links attached to the images lead to the epoch {\bf or halo} pages {\bf for this simulation}.
 
-\subsubsection{The Epoch Page}\label{sec:epoch_page}
+\subsubsection{The Epoch and Halo Pages}\label{sec:epoch_page}
 
-Any given link on the simulation page leads to an ``epoch page'' where images from a particular simulation epoch can be examined and the corresponding data may be obtained. Links are provided to similar simulations with different input physics at the same epoch. This page also contains information about the different types of data within the files. A drop-down menu is provided for switching between the different projection axes available.
+Any given link on the simulation page leads to an ``epoch page'' or ``halo page'' where images from a particular simulation epoch {\bf for idealized simulations, or a particular halo for cosmological simulations,} can be examined and the corresponding data may be obtained. Links are provided to similar simulations with different input physics at the same epoch {\bf or for the same halo}. This page also contains information about the different types of data within the files. A drop-down menu is provided for switching between the different projection axes available.
 
-A link is provided on each epoch page to the location of the files on the \code{yt Hub}, so that one may start Jupyter notebooks with access to the data. Each epoch page also contains a JS9 application for opening the various FITS files associated with that particular epoch. A drop-down menu is provided for navigating between the various fields in each FITS file.
+A link is provided on each epoch {\bf or halo} page to the location of the files on the \code{yt Hub}, so that one may start Jupyter notebooks with access to the data. Each epoch page also contains a JS9 application for opening the various FITS files associated with that particular epoch {\bf or halo}. A drop-down menu is provided for navigating between the various fields in each FITS file.
 
 \section{Future Directions}\label{sec:future}
 
@@ -288,7 +288,7 @@ The second important resource is of course that of the human beings who are main
 
 \section{Summary}\label{sec:summary}
 
-We have made the first release of the ``Galaxy Cluster Merger Catalog'', a website designed to provide a simple yet powerful interface to accessing mock observations of galaxy cluster mergers. This release includes a suite of mock observations from a number of binary cluster merger simulations, with different initial conditions and input physics. In particular, the catalog provides a number of X-ray and S-Z synthetic observations as well as mock galaxy catalogs. Projections of the observables have been taken along a number of lines of sight through the simulation box, and at a large number of epochs for each simulation so that the merger history is well-sampled in time. This large parameter space of cluster mergers will be useful when comparing with observed cluster mergers in a number of wavebands.
+We have made the first release of the ``Galaxy Cluster Merger Catalog'', a website designed to provide a simple yet powerful interface to accessing mock observations of galaxy cluster mergers. This release includes a suite of mock observations from a number of binary cluster merger simulations, with different initial conditions and input physics. In particular, the catalog provides a number of X-ray and S-Z synthetic observations as well as mock galaxy catalogs {\bf for some simulations}. Projections of the observables have been taken along a number of lines of sight through the simulation box, and at a large number of epochs for each simulation so that the merger history is well-sampled in time. This large parameter space of cluster mergers will be useful when comparing with observed cluster mergers in a number of wavebands.
 
 The catalog is designed so that it may be easily extended and expanded. Future goals include:
 
@@ -303,7 +303,7 @@ The catalog is designed so that it may be easily extended and expanded. Future g
 
 \textbf{This initial release includes data products from binary merger simulations carried out by the first author, but the catalog is released and designed with the intent that it may be expanded to include simulation data products related to galaxy cluster mergers or the broader subject of cosmological structure formation from other works and authors. We have already received a positive response from the community in this regard and have plans underway to incorporate new simulations into the catalog in the near future.}
 
-It is our hope that the catalog will provide a useful resource for researchers studying galaxy cluster mergers from both the perspective of current observations as well as making predictions for future missions.
+{\bf Comparisons of data from the catalog to current observations have already been made to useful effect by \citet{wal17} and Douglass et al. 2017, in preparation.} It is our hope that the catalog will {\bf continue to provide} a useful resource for researchers studying galaxy cluster mergers from both the perspective of current observations as well as making predictions for future missions. 
 
 \acknowledgements
 The authors thank Eric Mandel (CfA) for tips on using JS9 and for critical bug fixes and enhancements that were provided to make it work with the data in the catalog, and Joseph DePasquale (CfA) for generating the home page image. JAZ acknowledges support through Chandra Award Number G04-15088X issued by the Chandra X-ray Center, which is operated by the Smithsonian Astrophysical Observatory for and on behalf of NASA under contract NAS8-03060. KK was funded in part by the Gordon and Betty Moore Foundation's Data-Driven Discovery Initiative through Grant GBMF4561.
@@ -341,6 +341,7 @@ The authors thank Eric Mandel (CfA) for tips on using JS9 and for critical bug f
 \bibitem[Turk et al.(2011)]{tur11} Turk, M.~J., Smith, B.~D., Oishi, J.~S., Skory, S., Skillman, S.~W., Abel, T., \& Norman, M.~L.\ 2011, \apjs, 192, 9
 \bibitem[van Weeren et al.(2010)]{vwe10} van Weeren, R.~J., R{\"o}ttgering, H.~J.~A., Br{\"u}ggen, M., \& Hoeft, M.\ 2010, Science, 330, 347
 \bibitem[Vazza et al.(2009)]{vaz09} Vazza, F., Brunetti, G., Kritsuk, A., et al.\ 2009, \aap, 504, 33
+\bibitem[Walker et al.(2017)]{wal17} Walker, S.~A., Hlavacek-Larrondo, J., Gendron-Marsolais, M., et al.\ 2017, \mnras, 468, 2506 
 \bibitem[Yu et al.(2015)]{yu15} Yu, L., Nelson, K., \& Nagai, D.\ 2015, \apj, 807, 12
 \bibitem[ZuHone et al.(2010)]{zuh10} ZuHone, J.~A., Markevitch, M., \& Johnson, R.~E.\ 2010, \apj, 717, 908
 \bibitem[ZuHone(2011)]{zuh11a} ZuHone, J.~A.\ 2011, \apj, 728, 54
