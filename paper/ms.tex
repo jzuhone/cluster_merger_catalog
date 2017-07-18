@@ -238,6 +238,20 @@ The event files are designed to provide approximate representations of real obse
 \end{center}
 \end{figure*}
 
+\begin{figure*}
+\begin{center}
+\includegraphics[width=0.9\textwidth]{halos_page.eps}
+\caption{Another example of a ``simulation page,'' except showing halos from a cosmological simulation instead of epochs. Slider bars allow exploration of different halos, and buttons near the top choose different projection axes. The figures link to the page for the files for the corresponding halo ID. This particular page is linked at \url{http://gcmc.hub.yt/omega500/non_radiative_1.0005/index.html}.}
+\end{center}
+\end{figure*}
+
+\begin{figure*}
+\begin{center}
+\includegraphics[width=0.9\textwidth]{halo_page.eps}
+\caption{A portion of a ``halo page,'' showing the details of the halo information and the slice data for this particular halo. This particular page is linked at \url{http://gcmc.hub.yt/omega500/non_radiative_1.0005/00086.html}.}
+\end{center}
+\end{figure*}
+
 A number of the simulations have been run using an N-body code to represent the collisionless dark matter component of the cluster via massive particles. A number of these dark matter particles can be sampled from the simulation to represent mock ``galaxies,'' which can also be treated as a collisionless component. For some of these simulations, we have created mock galaxy catalogs.
 
 A number of particles are drawn from each halo within a radius of $r_{200}$, determined by the mass-richness relation of \citet{for14}, from the intitial simulation epoch, which are the ``galaxies.'' The same galaxy particles are tracked for the rest of the epochs in the simulation. The FITS binary tables for the galaxies include sky positions, line-of-sight velocities, an identifier for which halo each galaxy originally belonged to, and unique IDs for every galaxy. These particles provide a way of measuring the kinematics of the merger from the perspective of the collisionless material with a statistical significance that is comparable to that obtained from measured redshifts of member galaxies in real clusters. No redshift errors have been applied to the galaxy velocities, which is an exercise left to the end-user.
