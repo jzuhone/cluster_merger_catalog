@@ -63,10 +63,10 @@ The galaxy cluster merger simulation data in the catalog comes from state-of-the
 \item If dark matter is included, it is modeled by an N-body solver for a collection of collisionless massive particles, which interact with the gas component only via gravity.
 \item The gravity in the simulations is either modeled as a rigid gravitational potential associated with each cluster or by computing the self-gravity of the gas and dark matter using a Poisson solver \citep[e.g.,][]{ric08}.
 \item {\bf Cosmological simulations in the catalog include the effect of cosmological expansion by evolving the equations of hydrodynamics and particle advancement in comoving coordinates and with terms including the dependence on the scale factor of the universe.}
-\item Depending on the goals of the simulation study, other physics, such as viscosity, thermal conduction, radiative cooling, etc., may be included.
+\item Depending on the goals of the simulation study, other physics, such as viscosity, thermal conduction, radiative cooling, star formation and energy feedback from black holes, etc., may be included.
 \end{itemize}
 
-Though currently the simulations represented in the catalog are of the grid-based variety, eventually the catalog will also include data from smoothed particle hydrodynamics (SPH) simulations.
+Though currently the simulations represented in the catalog are of the grid-based variety, eventually the catalog will also include data from smoothed particle hydrodynamics (SPH) and moving-mesh simulations.
 
 \subsection{Methods and Technologies}\label{sec:methods}
 
@@ -306,7 +306,7 @@ The catalog is designed so that it may be easily extended and expanded. Future g
 {\bf Comparisons of data from the catalog to current observations have already been made to useful effect by \citet{wal17} and Douglass et al. 2017, in preparation.} It is our hope that the catalog will {\bf continue to provide} a useful resource for researchers studying galaxy cluster mergers from both the perspective of current observations as well as making predictions for future missions. 
 
 \acknowledgements
-The authors thank Eric Mandel (CfA) for tips on using JS9 and for critical bug fixes and enhancements that were provided to make it work with the data in the catalog, and Joseph DePasquale (CfA) for generating the home page image. JAZ acknowledges support through Chandra Award Number G04-15088X issued by the Chandra X-ray Center, which is operated by the Smithsonian Astrophysical Observatory for and on behalf of NASA under contract NAS8-03060. KK was funded in part by the Gordon and Betty Moore Foundation's Data-Driven Discovery Initiative through Grant GBMF4561.
+The authors thank Eric Mandel (CfA) for tips on using JS9 and for critical bug fixes and enhancements that were provided to make it work with the data in the catalog, and Joseph DePasquale (CfA) for generating the home page image. JAZ acknowledges support through Chandra Award Number G04-15088X issued by the Chandra X-ray Center, which is operated by the Smithsonian Astrophysical Observatory for and on behalf of NASA under contract NAS8-03060. KK was funded in part by the Gordon and Betty Moore Foundation's Data-Driven Discovery Initiative through Grant GBMF4561. This work was supported in part by NSF AST-1412768 and by the facilities and staff of the Yale Center for Research Computing.
 
 \begin{thebibliography}{}
 \bibitem[Astropy Collaboration et al.(2013)]{apy13} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., et al.\ 2013, \aap, 558, A33
