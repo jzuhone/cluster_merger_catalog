@@ -205,174 +205,155 @@ The S-Z FITS file contains the following fields:
 
     <script>
 
-        var axisList = document.getElementById("proj_axis");
-        var fitsList = document.getElementById("fits_ext");
+    var axisList = document.getElementById("proj_axis");
+    var fitsList = document.getElementById("fits_ext");
 
-        var default_js9 = {"slice":"DENSITY",
-                           "proj":"XRAY_EMISSIVITY",
-                           "SZ":"180_GHZ",
-                           "cxo_evt":"EVENTS"};
+    var default_js9 = {"slice":"DENSITY",
+                       "proj":"XRAY_EMISSIVITY",
+                       "SZ":"180_GHZ",
+                       "cxo_evt":"EVENTS"};
 
-        var girder_data = {
-        {% for itype, axes in data.items() %}
-            "{{itype}}": {
-        {% for ax, ftypes in axes.items() %}
-                "{{ax}}": {"fits": "{{ftypes.fits}}",		
-        {% if itype == "galaxies" %}
-                           "reg": "{{ftypes.reg}}",
-        {% endif %}                   
-                           "pngs": {
-        {% for key, link in ftypes.pngs.items() %}
-                               "{{key}}": "{{link}}",
-        {% endfor %}
-                       },},
-        {% endfor %}
-            },
-        {% endfor %}
-        };
+    var girder_data = {
+    {% for itype, axes in data.items() %}
+        "{{itype}}": {
+    {% for ax, ftypes in axes.items() %}
+            "{{ax}}": {"fits": "{{ftypes.fits}}",		
+    {% if itype == "galaxies" %}
+                       "reg": "{{ftypes.reg}}",
+    {% endif %}                   
+                       "pngs": {
+    {% for key, link in ftypes.pngs.items() %}
+                           "{{key}}": "{{link}}",
+    {% endfor %}
+                   },},
+    {% endfor %}
+        },
+    {% endfor %}
+    };
 
-        var axes = [
-        {% for ax in data.proj %}
-            "{{ax}}",
-        {% endfor %}
-        ];
+    var axes = [
+    {% for ax in data.proj %}
+        "{{ax}}",
+    {% endfor %}
+    ];
 
-        $(document).ready(function () {
+    $(document).ready(function () {
 
-            //var myModal = document.getElementById('hubModal');  
-            //var myLink = document.getElementById("hubLink");
-            //var mySpan = document.getElementById("closeModal");
-            //myLink.onclick = function() {
-            //    myModal.style.display = "block";
-            // }
-            //mySpan.onclick = function() {
-            //    myModal.style.display = "none";
-            //}
-            //window.onclick = function(event) {
-            //    if (event.target == modal) {
-            //        modal.style.display = "none";
-            //    }
-            //}
-            //document.getElementById('hubFolder').href = "{{hub_folder}}";
+        show_files('slice', 'z');
+        fits_link('slice', 'z');
+        show_files('proj', 'z');
+        fits_link('proj', 'z');
+        {% if sz_fields|length > 0 %}
+        show_files('SZ', 'z');
+        fits_link('SZ', 'z');
+        {% endif %}
+        {% if xray_events %}
+        show_files('cxo_evt', 'z');
+        fits_link('cxo_evt', 'z');
+        {% endif %}
+        {% if galaxies %}
+        show_files('galaxies', 'z');
+        fits_link('galaxies', 'z');
+        {% endif %}
+        for (var i = 0; i < axes.length; i++) {
+            var new_ax = document.createElement("option");
+            new_ax.text = axes[i];
+            axisList.options.add(new_ax, i);
+        }
+        $('#proj_axis').val("z");
 
-            show_files('slice', 'z');
-            fits_link('slice', 'z');
-            show_files('proj', 'z');
-            fits_link('proj', 'z');
-            {% if sz_fields|length > 0 %}
-            show_files('SZ', 'z');
-            fits_link('SZ', 'z');
-            {% endif %}
-	    {% if xray_events %}
-            show_files('cxo_evt', 'z');
-            fits_link('cxo_evt', 'z');
-	    {% endif %}
-            {% if galaxies %}
-            show_files('galaxies', 'z');
-            fits_link('galaxies', 'z');
-            {% endif %}
-            for (var i = 0; i < axes.length; i++) {
-                var new_ax = document.createElement("option");
-                new_ax.text = axes[i];
-                axisList.options.add(new_ax, i);
-	    }
-            $('#proj_axis').val("z");
+    });
 
+    function get_hub_link() {
+        window.open("{{hub_folder}}", "_blank");
+    }
+
+    function fits_link(itype, axis) {
+        var fits_link = girder_data[itype][axis]["fits"];
+        document.getElementById(itype+'_fits').href = fits_link;
+        document.getElementById(itype+'_fits').innerText = "FITS File Download ("+axis+"-axis)";
+        document.getElementById(itype+'_fits').textContent = "FITS File Download ("+axis+"-axis)";
+        var descr = "";
+        if (itype == "galaxies") {
+            descr = "region";
+            var reg_link = girder_data["galaxies"][axis]["reg"];
+            document.getElementById(itype+'_reg').href = reg_link;
+            document.getElementById(itype+'_reg').innerText = "Region File Download ("+axis+"-axis)";
+            document.getElementById(itype+'_reg').textContent = "Region File Download ("+axis+"-axis)";
+        } else {
+            descr = "FITS";
+            document.getElementById(itype+'_js9').onclick = function(){js9Load(fits_link, itype)};
+            document.getElementById(itype+'_js9').innerText = "Open "+descr+" file in JS9 below ("+axis+"-axis)";
+            document.getElementById(itype+'_js9').textContent = "Open "+descr+" file in JS9 below ("+axis+"-axis)";
+        }
+    }
+    
+    function show_files(itype, axis) {
+        var pngs = girder_data[itype][axis]["pngs"];
+        $.each(pngs, function(key, value) {
+            var img = document.getElementById(itype+'_'+key);
+            img.src = "../../images/loader.gif";
+            img.src = value;
+            document.getElementById('big_'+itype+'_'+key).href = value;
         });
+    }
+     
+    var changeAxis = function () { 
+        var axis = this.options[this.selectedIndex].value;
+        {% if slice_axes %}
+        show_files('slice', axis);
+        fits_link('slice', axis);
+        {% endif %}
+        show_files('proj', axis);
+        fits_link('proj', axis);
+        {% if sz_fields|length > 0 %}
+        show_files('SZ', axis);
+        fits_link('SZ', axis);
+        {% endif %}
+        {% if xray_events %}
+        show_files('cxo_evt', axis);
+        fits_link('cxo_evt', axis);
+        {% endif %}
+        {% if galaxies %}
+        show_files('galaxies', axis);
+        fits_link('galaxies', axis);
+        {% endif %}
+        $('#fits_ext').empty();
+        JS9.CloseImage();
+    }
 
-        function get_hub_link() {
-            window.open("{{hub_folder}}", "_blank");
-        }
-
-        function fits_link(itype, axis) {
-            var fits_link = girder_data[itype][axis]["fits"];
-            document.getElementById(itype+'_fits').href = fits_link;
-            document.getElementById(itype+'_fits').innerText = "FITS File Download ("+axis+"-axis)";
-            document.getElementById(itype+'_fits').textContent = "FITS File Download ("+axis+"-axis)";
-            var descr = "";
-            if (itype == "galaxies") {
-                descr = "region";
-                var reg_link = girder_data["galaxies"][axis]["reg"];
-                //document.getElementById(itype+'_js9').href = "javascript:JS9.LoadRegions('"+reg_link+"');";
-                document.getElementById(itype+'_reg').href = reg_link;
-                document.getElementById(itype+'_reg').innerText = "Region File Download ("+axis+"-axis)";
-                document.getElementById(itype+'_reg').textContent = "Region File Download ("+axis+"-axis)";
-            } else {
-                descr = "FITS";
-                document.getElementById(itype+'_js9').onclick = function(){js9Load(fits_link, itype)};
-                document.getElementById(itype+'_js9').innerText = "Open "+descr+" file in JS9 below ("+axis+"-axis)";
-                document.getElementById(itype+'_js9').textContent = "Open "+descr+" file in JS9 below ("+axis+"-axis)";
+    axisList.addEventListener('change', changeAxis, false);
+    
+    var getHDUList = function() {
+        $('#fits_ext').empty();
+        imdata = JS9.GetImageData(false);
+        var default_name = "";
+        for (var i = 0; i < imdata.hdus.length; i++) {
+            var name = imdata.hdus[i].name;
+            if (name == "DENSITY" || name == "XRAY_EMISSIVITY" ||
+                name == "180_GHZ" || name == "EVENTS") {
+                default_name = name;
             }
-            //document.getElementById(itype+'_js9').innerText = "Open "+descr+" file in JS9 below ("+axis+"-axis)";
-            //document.getElementById(itype+'_js9').textContent = "Open "+descr+" file in JS9 below ("+axis+"-axis)";
-        }
-        
-        function show_files(itype, axis) {
-            var pngs = girder_data[itype][axis]["pngs"];
-            $.each(pngs, function(key, value) {
-                var img = document.getElementById(itype+'_'+key);
-                img.src = "../../images/loader.gif";
-                img.src = value;
-                document.getElementById('big_'+itype+'_'+key).href = value;
-            });
-        }
-         
-        var changeAxis = function () { 
-            var axis = this.options[this.selectedIndex].value;
-	    {% if slice_axes %}
-	    show_files('slice', axis);
-	    fits_link('slice', axis);
-	    {% endif %}
-	    show_files('proj', axis);
-            fits_link('proj', axis);
-            {% if sz_fields|length > 0 %}
-            show_files('SZ', axis);
-            fits_link('SZ', axis);
-            {% endif %}
-	    {% if xray_events %}
-	    show_files('cxo_evt', axis);
-            fits_link('cxo_evt', axis);
-	    {% endif %}
-            {% if galaxies %}
-            show_files('galaxies', axis);
-            fits_link('galaxies', axis);
-            {% endif %}
-            $('#fits_ext').empty();
-            JS9.CloseImage();
-        }
-
-        axisList.addEventListener('change', changeAxis, false);
-        
-        var getHDUList = function() {
-            $('#fits_ext').empty();
-            imdata = JS9.GetImageData(false);
-            var default_name = "";
-            for (var i = 0; i < imdata.hdus.length; i++) {
-                var name = imdata.hdus[i].name;
-                if (name == "DENSITY" || name == "XRAY_EMISSIVITY" ||
-                    name == "180_GHZ" || name == "EVENTS") {
-                    default_name = name;
-                }
-                if (typeof name != "undefined" && name != "STDGTI") {
-                    var new_hdu = document.createElement("option");
-                    new_hdu.text = name;
-                    fitsList.options.add(new_hdu, i)
-                }
+            if (typeof name != "undefined" && name != "STDGTI") {
+                var new_hdu = document.createElement("option");
+                new_hdu.text = name;
+                fitsList.options.add(new_hdu, i)
             }
-            $('#fits_ext').val(default_name);
         }
-        
-        function js9Load(url, itype) {
-            JS9.CloseImage();
-            JS9.Load(url+"["+default_js9[itype]+"]", {onload: getHDUList});
-        }
+        $('#fits_ext').val(default_name);
+    }
+    
+    function js9Load(url, itype) {
+        JS9.CloseImage();
+        JS9.Load(url+"["+default_js9[itype]+"]", {onload: getHDUList});
+    }
 
-        var changeFits = function () {
-            var extid = this.selectedIndex;
-            JS9.DisplayExtension(extid);
-        }
-        
-        fitsList.addEventListener('change', changeFits, false);
+    var changeFits = function () {
+        var extid = this.selectedIndex;
+        JS9.DisplayExtension(extid);
+    }
+    
+    fitsList.addEventListener('change', changeFits, false);
 
     </script>
 
