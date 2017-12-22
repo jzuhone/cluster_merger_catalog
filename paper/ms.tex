@@ -46,7 +46,7 @@ The astrophysical literature is replete with simulations of galaxy cluster merge
 
 We seek to address these issues by releasing the ``Galaxy Cluster Merger Catalog,'' an extensive suite of mock observations and related data for simulations of galaxy cluster mergers. We have produced 2D projections and slices of a number of different quantities relevant to observations of galaxy clusters from simulations of binary cluster mergers and cosmological simulations. These data products include clusters in various stages of merging and interaction with other systems viewed along a number of relevant projection axes. The data from the various simulations are presented within a consistent format so that comparison between simulations with different physics or different initial conditions is straightforward. The inclusion of data from both simulation types emphasizes the strengths of each: idealized merger simulations, due to their typically higher resolution and controlled set up, can provide insights into what kind of physics and merger configurations lead to certain observable features in cluster mergers. On the other hand, cosmological simulations capture more realistic mergers between clusters with substructure as well as cosmological accretion, providing a more direct comparison with observations.
 
-The goal of this catalog is to provide a way to connect a variety of simulations of galaxy cluster mergers within a common interface with multiwavelength observations of real merging clusters, providing an opportunity for observers to compare clusters in their observations with a particular merging scenario. For example, the catalog may be used to interpret existing observations across multiple wavebands such as the Planck-Chandra Cluster Sample\footnote{\url{https://hea-www.harvard.edu/CHANDRA_PLANCK_CLUSTERS/}} \citep{jon16}, or be analyzed to make predictions for what various investigations of real clusters may reveal for future observations and missions, such as {\it Athena}\footnote{\url{http://www.the-athena-x-ray-observatory.eu/}} and {\it Lynx}\footnote{\url{https://wwwastro.msfc.nasa.gov/lynx/}}.
+The goal of this catalog is to provide a way to connect a variety of simulations of galaxy cluster mergers within a common interface with multiwavelength observations of real merging clusters, providing an opportunity for observers to compare clusters in their observations with a particular merging scenario. For example, the catalog may be used to interpret existing observations across multiple wavebands such as the Planck-Chandra Cluster Sample\footnote{\url{https://hea-www.harvard.edu/CHANDRA_PLANCK_CLUSTERS/}} \citep{and17}, or be analyzed to make predictions for what various investigations of real clusters may reveal for future observations and missions, such as {\it Athena}\footnote{\url{http://www.the-athena-x-ray-observatory.eu/}} and {\it Lynx}\footnote{\url{https://wwwastro.msfc.nasa.gov/lynx/}}.
 
 \section{The Data}
 
@@ -215,50 +215,50 @@ The event files are designed to provide approximate representations of real obse
 \begin{figure*}
 \begin{center}
 \includegraphics[width=0.9\textwidth]{set_page.eps}
-\caption{An example ``set page.'' Links are provided to original journal articles, various simulation parameters and other information are tabulated, and links to the data for the individual simulations appear here. This particular page is linked at \url{http://gcmc.hub.yt/virgo/index.html}.}
+\caption{An example ``set page.'' Links are provided to original journal articles, various simulation parameters and other information are tabulated, and links to the data for the individual simulations appear here. This particular page is linked at \url{http://gcmc.hub.yt/virgo/index.html}.\label{fig:set_page}}
 \end{center}
 \end{figure*}
 
 \begin{figure*}
 \begin{center}
 \includegraphics[width=0.9\textwidth]{sim_page.eps}
-\caption{An example ``simulation page.'' Slider bars allow exploration of different epochs, and buttons near the top choose different projection axes. The figures link to the page for the files for the corresponding epoch of the simulation. This particular page is linked at \url{http://gcmc.hub.yt/virgo/novisc/index.html}.}
+\caption{An example ``simulation page.'' Slider bars allow exploration of different epochs, and buttons near the top choose different projection axes. The figures link to the page for the files for the corresponding epoch of the simulation. This particular page is linked at \url{http://gcmc.hub.yt/virgo/novisc/index.html}.\label{fig:sim_page}}
 \end{center}
 \end{figure*}
 
 \begin{figure*}
+  \begin{center}
+  \includegraphics[width=0.9\textwidth]{halos_page.eps}
+  \caption{Another example of a ``simulation page,'' except showing halos from a cosmological simulation instead of epochs. Slider bars allow exploration of different halos, and buttons near the top choose different projection axes. The figures link to the page for the files for the corresponding halo ID. This particular page is linked at \url{http://gcmc.hub.yt/omega500/non_radiative_1.0005/index.html}.\label{fig:halos_page}}
+  \end{center}
+  \end{figure*}
+  
+\begin{figure*}
 \begin{center}
 \includegraphics[width=0.9\textwidth]{epoch_page.eps}
-\caption{An example ``epoch page.'' Links are provided to similar simulations with different physics at the same epoch at the top of the page. For each data type, figures of some of the fields are shown and links to download the data or display in JS9 are provided. This particular page is linked at \url{http://gcmc.hub.yt/virgo/novisc/0046.html}.}
+\caption{An example ``epoch page.'' Links are provided to similar simulations with different physics at the same epoch at the top of the page. For each data type, figures of some of the fields are shown and links to download the data or display in JS9 are provided. This particular page is linked at \url{http://gcmc.hub.yt/virgo/novisc/0046.html}.\label{fig:epoch_page}}
 \end{center}
 \end{figure*}
 
 \begin{figure*}
 \begin{center}
 \includegraphics[width=0.9\textwidth]{epoch_page2.eps}
-\caption{The bottom of an ``epoch page,'' showing the simulated X-ray event file, the link to the Jupyter notebook directions, and the JS9 interface with a projection file loaded, and a circular region selected. This particular page is linked at \url{http://gcmc.hub.yt/virgo/novisc/0046.html}.}
-\end{center}
-\end{figure*}
-
-\begin{figure*}
-\begin{center}
-\includegraphics[width=0.9\textwidth]{halos_page.eps}
-\caption{Another example of a ``simulation page,'' except showing halos from a cosmological simulation instead of epochs. Slider bars allow exploration of different halos, and buttons near the top choose different projection axes. The figures link to the page for the files for the corresponding halo ID. This particular page is linked at \url{http://gcmc.hub.yt/omega500/non_radiative_1.0005/index.html}.}
+\caption{The bottom of an ``epoch page,'' showing the simulated X-ray event file, the link to the Jupyter notebook directions, and the JS9 interface with a projection file loaded, and a circular region selected. This particular page is linked at \url{http://gcmc.hub.yt/virgo/novisc/0046.html}.\label{fig:epoch_page2}}
 \end{center}
 \end{figure*}
 
 \begin{figure*}
 \begin{center}
 \includegraphics[width=0.95\textwidth]{halo_page.eps}
-\caption{A portion of a ``halo page,'' showing the details of the halo information and the slice data for this particular halo. This particular page is linked at \url{http://gcmc.hub.yt/omega500/non_radiative_1.0005/00086.html}.}
+\caption{A portion of a ``halo page,'' showing the details of the halo information and the slice data for this particular halo. This particular page is linked at \url{http://gcmc.hub.yt/omega500/non_radiative_1.0005/00086.html}.\label{fig:halo_page}}
 \end{center}
 \end{figure*}
 
-A number of the simulations have been run using an N-body code to represent the collisionless dark matter component of the cluster via massive particles. A number of these dark matter particles can be sampled from the simulation to represent mock ``galaxies,'' which can also be treated as a collisionless component. For some of these simulations, we have created mock galaxy catalogs, {\bf which consist of the sky positions and redshifts of ``galaxy'' particles.} 
+A number of the simulations have been run using an N-body code to represent the collisionless dark matter component of the cluster via massive particles. A number of these dark matter particles can be sampled from the simulation to represent mock ``galaxies,'' which can also be treated as a collisionless component. For some of these simulations, we have created mock galaxy catalogs, which consist of the sky positions and redshifts of ``galaxy'' particles.
 
 A number of particles are drawn from each halo within a radius of $r_{200}$, determined by the mass-richness relation of \citet{for14}, from the intitial simulation epoch, which are the ``galaxies.'' The same galaxy particles are tracked for the rest of the epochs in the simulation. The FITS binary tables for the galaxies include sky positions, line-of-sight velocities, an identifier for which halo each galaxy originally belonged to, and unique IDs for every galaxy. These particles provide a way of measuring the kinematics of the merger from the perspective of the collisionless material with a statistical significance that is comparable to that obtained from measured redshifts of member galaxies in real clusters. No redshift errors have been applied to the galaxy velocities, which is an exercise left to the end-user.
 
-A ds9 region file containing point regions corresponding to the galaxy positions is provided for each epoch and line-of-sight in addition to the FITS file, which allows the galaxy positions to be plotted over the projections of the other fields. {\bf At the time of writing, mock galaxy catalogs have been created for the ``A Parameter Space Exploration of Galaxy Cluster Merger'' simulations found at \url{http://gcmc.hub.yt/fiducial/index.html}, an example of which may be found at \url{http://gcmc.hub.yt/fiducial/1to1_b0.5/0139.html}, under the heading ``Galaxies''.}
+A ds9 region file containing point regions corresponding to the galaxy positions is provided for each epoch and line-of-sight in addition to the FITS file, which allows the galaxy positions to be plotted over the projections of the other fields. At the time of writing, mock galaxy catalogs have been created for the ``A Parameter Space Exploration of Galaxy Cluster Merger'' simulations found at \url{http://gcmc.hub.yt/fiducial/index.html}, an example of which may be found at \url{http://gcmc.hub.yt/fiducial/1to1_b0.5/0139.html}, under the heading ``Galaxies''.
 
 \subsection{The Interface}\label{sec:interface}
 
@@ -270,17 +270,17 @@ The portion of the website containing the simulation data is structured using th
 
 The highest level of organization within the catalog is that of a ``set'' of simulations, which are simulations with shared characteristics. For example, these may be simulations with identical initial conditions but different input physics (e.g., pure hydrodynamics versus MHD, or a non-radiative cosmological simulation versus a simulation with star formation and feedback), or simulations with identical physics but different initial conditions (e.g., varying the mass ratio and/or impact parameter in binary merger simulations). Simulations within a set were run with the same code. The ``set page'' describes the general characteristics of a single set of simulations from a particular investigation and provides links to the data for the individual simulations. This page also provides links to journal articles which the simulation data appeared in, as well as basic characteristics of the simulation data including the size of the domain, the finest cell size, the characteristic mass of the clusters, the cosmological parameters, etc. This page may also include links to supplementary data files that are common to all of the simulations in the set.
 
-All of the set pages are linked from the main simulation page, which can be found at \url{http://gcmc.hub.yt/simulations.html}.
+All of the set pages are linked from the main simulation page, which can be found at \url{http://gcmc.hub.yt/simulations.html}. Figure \ref{fig:set_page} shows an example of a set page.
 
 \subsubsection{The Simulation Page}\label{sec:sim_page}
 
-Every simulation of a set has a ``simulation page'' which shows various quantities projected perpendicular to the merger plane for every epoch or halo of the simulation that is available. The different epochs or halos can be navigated using a slider bar, and buttons above the slider bar can be used to look at the same images from a different line of sight. The links attached to the images lead to the epoch or halo pages for this simulation.
+Every simulation of a set has a ``simulation page'' which shows various quantities projected perpendicular to the merger plane for every epoch or halo of the simulation that is available. The different epochs or halos can be navigated using a slider bar, and buttons above the slider bar can be used to look at the same images from a different line of sight. The links attached to the images lead to the epoch or halo pages for this simulation. Simulation pages for a binary merger simulation with different epochs and a cosmological simulation with different halos are shown in Figures \ref{fig:sim_page} and \ref{fig:halos_page}.
 
 \subsubsection{The Epoch and Halo Pages}\label{sec:epoch_page}
 
-Any given link on the simulation page leads to an ``epoch page'' or ``halo page'' where images from a particular simulation epoch for idealized simulations, or a particular halo for cosmological simulations, can be examined and the corresponding data may be obtained. Links are provided to similar simulations with different input physics at the same epoch or for the same halo. This page also contains information about the different types of data within the files. A drop-down menu is provided for switching between the different projection axes available.
+Any given link on the simulation page leads to an ``epoch page'' or ``halo page'' where images from a particular simulation epoch for idealized simulations, or a particular halo for cosmological simulations, can be examined and the corresponding data may be obtained. Links are provided to similar simulations with different input physics at the same epoch or for the same halo. This page also contains information about the different types of data within the files. A drop-down menu is provided for switching between the different projection axes available. Examples of epoch and halo pages are shown in Figures \ref{fig:epoch_page}-\ref{fig:halo_page}.
 
-A link is provided on each epoch or halo page to the location of the files on the \code{yt Hub}, so that one may start Jupyter notebooks with access to the data. Each epoch page also contains a JS9 application for opening the various FITS files associated with that particular epoch or halo. A drop-down menu is provided for navigating between the various fields in each FITS file.
+A link is provided on each epoch or halo page to the location of the files on the \code{yt Hub}, so that one may start Jupyter notebooks with access to the data. Each epoch page also contains a JS9 application for opening the various FITS files associated with that particular epoch or halo. A drop-down menu is provided for navigating between the various fields in each FITS file. 
 
 \section{Future Directions}\label{sec:future}
 
@@ -321,10 +321,13 @@ At the time of writing, the catalog includes data products from binary merger si
 
 Comparisons of data from the catalog to current observations have already been made to useful effect by \citet{wal17} and Douglass et al. 2017, in preparation. The catalog is also being explored as an avenue for further simulation investigations as well. The simulated X-ray images from several of the simulations are currently being analyzed with edge-detection techniques to determine if such an approach can reveal differences in the X-ray surface brightness distribution produced by varying the plasma physics of the ICM, including the strength of the magnetic field and viscosity (Bellomi et al., in preparation). Another area of research that is being explored by the authors of this work involves extracting cluster merger parameters from mergers in cosmological simulations and using them as inputs for idealized simulations, applying different prescriptions for the physics of the ICM in different simulations. This will be particularly useful from the perspective of determining the effect of varying the ICM physics on the velocity field of merging clusters, which will be an area of intense research with the advent of X-ray observatories carrying instruments which can measure such motions. The fruits of this research will eventually become part of the catalog as well. It is our hope that the catalog will continue to provide a useful resource for researchers studying galaxy cluster mergers from both the perspective of current observations as well as making predictions for future missions. 
 
+Recently, a similar online catalog of simulated cluster observations been released by \citet{rag16}, which includes 2D maps of relevant quantities, mock X-ray observations, and capabilities for interactive analysis.
+
 \acknowledgements
 The authors thank Eric Mandel (CfA) for tips on using JS9 and for critical bug fixes and enhancements that were provided to make it work with the data in the catalog, and Joseph DePasquale (CfA) for generating the home page image. JAZ acknowledges support through Chandra Award Number G04-15088X issued by the Chandra X-ray Center, which is operated by the Smithsonian Astrophysical Observatory for and on behalf of NASA under contract NAS8-03060. KK was funded in part by the Gordon and Betty Moore Foundation's Data-Driven Discovery Initiative through Grant GBMF4561. This work was supported in part by NSF AST-1412768 and by the facilities and staff of the Yale Center for Research Computing.
 
 \begin{thebibliography}{}
+\bibitem[Andrade-Santos et al.(2017)]{and17} Andrade-Santos, F., Jones, C., Forman, W.~R., et al.\ 2017, \apj, 843, 76 
 \bibitem[Astropy Collaboration et al.(2013)]{apy13} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., et al.\ 2013, \aap, 558, A33
 \bibitem[Berger \& Colella(1989)]{ber89} Berger, M.~J., \& Colella, P.\ 1989, Journal of Computational Physics, 82, 64
 \bibitem[Br{\"u}ggen et al.(2012)]{bru12} Br{\"u}ggen, M., Bykov, A., Ryu, D., R{\"o}ttgering, H.\ 2012, \ssr, 166, 187
@@ -345,13 +348,13 @@ The authors thank Eric Mandel (CfA) for tips on using JS9 and for critical bug f
 \bibitem[Feretti(2005)]{fer05} Feretti, L.\ 2005, Advances in Space Research, 36, 729
 \bibitem[Ford et al.(2014)]{for14} Ford, J., Hildebrandt, H., Van Waerbeke, L., et al.\ 2014, \mnras, 439, 3755
 \bibitem[Forman et al.(1972)]{for72} Forman, W., Kellogg, E., Gursky, H., Tananbaum, H., \& Giacconi, R.\ 1972, \apj, 178, 309
-\bibitem[Jones et al.(2016)]{jon16} Jones, C., Santos, F.~A., Forman, W.~R., et al.\ 2016, American Astronomical Society Meeting Abstracts, 228, 110.04 
 \bibitem[Kravtsov(1999)]{kra99} Kravtsov, A.~V.\ 1999, Ph.D.~Thesis, 5564 
 \bibitem[Kravtsov(2002)]{kra02} Kravtsov, A.\ 2002, APS April Meeting Abstracts,  
 \bibitem[Markevitch et al.(2004)]{mar04} Markevitch, M., Gonzalez, A.~H., Clowe, D., et al.\ 2004, \apj, 606, 819
 \bibitem[Nelson et al.(2014)]{nel14} Nelson, K., Lau, E.~T., Nagai, D., Rudd, D.~H., \& Yu, L.\ 2014, \apj, 782, 107 
 \bibitem[Pence et al.(2010)]{pen10} Pence, W.~D., Chiappetti, L., Page, C.~G., Shaw, R.~A., \& Stobie, E.\ 2010, \aap, 524, A42
 \bibitem[Poole et al.(2006)]{poo06} Poole, G.~B., Fardal, M.~A., Babul, A., McCarthy, I.~G., Quinn, T., \& Wadsley, J.\ 2006, \mnras, 373, 881
+\bibitem[Ragagnin et al.(2016)]{rag16} Ragagnin, A., Dolag, K., Biffi, V., et al.\ 2016, arXiv:1612.06380 
 \bibitem[Ricker \& Sarazin(2001)]{ric01} Ricker, P.~M., \& Sarazin, C.~L.\ 2001, \apj, 561, 621
 \bibitem[Ricker(2008)]{ric08} Ricker, P.~M.\ 2008, \apjs, 176, 293-300
 \bibitem[Rudd et al.(2008)]{rud08} Rudd, D.~H., Zentner, A.~R., \& Kravtsov, A.~V.\ 2008, \apj, 672, 19-32 
